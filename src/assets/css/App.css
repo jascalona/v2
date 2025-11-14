@@ -1,0 +1,452 @@
+/* styles.css */
+/*
+Color button: background-color: rgb(38, 66, 124);
+
+*/
+
+
+/* --- Estilos Globales y Layout Principal --- */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  background-color: #f9fafb;
+  /* Fondo de la app fuera del contenido */
+  color: #374151;
+  font-size: 14px;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* --- Navbar Superior --- */
+.top-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 56px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: rgb(38, 66, 124);
+  /* Color verde del logo */
+}
+
+.logo-icon {
+  background-color: rgb(38, 66, 124);
+  color: white;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 1.1em;
+  margin-right: 5px;
+}
+
+.navbar-links {
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #6b7280;
+  padding: 8px 15px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.95em;
+  font-weight: 500;
+}
+
+.nav-link.active {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.nav-link:hover {
+  background-color: #f3f4f6;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-button {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 0.9em;
+}
+
+.navbar-star-link {
+  text-decoration: none;
+  color: #374151;
+  font-size: 0.9em;
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+}
+
+.profile-icon {
+  background-color: #d1d5db;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8em;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.nav-icon {
+  margin-right: 5px;
+}
+
+/* --- Layout Principal y Contenido --- */
+.main-layout {
+  display: flex;
+  flex: 1;
+}
+
+.content-area {
+  flex-grow: 1;
+  padding: 30px 40px;
+  overflow-y: auto;
+  background-color: #f9fafb;
+  /* Color de fondo del área de contenido */
+}
+
+/* --- Barra Lateral (Sidebar) --- */
+.sidebar {
+  width: 260px;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px 0 10px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.sidebar-header {
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+.create-button {
+  display: block;
+  text-align: center;
+  background-color: rgb(38, 66, 124);
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #f3f4f6;
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+
+.search-box input {
+  border: none;
+  background: none;
+  width: 100%;
+  padding: 5px;
+  font-size: 0.9em;
+  color: #374151;
+}
+
+.search-box input:focus {
+  outline: none;
+}
+
+.search-icon {
+  color: #9ca3af;
+  margin-right: 5px;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item a {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #374151;
+  font-size: 0.95em;
+}
+
+.nav-item.active a {
+  background-color: #f3f4f6;
+  font-weight: 600;
+  border-left: 3px solid rgb(38, 66, 124);
+  /* Indicador de selección */
+  padding-left: 17px;
+  /* Compensa el ancho del borde */
+}
+
+.nav-item:not(.active) a:hover {
+  background-color: #f9fafb;
+}
+
+.nav-separator {
+  color: #9ca3af;
+  font-size: 0.8em;
+  padding: 15px 20px 5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.add-project a {
+  display: block;
+  padding: 10px 20px;
+  color: #6b7280;
+  font-size: 0.95em;
+  text-decoration: none;
+}
+
+.add-project a:hover {
+  background-color: #f9fafb;
+}
+
+.sidebar-footer {
+  padding: 10px 20px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9em;
+}
+
+.sidebar-footer .footer-link {
+  color: #374151;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.footer-icons .footer-icon {
+  margin-left: 10px;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+/* --- Dashboard Content (Contenido Central) --- */
+
+.dashboard-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.content-header {
+  margin-bottom: 30px;
+}
+
+/*COLOR DE FONDO SOLO PARA ETIQUETA FONDO*/
+.fondo{
+  background: rgb(40, 58, 95);;
+  padding: 25px;
+  border-radius: 20px;
+}
+
+
+.content-header h2 {
+  font-size: 2em;
+  margin: 0;
+  font-weight: 700;
+}
+
+.content-header p {
+  font-size: 0.95em;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.header-emoji {
+  margin-right: 5px;
+  font-size: 1.2em;
+}
+
+/* Sección General */
+.section {
+  margin-bottom: 40px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h3 {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Botones de la Sección */
+.dismiss-button {
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 0.9em;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.dismiss-button:hover {
+  background-color: #eee;
+}
+
+.add-link-button {
+  background: none;
+  border: 1px solid #d1d5db;
+  color: #3b82f6;
+  /* Color azul para el link */
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s;
+}
+
+.add-link-button:hover {
+  background-color: #eff6ff;
+}
+
+/* --- Tarjetas de Inicio Rápido --- */
+.quick-start-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 2 columnas */
+  gap: 20px;
+}
+
+.quick-start-card {
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all .1s;
+}
+
+.quick-start-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+
+
+.card-icon-container {
+  width: 36px;
+  height: 36px;
+  background-color: #f3f4f6;
+  /* Gris muy claro para el fondo */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card-icon {
+  font-size: 1.2em;
+}
+
+.quick-start-card h4 {
+  font-size: 1em;
+  margin: 0 0 5px 0;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.quick-start-card p {
+  font-size: 0.85em;
+  color: #6b7280;
+  line-height: 1.4;
+  flex-grow: 1;
+  margin-bottom: 15px;
+}
+
+.primary-button.link-style,
+.link-text {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9em;
+  color: #3b82f6;
+  /* Azul */
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.link-text:hover,
+.primary-button.link-style:hover {
+  text-decoration: underline;
+}
+
+
+/* --- Estados Vacíos (Empty States) --- */
+.empty-state {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  color: #9ca3af;
+}
+
+.empty-state-icon {
+  font-size: 2em;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+.recent-filter {
+  padding: 5px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 0.9em;
+}
