@@ -1,9 +1,10 @@
 import { useState } from "react";
+import TabsActivities from './setting/component/tabs_activities'
 
-function Activities(){
-    return(
+function Activities() {
+    return (
         <>
-            Hola desde Actividades
+            <TabsActivities />
         </>
     )
 }

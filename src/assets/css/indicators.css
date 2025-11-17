@@ -1,0 +1,94 @@
+/*PRIMERA GALERIA*/
+.gallery-indicators-i{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 10px;
+}
+
+
+/*SEGUNDA GALERIA*/
+.gallery-indicators-ii{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 7px;
+}
+
+/*TERCERA GALERIA GRAFICOS*/
+.gallery-charts{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    margin: 50px auto;
+    padding: 0px;
+    gap: 30px;
+
+}
+
+.card-charts{
+    padding: 30px;
+    border: solid 1px rgba(128, 128, 128, 0.415);
+    border-radius: 10px;
+}
+
+.card-item-indicator{
+    border: solid 1px rgba(128, 128, 128, 0.415);
+    padding: 13px;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-item-indicator .icon{
+    background: rgba(128, 128, 128, 0.305);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-item-indicator .item-body{
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+
+/*AJUSTES RESPONSIVOS*/
+@media (max-width: 1400px) {
+    .gallery-indicators-ii{
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1180px) {
+    .gallery-indicators-ii{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1100px) {
+    .gallery-indicators-i{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 800px) {
+    .gallery-indicators-i{
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-indicators-ii{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 660px) {
+    .gallery-indicators-ii{
+        grid-template-columns: 1fr;
+    }
+}
