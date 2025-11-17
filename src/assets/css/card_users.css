@@ -1,0 +1,169 @@
+/* GALLERY CARD USERS */
+.gallery_card_user{
+    display: grid;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    padding: 20px; 
+}
+
+/* Estilos para el contenedor principal de la tarjeta */
+.card-container {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    flex: 1 1 300px; 
+    width: 350px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* --- Encabezado --- */
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.logo-container {
+    width: 35px;
+    height: 35px;
+    background-color: rgb(38, 66, 124); 
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.logo {
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.company-name {
+    font-weight: bold;
+    color: #333;
+    font-size: 15px;
+    margin: 0;
+}
+
+.time {
+    color: #777;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* --- Mensaje y ID --- */
+.message {
+    font-size: 15px;
+    color: #333;
+    line-height: 1.5;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.highlight {
+    color: #a700d1; 
+    font-weight: bold;
+}
+
+.meeting-id {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 25px;
+    font-weight: 500; 
+}
+
+/* --- Pie de página --- */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Botón VER */
+.join-button {
+    background: linear-gradient(to right, rgb(74, 116, 200), rgb(38, 66, 124));
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.join-button:hover {
+    opacity: 0.9;
+}
+
+/* Avatares */
+.avatars {
+    display: flex;
+    margin-right: 10px; 
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background-color: #ccc; 
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    margin-left: -10px; 
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.avatar:first-child {
+    margin-left: 0; 
+}
+
+@media (min-width: 1670px) {
+    .gallery_card_user{
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1669px) {
+    .gallery_card_user{
+        grid-template-columns: repeat(3, 1fr);
+    }
+     .card-container{
+        width: 320px;
+    }
+}
+
+@media (max-width: 1330px) {
+    .gallery_card_user{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .card-container{
+        width: 400px;
+    }
+}
+
+
+@media (max-width: 1160px) {
+    .gallery_card_user{    
+        grid-template-columns: repeat(2, 1fr);
+    }
+     .card-container{
+        width: 350px;
+    }
+}
+
+@media (max-width: 700px) {
+    .gallery_card_user{
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+}

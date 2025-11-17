@@ -1,0 +1,135 @@
+/*NOTIFICATION*/
+.total-row{
+    color: blue;
+    font-size: 20px;
+    font-size: 17px;
+}
+
+  /* Estilo del Header de la Tabla y Opciones */
+  .table-empresa .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1rem;
+      padding: 0 20px;
+  }
+
+  .table-empresa .options h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #333;
+  }
+
+  .table-empresa .options small {
+      color: #777;
+      font-weight: 400;
+  }
+
+  /* Estilo del Botón de Descarga */
+  .table-empresa .group-btn .p-button {
+      background-color: transparent;
+      /* Se hizo transparente para ser más sutil */
+      color: #5A639C !important;
+      border: 1px solid #f0f0f0;
+      /* Borde sutil */
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  .table-empresa .group-btn .p-button:hover {
+      background-color: #f5f5f5;
+      /* Hover sutil */
+      border-color: #e0e0e0;
+  }
+
+  /* --- Estilos de la DataTable (simulando PrimeReact) --- */
+  .tabla-empresa .p-datatable-wrapper {
+      border-radius: 0.5rem;
+      overflow: hidden;
+      border: 1px solid #f0f0f0;
+      /* Borde general para el cuerpo de la tabla */
+  }
+
+  /* Estilo de la cabecera (Header) */
+  .tabla-empresa .p-datatable-thead>tr>th {
+      background-color: #ffffff;
+      color: #555;
+      font-weight: 600;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #e0e0e0;
+      /* Separador bajo el header más definido */
+      border-top: none;
+      text-align: left;
+      font-size: 14px;
+  }
+
+  /* Estilo de las filas (Rows) */
+  .tabla-empresa .p-datatable-tbody>tr {
+      background-color: #ffffff;
+      transition: background-color 0.2s;
+  }
+
+  .tabla-empresa .p-datatable-tbody>tr:hover {
+      background-color: #fafafa;
+      /* Efecto hover sutil */
+  }
+
+  .tabla-empresa .p-datatable-tbody>tr>td {
+      padding: 0.7rem 1.5rem;
+      border-bottom: 1px solid #f5f5f5;
+      /* Separador muy sutil entre filas */
+      color: #444;
+      font-size: 13px;
+  }
+
+  /* Estilo de la última fila: remueve el border-bottom */
+  .tabla-empresa .p-datatable-tbody>tr:last-child>td {
+      border-bottom: none;
+  }
+
+  /* --- Estilos de la Paginación --- */
+  /* Sobreescribimos el paginador personalizado */
+  .mi-paginador-personalizado {
+      border-top: 1px solid #f0f0f0 !important;
+      /* Separador de la paginación más sutil */
+      padding: 1rem 1.5rem !important;
+  }
+
+  .mi-paginador-personalizado .p-paginator-page {
+      min-width: 2.25rem;
+      height: 2.25rem;
+      margin: 0 0.25rem;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+  }
+
+  /* Estilo para el botón de página activa (Color Verde de la imagen) */
+  .mi-paginador-personalizado .p-highlight {
+      background-color: rgb(38, 66, 124) !important;
+      color: #fff!important;
+      border-radius: 50% !important;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(76, 94, 175, 0.4);
+      border: none !important;
+  }
+
+  /* Estilo para los botones de paginación normales */
+  .mi-paginador-personalizado .p-paginator-page:not(.p-highlight) {
+      background-color: transparent;
+      color: rgb(38, 66, 124);;
+      border: none;
+      border-radius: 50%;
+  }
+
+  .mi-paginador-personalizado .p-paginator-page:not(.p-highlight):hover {
+      background-color: rgb(38, 66, 124);
+      color: #fff;
+  }
+
+  /* Ajuste para el ícono de búsqueda */
+  .p-input-icon-left .pi-search {
+      color: rrf;
+  }
+
+  
