@@ -1,9 +1,12 @@
 import { useState } from "react";
+import ProjectExplorer from './setting/component/view_project';
 
 function Project(){
     return(
         <>
-            Hola desde Proyectos
+            <div className="show-nav">
+                <ProjectExplorer />
+            </div>
         </>
     )
 }

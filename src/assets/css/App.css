@@ -360,6 +360,12 @@ body {
   gap: 20px;
 }
 
+@media (max-width: 700px) {
+  .quick-start-cards{
+    grid-template-columns: 1fr;
+  }
+}
+
 .quick-start-card {
   background-color: #fff;
   border: 1px solid #e5e7eb;
