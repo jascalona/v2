@@ -138,7 +138,7 @@
         grid-template-columns: repeat(3, 1fr);
     }
      .card-container{
-        width: 320px;
+        width: 100%;
     }
 }
 
@@ -146,24 +146,14 @@
     .gallery_card_user{
         grid-template-columns: repeat(2, 1fr);
     }
-    .card-container{
-        width: 400px;
-    }
 }
 
-
-@media (max-width: 1160px) {
-    .gallery_card_user{    
-        grid-template-columns: repeat(2, 1fr);
-    }
-     .card-container{
-        width: 350px;
-    }
+@media (max-width: 1050px) {
+    
 }
 
 @media (max-width: 700px) {
     .gallery_card_user{
         grid-template-columns: 1fr;
-        width: 100%;
     }
 }

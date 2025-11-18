@@ -1,3 +1,7 @@
+/*COLOR PRINCIPAL
+rgb(38, 66, 124)
+*/
+
 /* styles.css */
 body {
   margin: 0;
@@ -117,9 +121,11 @@ body {
   overflow: hidden;
 }
 
+/* AJUSTE: Reducir padding horizontal para centrar correctamente el dashboard-content */
 .content-area {
   flex-grow: 1;
-  padding: 30px 40px;
+  padding: 30px 20px;
+  /* Reducido de 40px para mejor responsividad */
   overflow-y: auto;
   background-color: #f9fafb;
 }
@@ -248,19 +254,28 @@ body {
 }
 
 /* --- Dashboard Content (Contenido Central) --- */
+/* AJUSTE: Añadir padding lateral para asegurar espacio en pantallas pequeñas */
 .dashboard-content {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 15px;
 }
 
 .content-header {
   margin-bottom: 30px;
 }
 
-.fondo{
+.fondo {
   background: rgb(40, 58, 95);
   padding: 25px;
   border-radius: 20px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1005px) {
+  .fondo {
+    margin-right: 20px;
+  }
 }
 
 .content-header h2 {
@@ -281,6 +296,16 @@ body {
   margin-right: 5px;
   font-size: 1.2em;
 }
+
+/* --- AJUSTES PARA gallery_card_user (Responsividad de Tarjetas) --- */
+.gallery_card_user {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+  padding: 0;
+}
+
 
 .section {
   margin-bottom: 40px;
@@ -328,7 +353,7 @@ body {
   background-color: #eff6ff;
 }
 
-/* --- Tarjetas de Inicio Rápido --- */
+/* --- Tarjetas de Inicio Rápido (Se mantiene, pero .gallery_card_user es el principal) --- */
 .quick-start-cards {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -450,9 +475,8 @@ body {
 }
 
 /* --- Media Query para Responsividad --- */
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
 
-  /* Mostrar Botón Flotante y Ocultar elementos de Navbar innecesarios */
   .sidebar-toggle-button {
     display: flex;
   }

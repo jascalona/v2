@@ -7,7 +7,11 @@ import { Button } from 'primereact/button';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import  '../../../assets/css/table.css'
+import '../../../assets/css/table.css'
+
+
+//Componentes
+import NewMember from './modal_user';
 
 interface Usuario {
     coUsuario: string,
@@ -100,17 +104,21 @@ function TableMembers() {
                     <div className="title">
                         <h2>Miembros <span className="total-row">{usuario.length}</span></h2>
                     </div>
+
                     <div className="group-btn">
                         <div className="p-input-icon-left" >
                             <i className="pi pi-search" />
-                            <InputText style={{ background: '#fffffff6', border: 'solid 1px #7776b352', padding: '10px', borderRadius: 5, color: '#333', width: '300px', outline: 'none' }}
+                            <InputText style={{ background: '#fffffff6', border: 'solid 1px #7776b352', padding: '10px', borderRadius: 5, color: '#333', maxWidth: '300px', outline: 'none' }}
                                 value={globalFilterValue}
                                 onChange={onGlobalFilterChange}
                                 placeholder="Buscar..."
                             />
                         </div>
+                        <div className="btn-modal" style={{marginLeft: 10}}>
+                            <NewMember />
+                        </div>
 
-                        <Button style={{ color: '#fff', fontSize: '20px', padding: '10px', marginLeft: '10px', background: '#5158ea' }}
+                        <Button style={{ color: '#fff', fontSize: '20px', padding: '10px', marginLeft: '10px', background: 'rgb(38, 66, 124)' }}
                             type="button"
                             icon="pi pi-file-excel"
                             className="p-button-success"
@@ -124,7 +132,7 @@ function TableMembers() {
                     value={usuario}
                     tableStyle={{ minWidth: '50rem' }}
                     paginator
-                    rows={5}
+                    rows={8}
                     emptyMessage="No se encontraron registros relacionados"
                     className="tabla-empresa"
                     paginatorClassName="mi-paginador-personalizado"

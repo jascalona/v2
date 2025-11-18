@@ -29,6 +29,29 @@ strong{
       font-weight: 400;
   }
 
+.group-btn{
+    padding: 5px;
+    display: flex;
+}
+
+@media (max-width: 640px) {
+    .options .title h2{
+        font-size: 20px;
+    }
+
+    .options{
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 433px) {
+    .options .group-btn{
+        flex-direction: column;
+        text-align: end;
+        gap: 5px;
+    }
+}
+
   /* Estilo del Botón de Descarga */
   .table-empresa .group-btn .p-button {
       background-color: transparent;
