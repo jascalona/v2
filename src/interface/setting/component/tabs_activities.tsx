@@ -10,6 +10,7 @@ import BeenhereIcon from '@mui/icons-material/Beenhere';
 
 
 //COMPONENTES GRAFICOS
+import AvatarI from './Avatar';
 import ChartPie from './chart_pie';
 import LineCharts from './chart_line';
 import '../../../assets/css/indicators.css'
@@ -154,6 +155,94 @@ function TabsActivities() {
             <div className="card-charts">
               <p><strong>Elemento de trabajo por Estado</strong></p>
               <LineCharts />
+            </div>
+          </div>
+
+          <h3>Actividades Recientes</h3>
+          <div className="container-table-activities">
+
+            <div className="colum-i">
+              <div className="row-activities">
+                <div className='container-row'>
+                  <AvatarI />
+                  <div className="content-activities">
+                    <span>Te han Asignado <strong>Certificacion Bancrecer</strong></span><br />
+                    <span>Actividad: <strong>Desarrollo Test Case</strong></span>
+                  </div>
+                </div>
+                <div className="date">
+                  <small>Creado el: 18/11/2025</small>
+                </div>
+              </div>
+
+              <div className="row-activities">
+                <div className='container-row'>
+                  <AvatarI />
+                  <div className="content-activities">
+                    <span>Te han Asignado <strong>Certificacion Bancrecer</strong></span><br />
+                    <span>Actividad: <strong>Desarrollo Test Case</strong></span>
+                  </div>
+                </div>
+                <div className="date">
+                  <small>Creado el: 18/11/2025</small>
+                </div>
+              </div>
+
+              <div className="row-activities">
+                <div className='container-row'>
+                  <AvatarI />
+                  <div className="content-activities">
+                    <span>Te han Asignado <strong>Certificacion Bancrecer</strong></span><br />
+                    <span>Actividad: <strong>Desarrollo Test Case</strong></span>
+                  </div>
+                </div>
+                <div className="date">
+                  <small>Creado el: 18/11/2025</small>
+                </div>
+              </div>
+
+            </div>
+
+            <div className="colum-i">
+              <div className="row-activities">
+                <div className='container-row'>
+                  <AvatarI />
+                  <div className="content-activities">
+                    <span>Te han Asignado <strong>Certificacion Bancrecer</strong></span><br />
+                    <span>Actividad: <strong>Desarrollo Test Case</strong></span>
+                  </div>
+                </div>
+                <div className="date">
+                  <small>Creado el: 18/11/2025</small>
+                </div>
+              </div>
+
+              <div className="row-activities">
+                <div className='container-row'>
+                  <AvatarI />
+                  <div className="content-activities">
+                    <span>Te han Asignado <strong>Certificacion Bancrecer</strong></span><br />
+                    <span>Actividad: <strong>Desarrollo Test Case</strong></span>
+                  </div>
+                </div>
+                <div className="date">
+                  <small>Creado el: 18/11/2025</small>
+                </div>
+              </div>
+
+              <div className="row-activities">
+                <div className='container-row'>
+                  <AvatarI />
+                  <div className="content-activities">
+                    <span>Te han Asignado <strong>Certificacion Bancrecer</strong></span><br />
+                    <span>Actividad: <strong>Desarrollo Test Case</strong></span>
+                  </div>
+                </div>
+                <div className="date">
+                  <small>Creado el: 18/11/2025</small>
+                </div>
+              </div>
+
             </div>
 
           </div>
