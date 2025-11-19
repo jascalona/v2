@@ -142,7 +142,7 @@ function TableMembers() {
                 >
                     <Column field="coUsuario" header="SCID"></Column>
                     <Column field="nbNombre" header="Nombre"></Column>
-                    <Column field="nbApellido" header="Apellidp"></Column>
+                    <Column field="nbApellido" header="Apellido"></Column>
                     <Column field="txEmail" header="Email"></Column>
                     <Column field="nucelular" header="CELE"></Column>
                     <Column field="cosubarea" header="Co. Subarea"></Column>

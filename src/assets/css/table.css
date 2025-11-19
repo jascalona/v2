@@ -55,10 +55,8 @@ strong{
   /* Estilo del Botón de Descarga */
   .table-empresa .group-btn .p-button {
       background-color: transparent;
-      /* Se hizo transparente para ser más sutil */
       color: #5A639C !important;
       border: 1px solid #f0f0f0;
-      /* Borde sutil */
       padding: 0.5rem 0.75rem;
       border-radius: 0.5rem;
       transition: background-color 0.2s, border-color 0.2s;
@@ -66,7 +64,6 @@ strong{
 
   .table-empresa .group-btn .p-button:hover {
       background-color: #f5f5f5;
-      /* Hover sutil */
       border-color: #e0e0e0;
   }
 
@@ -75,7 +72,6 @@ strong{
       border-radius: 0.5rem;
       overflow: hidden;
       border: 1px solid #f0f0f0;
-      /* Borde general para el cuerpo de la tabla */
   }
 
   /* Estilo de la cabecera (Header) */
@@ -83,9 +79,8 @@ strong{
       background-color: #ffffff;
       color: #555;
       font-weight: 600;
-      padding: 1rem 1.5rem;
+      padding: 0.8rem 1.5rem;
       border-bottom: 1px solid #e0e0e0;
-      /* Separador bajo el header más definido */
       border-top: none;
       text-align: left;
       font-size: 14px;
@@ -105,7 +100,6 @@ strong{
   .tabla-empresa .p-datatable-tbody>tr>td {
       padding: 0.7rem 1.5rem;
       border-bottom: 1px solid #f5f5f5;
-      /* Separador muy sutil entre filas */
       color: #444;
       font-size: 13px;
   }
@@ -199,3 +193,6 @@ strong{
         margin-left: 57px;
     }
 }
+
+
+
