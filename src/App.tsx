@@ -7,7 +7,7 @@ import MainInterface from './interface/structure/main_interface';
 import Home from './interface/home'
 import Inbox from './interface/inbox'
 import Activities from './interface/activities'
-import Project from './interface/project';
+import Project from './interface/setting/project';
 
 //Setting
 import Setting from './interface/setting/setting';
@@ -24,13 +24,14 @@ function App() {
           <Route path='home' element={<Home />} />
           <Route path='init' element={<MainInterface />} />
           <Route path='inbox' element={<Inbox />} />
-          <Route path='activities' element={<Activities />}/>
-          <Route path='project' element={<Project />} />
+          <Route path='activities' element={<Activities />} />
 
           {/*RUTA PARA DIRECTORIO SETTING*/}
           <Route path='setting' element={<Setting />}>
+            <Route path='general' element={<General />} />
             <Route path='members' element={<Members />} />
             <Route path='general' element={<General />} />
+            <Route path='project' element={<Project />} />
           </Route>
         </Route>
 

@@ -131,12 +131,13 @@ const CardView: React.FC<CardViewProps> = ({ productos_card }) => (
                         <div className="card-title-actions">
                             <h2 className="card-title">{producto.nbproducto}</h2>
                         </div>
-                        <p className="card-subtitle">{producto.stproducto}</p>
+                        <p className="card-subtitle">Soluciones Sycom</p>
                     </div>
                 </div>
 
                 {/* Cuerpo de la tarjeta */}
                 <div className="card-body">
+                    <p className='card-description'>{producto.stproducto}</p>
                     <p className="card-description">aqui va la descripcion</p>
                     <div className="card-footer">
                         {/*DEFINIR DEPUES*/}

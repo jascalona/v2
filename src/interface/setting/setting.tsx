@@ -36,7 +36,7 @@ function Setting() {
                                     <div className="card-icon-container"><span className="card-icon">📄</span></div>
                                     <h4>Ajustes Generales</h4>
                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi, harum.</p>
-                                    <button className="primary-button link-style">Comienza</button>
+                                    <button className="primary-button link-style"><Link to={"general"}>Comienza</Link></button>
                                 </div>
 
                                 {/* Tarjeta 2 */}
@@ -58,9 +58,9 @@ function Setting() {
                                 {/* Tarjeta 4 */}
                                 <div className="quick-start-card">
                                     <div className="card-icon-container"><span className="card-icon">🎨</span></div>
-                                    <h4>Proyectos</h4>
+                                    <h4>Productos</h4>
                                     <p>Elige tu imagen, colores y más.</p>
-                                    <a href="#" className="link-text">Personaliza ahora</a>
+                                    <a href="#" className="link-text"><Link to={"project"}>Nuevo producto</Link></a>
                                 </div>
                             </div>
                         </div>
