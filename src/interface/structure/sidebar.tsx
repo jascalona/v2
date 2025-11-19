@@ -43,8 +43,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
         <ul>
           <li className="nav-item">
-            <Link to="project" onClick={toggleSidebar}><span className="nav-icon">🗄️</span> Proyectos</Link>
+            <Link to="product" onClick={toggleSidebar}><span className="nav-icon">🗄️</span> Productos</Link>
           </li>
+
+          <li className="nav-item">
+            <Link to="product" onClick={toggleSidebar}><span className="nav-icon">🗄️</span> Proyectos</Link>
+          </li>
+
           <li className="nav-item has-dropdown">
             <Link to="mas.." onClick={toggleSidebar}><span className="nav-icon">...</span> Más</Link>
           </li>

@@ -95,9 +95,6 @@ const ListOrderedIcon: React.FC<{ className?: string }> = ({ className = "" }) =
     </svg>
 );
 
-
-// --- 4. Componentes de Vista Tipados ---
-
 // Interfaz de props para CardView (usa los datos estáticos)
 interface CardViewProps {
     productos_card: Producto[];
@@ -205,7 +202,7 @@ const ProjectExplorer: React.FC = () => {
 
                     {/* Título de la sección */}
                     <h3 className="title">
-                        Gestión de Proyectos
+                        Gestion de Productos
                     </h3>
 
                     {/* Barra de botones de vista */}
@@ -231,10 +228,6 @@ const ProjectExplorer: React.FC = () => {
                                 <ListOrderedIcon />
                                 <span>Tabla</span>
                             </button>
-                        </div>
-
-                        <div className="btn-modal" style={{ marginLeft: 10 }}>
-                            <NewProject />
                         </div>
 
                     </div>

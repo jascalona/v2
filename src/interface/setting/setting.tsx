@@ -60,7 +60,7 @@ function Setting() {
                                     <div className="card-icon-container"><span className="card-icon">🎨</span></div>
                                     <h4>Productos</h4>
                                     <p>Elige tu imagen, colores y más.</p>
-                                    <a href="#" className="link-text"><Link to={"project"}>Nuevo producto</Link></a>
+                                    <a href="#" className="link-text"><Link to={"managerproduct"}>Nuevo producto</Link></a>
                                 </div>
                             </div>
                         </div>

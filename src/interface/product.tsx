@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ProjectExplorer from './component/view_project';
+import ProjectExplorer from './setting/component/view_project';
 
 function Project(){
     return(

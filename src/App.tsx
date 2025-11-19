@@ -7,12 +7,13 @@ import MainInterface from './interface/structure/main_interface';
 import Home from './interface/home'
 import Inbox from './interface/inbox'
 import Activities from './interface/activities'
-import Project from './interface/setting/project';
+import Project from './interface/product';
 
 //Setting
 import Setting from './interface/setting/setting';
 import Members from './interface/setting/members';
 import General from './interface/setting/general';
+import ManagerProduct from './interface/setting/manager_product';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -25,13 +26,13 @@ function App() {
           <Route path='init' element={<MainInterface />} />
           <Route path='inbox' element={<Inbox />} />
           <Route path='activities' element={<Activities />} />
+          <Route path='product' element={<Project />} />
 
           {/*RUTA PARA DIRECTORIO SETTING*/}
           <Route path='setting' element={<Setting />}>
             <Route path='general' element={<General />} />
             <Route path='members' element={<Members />} />
-            <Route path='general' element={<General />} />
-            <Route path='project' element={<Project />} />
+            <Route path='managerproduct' element={<ManagerProduct />} />
           </Route>
         </Route>
 
