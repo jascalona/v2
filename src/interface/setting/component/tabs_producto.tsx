@@ -107,13 +107,9 @@ function TabsProduct() {
 
                 </div>
 
-
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                Item Two
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
-                Item Three
+                AJUSTAR EDICION DE PRODUCTOS MAS TARDE...
             </CustomTabPanel>
         </Box>
     );
