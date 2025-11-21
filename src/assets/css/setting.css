@@ -1,10 +1,9 @@
-
 /*ESTILOS PARA EL COMPONENTE HERRAMIENTAS GENERALES*/
-.container-setting-general{
+.container-setting-general {
     padding: 10px;
 }
 
-.row-item{
+.row-item {
     margin: 10px;
     display: flex;
     align-items: center;
@@ -22,16 +21,82 @@
 }
 
 /*OTHER COMPONENT*/
-.icon-ite{
+.icon-ite {
     background: rgba(128, 128, 128, 0.327);
     padding: 10px;
     margin-top: 15px;
 }
 
-.content-setting{
+.content-setting {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     margin: 0 auto;
+}
+
+/*ESTILOS PARA GENERAL/ORGANIZATION*/
+.container-organization {
+    width: 95%;
+    margin: 0 auto;
+}
+
+
+.gallery-organization {
+    display: grid;
+    padding: 10px;
+    gap: 20px;
+}
+
+
+.card-resumen-organization {
+    background: #ffffff;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+.chart-organization {
+    width: 95%;
+    margin: 100px auto;
+}
+
+@media (min-width: 1355px) {
+    .gallery-organization {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (max-width: 1354px) {
+    .gallery-organization {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1185px) {
+    .gallery-organization {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+
+    .container-organization {
+        margin-left: -5px;
+    }
+
+    .gallery-organization {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chart-organization {
+        width: 100%;
+
+    }
+}
+
+@media (max-width: 400px) {
+    .gallery-organization {
+        grid-template-columns: 1fr;
+    }
 }

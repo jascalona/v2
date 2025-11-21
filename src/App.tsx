@@ -15,6 +15,11 @@ import Members from './interface/setting/members';
 import General from './interface/setting/general';
 import ManagerProduct from './interface/setting/manager_product';
 
+//General
+import Empresa from './interface/setting/empresa';
+import Area from './interface/setting/area';
+import Subarea from './interface/setting/subarea';
+
 function App() {
   const [count, setCount] = useState(0)
 
@@ -30,7 +35,14 @@ function App() {
 
           {/*RUTA PARA DIRECTORIO SETTING*/}
           <Route path='setting' element={<Setting />}>
-            <Route path='general' element={<General />} />
+
+            <Route path='general' element={<General />} >
+              <Route path='empresa' element={<Empresa />} />
+              <Route path='area' element={<Area />} />
+              <Route path='subarea' element={<Subarea />} />
+            </Route>
+
+
             <Route path='members' element={<Members />} />
             <Route path='managerproduct' element={<ManagerProduct />} />
           </Route>
