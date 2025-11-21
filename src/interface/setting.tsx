@@ -50,9 +50,9 @@ function Setting() {
                                 {/* Tarjeta 3 */}
                                 <div className="quick-start-card">
                                     <div className="card-icon-container"><span className="card-icon">🗄️</span></div>
-                                    <h4>Componentes</h4>
-                                    <p>Activa o desactiva funciones, o ve más allá.</p>
-                                    <a href="#" className="link-text">Configura este espacio de trabajo</a>
+                                    <h4>Núcleo Maestro</h4>
+                                    <p>Activa, crear, desactiva funciones, o ve más allá.</p>
+                                    <a href="#" className="link-text"><Link to={"mastercore"}>Configura tu estacion de trabajo</Link></a>
                                 </div>
 
                                 {/* Tarjeta 4 */}

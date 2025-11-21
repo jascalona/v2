@@ -10,10 +10,12 @@ import Activities from './interface/activities'
 import Project from './interface/product';
 
 //Setting
-import Setting from './interface/setting/setting';
+import Setting from './interface/setting';
 import Members from './interface/setting/members';
 import General from './interface/setting/general';
 import ManagerProduct from './interface/setting/manager_product';
+import MasterCore from './interface/setting/master_core';
+
 
 //General
 import Empresa from './interface/setting/empresa';
@@ -42,9 +44,12 @@ function App() {
               <Route path='subarea' element={<Subarea />} />
             </Route>
 
+            <Route path='mastercore' element={<MasterCore />} />
 
             <Route path='members' element={<Members />} />
             <Route path='managerproduct' element={<ManagerProduct />} />
+
+            
           </Route>
         </Route>
 

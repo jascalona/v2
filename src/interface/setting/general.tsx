@@ -7,6 +7,9 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import AddHomeIcon from '@mui/icons-material/AddHome';
 import GroupsIcon from '@mui/icons-material/Groups';
 import PersonIcon from '@mui/icons-material/Person';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import MultilineChartIcon from '@mui/icons-material/MultilineChart';
 
 
 function General() {
@@ -80,7 +83,7 @@ function General() {
 
                                 <div className="other-setting" style={{ marginTop: 40 }}>
 
-                                    <h2> Otros Componentes</h2>
+                                    <h2> Configuración de Cuenta</h2>
                                     <p>
                                         En este apartado podra administrar y diseñar distintos recursos de su organizacion
                                     </p>
@@ -89,7 +92,37 @@ function General() {
                                         <span className="icon-ite"><PersonIcon /></span>
                                         <div className="content-setting">
                                             <div>
-                                                <p>Subarea</p>
+                                                <p>Perfil</p>
+                                                <small style={{ lineHeight: 1 }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, culpa.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="row-item">
+                                        <span className="icon-ite"><ColorLensIcon /></span>
+                                        <div className="content-setting">
+                                            <div>
+                                                <p>Preferencias</p>
+                                                <small style={{ lineHeight: 1 }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, culpa.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="row-item">
+                                        <span className="icon-ite"><NotificationsIcon /></span>
+                                        <div className="content-setting">
+                                            <div>
+                                                <p>Notificaciones</p>
+                                                <small style={{ lineHeight: 1 }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, culpa.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <div className="row-item">
+                                        <span className="icon-ite"><MultilineChartIcon /></span>
+                                        <div className="content-setting">
+                                            <div>
+                                                <p>Actividad</p>
                                                 <small style={{ lineHeight: 1 }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, culpa.</small>
                                             </div>
                                         </div>
