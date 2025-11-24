@@ -35,6 +35,18 @@
     margin: 0 auto;
 }
 
+/*BTN-LABEL*/
+.btn-label{
+    border: none;
+    border-radius: 7px;
+    background: none;
+    padding: 8px;
+}
+
+.btn-label:hover{
+    background: rgb(231, 230, 230);
+}
+
 /*ESTILOS PARA GENERAL/ORGANIZATION*/
 .container-organization {
     width: 95%;

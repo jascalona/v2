@@ -264,6 +264,11 @@ body {
   margin-bottom: 30px;
 }
 
+.container-maestro{
+  width: 95%;
+  margin: 0 auto;
+}
+
 .fondo {
   background: rgb(40, 58, 95);
   padding: 25px;

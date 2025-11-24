@@ -58,9 +58,9 @@ function Setting() {
                                 {/* Tarjeta 4 */}
                                 <div className="quick-start-card">
                                     <div className="card-icon-container"><span className="card-icon">🎨</span></div>
-                                    <h4>Productos</h4>
+                                    <h4>Proyectos</h4>
                                     <p>Elige tu imagen, colores y más.</p>
-                                    <a href="#" className="link-text"><Link to={"managerproduct"}>Nuevo producto</Link></a>
+                                    <a href="#" className="link-text"><Link to={"managerproduct"}>Nuevo Proyecto</Link></a>
                                 </div>
                             </div>
                         </div>

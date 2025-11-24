@@ -14,13 +14,21 @@ import Setting from './interface/setting';
 import Members from './interface/setting/members';
 import General from './interface/setting/general';
 import ManagerProduct from './interface/setting/manager_product';
-import MasterCore from './interface/setting/master_core';
+import MasterCore from './interface/setting/mastercore';
 
 
 //General
-import Empresa from './interface/setting/empresa';
-import Area from './interface/setting/area';
-import Subarea from './interface/setting/subarea';
+import Empresa from './interface/setting/general/empresa';
+import Area from './interface/setting/general/area';
+import Subarea from './interface/setting/general/subarea';
+
+
+//Core Master
+import Product from './interface/setting/master_core/product';
+import Componentes from './interface/setting/master_core/componentes';
+import Category from './interface/setting/master_core/category';
+import SubCategory from './interface/setting/master_core/sub_category';
+import Article from './interface/setting/master_core/article';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -44,12 +52,20 @@ function App() {
               <Route path='subarea' element={<Subarea />} />
             </Route>
 
-            <Route path='mastercore' element={<MasterCore />} />
+            {/*RUTAS PARA DIRECTORIO CORE MASTER*/}
+            <Route path='mastercore' element={<MasterCore />} >
+              <Route path='product' element={<Product />} />
+              <Route path='componentes' element={<Componentes />} />
+              <Route path='category' element={<Category />} />
+              <Route path='subcategory' element={<SubCategory />} />
+              <Route path='article' element={<Article />} />
+              
+            </Route>
 
             <Route path='members' element={<Members />} />
             <Route path='managerproduct' element={<ManagerProduct />} />
 
-            
+
           </Route>
         </Route>
 

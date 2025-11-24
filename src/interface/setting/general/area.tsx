@@ -1,16 +1,16 @@
 import { useState } from "react"
 
 //component
-import SimpleBarChart from './component/chart_organization';
-import TableEmpresa from './component/table_empresa';
-import ModalEmpresa from './component/modal_empresa'
+import SimpleBarChart from '../component/chart_organization';
+import TableArea from '../component/table_area';
+import ModalArea from '../component/modal_area';
 
 
-function Empresa() {
+function Area() {
     return (
         <>
             <div className="content-header">
-                <h2 >Gestion de Empresa</h2>
+                <h2 >Gestion de Area</h2>
 
                 <p style={{}}>
                     <span className="header-emoji">⚡</span> Jueves, 13 de noviembre, 22:19
@@ -18,7 +18,7 @@ function Empresa() {
             </div>
 
         <div className="btn" style={{textAlign: 'end', padding: '30px 60px'}}>
-            <ModalEmpresa />
+            <ModalArea />
         </div>    
 
             <div className="container-organization">
@@ -55,7 +55,7 @@ function Empresa() {
                 </div>
 
                 <div className="container-table">
-                    <TableEmpresa />
+                    <TableArea />
                 </div>
                 
 
@@ -64,4 +64,4 @@ function Empresa() {
         </>
     )
 }
-export default Empresa
+export default Area
