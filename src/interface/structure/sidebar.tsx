@@ -3,6 +3,17 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import React from 'react';
 import '../../assets/css/App.css'
 
+
+//Icons
+import HomeIcon from '@mui/icons-material/Home';
+import MoveToInboxIcon from '@mui/icons-material/MoveToInbox';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import SettingsIcon from '@mui/icons-material/Settings';
+import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
+import GroupsIcon from '@mui/icons-material/Groups';
+
+
 // Definir las props del componente Sidebar
 interface SidebarProps {
   isOpen: boolean;
@@ -25,17 +36,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       <nav className="sidebar-nav">
         <ul>
           <li className="nav-item active">
-            <Link to="home" onClick={toggleSidebar}><span className="nav-icon">🏠</span> Inicio</Link> {/* Agregamos onClick */}
+            <Link to="home" onClick={toggleSidebar}><span className="nav-icon"><HomeIcon /></span> Inicio</Link> {/* Agregamos onClick */}
           </li>
           <li className="nav-item">
-            <Link to="inbox" onClick={toggleSidebar}><span className="nav-icon">📥</span> Inbox</Link>
+            <Link to="inbox" onClick={toggleSidebar}><span className="nav-icon"><MoveToInboxIcon /></span> Inbox</Link>
           </li>
           {/* ... otros elementos del menú ... */}
           <li className="nav-item has-dropdown">
-            <Link to="activities" onClick={toggleSidebar}><span className="nav-icon">💼</span> Para mi</Link>
+            <Link to="activities" onClick={toggleSidebar}><span className="nav-icon"><AutoStoriesIcon /></span> Para mi</Link>
           </li>
           <li className="nav-item has-dropdown">
-            <Link to="setting" onClick={toggleSidebar}><span className="nav-icon">⚙️</span> Herramientas</Link>
+            <Link to="setting" onClick={toggleSidebar}><span className="nav-icon"><SettingsIcon /></span> Herramientas</Link>
           </li>
         </ul>
 
@@ -43,11 +54,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
         <ul>
           <li className="nav-item">
-            <Link to="product" onClick={toggleSidebar}><span className="nav-icon">🗄️</span> Productos</Link>
+            <Link to="product" onClick={toggleSidebar}><span className="nav-icon"><PrecisionManufacturingIcon /></span> Productos</Link>
           </li>
 
           <li className="nav-item">
-            <Link to="product" onClick={toggleSidebar}><span className="nav-icon">🗄️</span> Proyectos</Link>
+            <Link to="product" onClick={toggleSidebar}><span className="nav-icon"><ColorLensIcon /></span> Proyectos</Link>
           </li>
 
           <li className="nav-item has-dropdown">
@@ -63,7 +74,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
       {/* Pie de la Barra Lateral */}
       <div className="sidebar-footer">
-        <a href="#" className="footer-link"><span className="icon">💬</span> Comunidad</a>
+        <a href="#" className="footer-link"><span className="icon"><GroupsIcon /></span> Comunidad</a>
         <div className="footer-icons">
           <span className="footer-icon">💬</span>
           <span className="footer-icon">⚙️</span>
