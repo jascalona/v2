@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Labels from '../component/labels_article';
+import Labels from '../component/labels/labels_article';
 
 
 function Article() {

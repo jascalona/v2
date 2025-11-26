@@ -5,6 +5,12 @@ import axios from "axios";
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import CategoryIcon from '@mui/icons-material/Category';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import LastPageIcon from '@mui/icons-material/LastPage';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
+
 
 // Componentes
 import TextField from '@mui/material/TextField';
@@ -13,22 +19,27 @@ import TextField from '@mui/material/TextField';
 // Interfaz para la respuesta de la API (Categoría)
 interface CategoriaAPI {
     cocategoria: string,
-    nbcategoria: string 
+    nbcategoria: string
 }
 
 // Interfaz para la estructura de datos que usa el componente internamente
 interface Label {
-    id: string; 
+    id: string;
     title: string;
 }
 
 function LabelCategory() {
 
     // Estado principal para la lista de etiquetas, se inicializa vacío
-    const [labels, setLabels] = useState<Label[]>([]); 
-    
+    const [labels, setLabels] = useState<Label[]>([]);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    //Paginado
+    const [currentPage, setCurrentPage] = useState(1);
+    const ITEMS_PER_PAGE = 7;
+
 
     // Los estados de control de modales
     const [deletingLabel, setDeletingLabel] = useState<Label | null>(null);
@@ -43,11 +54,11 @@ function LabelCategory() {
         const fetchCategorias = async () => {
             try {
                 const response = await axios.get<CategoriaAPI[]>(API_URL);
-                
+
                 // Mapeamos los datos de la API a la estructura interna (Label)
                 const transformedLabels: Label[] = response.data.map(categoria => ({
-                    id: categoria.cocategoria, 
-                    title: categoria.nbcategoria, 
+                    id: categoria.cocategoria,
+                    title: categoria.nbcategoria,
                 }));
 
                 setLabels(transformedLabels); // Establecemos los datos mapeados
@@ -63,6 +74,70 @@ function LabelCategory() {
 
         fetchCategorias();
     }, []);
+
+
+    //Logica del paginado
+
+    const totalPages = Math.ceil(labels.length / ITEMS_PER_PAGE);
+
+    const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+    const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
+
+    const currentLabels = labels.slice(indexOfFirstItem, indexOfLastItem);
+
+    const paginate = (pageNumber: number) => {
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+            setCurrentPage(pageNumber);
+        }
+    };
+
+    //Logica del paginado
+    const goToNextPage = () => {
+        paginate(currentPage + 1);
+    };
+
+    const goToPrevPage = () => {
+        paginate(currentPage - 1);
+    };
+
+    const goToFirstPage = () => {
+        setCurrentPage(1);
+    };
+
+    const goToLastPage = () => {
+        setCurrentPage(totalPages);
+    };
+
+    // Estilo para los botones de control de paginación (<<, <, >, >>)
+    const controlButtonStyle = (disabled: boolean) => ({
+        padding: '6px', // Reduje el padding para que los iconos se vean bien
+        border: '1px solid #ddd',
+        borderRadius: '8px',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        backgroundColor: disabled ? '#f5f5f5' : '#fff',
+        color: disabled ? '#ccc' : '#666',
+        fontWeight: 'normal',
+        margin: '0 2px',
+        transition: 'all 0.3s ease',
+    });
+
+    // Estilo para los botones de número de página
+    const pageButtonStyle = (isActive: boolean) => ({
+        width: '36px',
+        height: '36px',
+        borderRadius: '8px', // Rectangular con bordes redondeados
+        border: isActive ? 'none' : '1px solid #ddd',
+        cursor: 'pointer',
+        backgroundColor: isActive ? '#28587d' : '#fff', // Color principal para activo
+        color: isActive ? '#fff' : '#28587d', // Color de texto para activo
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: '14px',
+        fontWeight: isActive ? 'bold' : 'normal',
+        margin: '0 2px',
+        transition: 'all 0.3s ease',
+    });
 
     // --- RENDERIZADO CONDICIONAL DE ESTADO ---
     if (loading) {
@@ -83,13 +158,13 @@ function LabelCategory() {
     // Abre el modal de edicion y prepara el estado del formulario
     const openEditLabel = (labelToEdit: Label) => {
         setEditLabel(labelToEdit);
-        setNewTitle(labelToEdit.title); 
+        setNewTitle(labelToEdit.title);
     }
 
     // Cierra el modal de edicion
     const closeEditModal = () => {
         setEditLabel(null);
-        setNewTitle(''); 
+        setNewTitle('');
     }
 
     // Cierra la modal de eliminación
@@ -99,9 +174,9 @@ function LabelCategory() {
 
 
     // Ejecuta la EDICIÓN de la etiqueta
-    const handeEdit = (id: string, newTitle: string) => { 
+    const handeEdit = (id: string, newTitle: string) => {
         // Aquí  integrar la lógica para llamar a tu API de edición
-        
+
         // Usa map para encontrar y reemplazar el elemento
         const updatedLabels = labels.map(label => {
             if (label.id === id) {
@@ -117,7 +192,7 @@ function LabelCategory() {
 
 
     // Ejecuta la ELIMINACION de la etiqueta
-    const handleDelete = (id: string) => { 
+    const handleDelete = (id: string) => {
         // Aquí integrar la lógica para llamar a tu API de eliminación
 
         setLabels(labels.filter(label => label.id !== id));
@@ -132,9 +207,9 @@ function LabelCategory() {
     return (
         <div className="labels-container">
             {/* LISTADO DE ETIQUETAS */}
-            {labels.map((label) => (
-                <div className="row-item" key={label.id}> 
-                    <span className="icon-ite"><CategoryIcon sx={{ color: 'grey'}} /></span> 
+            {currentLabels.map((label) => (
+                <div className="row-item" key={label.id}>
+                    <span className="icon-ite"><CategoryIcon sx={{ color: 'grey' }} /></span>
                     <div className="content-setting">
                         <p>{label.title}</p> {/* Usamos label.title que ahora es nbcategoria */}
                     </div>
@@ -162,6 +237,71 @@ function LabelCategory() {
             {labels.length === 0 && (
                 <p style={{ textAlign: 'center', color: '#aaa', marginTop: '20px' }}>No hay etiquetas para mostrar.</p>
             )}
+
+
+            {/* --- CONTROLES DE PAGINACIÓN (ESTILOS ACTUALIZADOS) --- */}
+            {totalPages > 1 && (
+                <div className="pagination-controls" style={{
+                    marginTop: '20px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '4px' // Espacio entre los botones
+                }}>
+                    {/* Botón de ir a la primera página (<<) */}
+                    <button
+                        className="control-button"
+                        onClick={goToFirstPage}
+                        disabled={currentPage === 1}
+                        style={controlButtonStyle(currentPage === 1)}
+                    >
+                        <FirstPageIcon fontSize="small" />
+                    </button>
+
+                    {/* Botón de ir a la página anterior (<) */}
+                    <button
+                        className="control-button"
+                        onClick={goToPrevPage}
+                        disabled={currentPage === 1}
+                        style={controlButtonStyle(currentPage === 1)}
+                    >
+                        <ChevronLeftIcon fontSize="small" />
+                    </button>
+
+                    {/* Generar los botones de número de página */}
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index + 1}
+                            className={`page-button ${index + 1 === currentPage ? 'active' : ''}`}
+                            onClick={() => paginate(index + 1)}
+                            style={pageButtonStyle(index + 1 === currentPage)}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+
+                    {/* Botón de ir a la página siguiente (>) */}
+                    <button
+                        className="control-button"
+                        onClick={goToNextPage}
+                        disabled={currentPage === totalPages}
+                        style={controlButtonStyle(currentPage === totalPages)}
+                    >
+                        <ChevronRightIcon fontSize="small" />
+                    </button>
+
+                    {/* Botón de ir a la última página (>>) */}
+                    <button
+                        className="control-button"
+                        onClick={goToLastPage}
+                        disabled={currentPage === totalPages}
+                        style={controlButtonStyle(currentPage === totalPages)}
+                    >
+                        <LastPageIcon fontSize="small" />
+                    </button>
+                </div>
+            )}
+
 
             {/* --- MODAL DE EDICIÓN --- */}
             {editlabel && (

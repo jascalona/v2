@@ -80,6 +80,7 @@ function LabelSLA() {
         }
     };
 
+    //Logica del paginado
     const goToNextPage = () => {
         paginate(currentPage + 1);
     };

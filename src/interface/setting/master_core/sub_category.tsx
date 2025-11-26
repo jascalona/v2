@@ -1,4 +1,4 @@
-import LabelSubCategory from "../component/label_subcategory";
+import LabelSubCategory from "../component/labels/label_subcategory";
 import ModalSubCategory from "../component/modal_subcategory";
 
 function SubCategory() {

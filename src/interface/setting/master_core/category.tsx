@@ -1,4 +1,4 @@
-import LabelCategory from "../component/label_category";
+import LabelCategory from "../component/labels/label_category";
 import ModalCategory from "../component/modal_category";
 
 function Category() {

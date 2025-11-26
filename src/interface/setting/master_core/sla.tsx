@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import LabelSLA from '../component/label_sla';
+import LabelSLA from '../component/labels/label_sla';
 
 
 function SLA() {
