@@ -21,7 +21,7 @@ const style = {
     p: 0,
 };
 
-function ModalCategory() {
+function ModalSubCategory() {
     const [open, setOpen] = React.useState(false);
     const [rol, setRol] = React.useState('Miembro');
     const handleOpen = () => setOpen(true);
@@ -44,7 +44,7 @@ function ModalCategory() {
                     fontFamily: 'sans-serif'
                 }}
             >
-                Nueva Categoria
+                Nueva Sub-Categoria
             </Button>
 
             <Modal
@@ -57,7 +57,7 @@ function ModalCategory() {
                     {/* Encabezado del Modal */}
                     <Box sx={{ p: 3, pb: 1, borderBottom: '1px solid #eee' }}>
                         <Typography id="invite-collaborator-title" variant="h5" component="h2" sx={{ fontWeight: 'bold' }}>
-                            Nueva Categoria
+                            Nueva Sub-Categoria
                         </Typography>
                         <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
                             Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, architecto.
@@ -71,7 +71,7 @@ function ModalCategory() {
                                 <TextField
                                     fullWidth
                                     label="Nombre"
-                                    placeholder="Por ejemplo, SGLBTR INTERBANCARIAS"
+                                    placeholder="Por ejemplo, C. Componentes de Negocio"
                                     variant="outlined"
                                     size="small"
                                     sx={{
@@ -141,4 +141,4 @@ function ModalCategory() {
     );
 }
 
-export default ModalCategory;
+export default ModalSubCategory;

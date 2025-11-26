@@ -73,8 +73,8 @@ function ModalComponent() {
 
                                 <TextField
                                     fullWidth
-                                    label="RIF"
-                                    placeholder="Por ejemplo, J1234567890"
+                                    label="Codigo de Producto"
+                                    placeholder="Por ejemplo, 1"
                                     variant="outlined"
                                     size="small"
                                     sx={{
@@ -87,7 +87,7 @@ function ModalComponent() {
                                 <TextField
                                     fullWidth
                                     label="Nombre"
-                                    placeholder="Por ejemplo, QA"
+                                    placeholder="Por ejemplo, GNU/Linux"
                                     variant="outlined"
                                     size="small"
                                     sx={{
@@ -99,8 +99,8 @@ function ModalComponent() {
 
                                 <TextField
                                     fullWidth
-                                    label="Estado"
-                                    placeholder="Por ejemplo, Activo"
+                                    label="Descripcion"
+                                    placeholder="Por ejemplo, Breve descripcion del componente..."
                                     variant="outlined"
                                     size="small"
                                     sx={{

@@ -11,7 +11,7 @@ function Category() {
                     <div className="container-setting-general">
 
                         <div className="other-setting" style={{ marginTop: 40 }}>
-                            <h2>Categor</h2>
+                            <h2>Categorias</h2>
 
                             <div className="h" style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', paddingBottom: '15px' }}>
                                 <p>

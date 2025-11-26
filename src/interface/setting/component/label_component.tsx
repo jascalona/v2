@@ -54,7 +54,7 @@ function CardComponent() {
                 <div className="label-component">
                     <div className="content-left" >
                         <h4 >{componente.nbcomponente}</h4>
-                        <p>{componente.cocomponente}</p>
+                        <p>Codigo del Producto: {componente.coproducto}</p>
                         <small ><strong>Creado: </strong> 24/11/2025</small>
                     </div>
 
