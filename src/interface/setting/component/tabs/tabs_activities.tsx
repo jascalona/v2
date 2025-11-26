@@ -10,10 +10,10 @@ import BeenhereIcon from '@mui/icons-material/Beenhere';
 
 
 //COMPONENTES GRAFICOS
-import AvatarI from './Avatar';
-import ChartPie from './chart_pie';
-import LineCharts from './chart_line';
-import '../../../assets/css/indicators.css'
+import AvatarI from '../Avatar';
+import ChartPie from '../charts/chart_pie';
+import LineCharts from '../charts/chart_line';
+import '../../../../assets/css/indicators.css'
 
 
 

@@ -1,5 +1,5 @@
 import CardComponent from "../component/labels/label_component";
-import ModalComponent from '../component/modal_component';
+import ModalComponent from '../component/modal/modal_component';
 
 import '../../../assets/css/label.css';
 

@@ -1,9 +1,9 @@
 import { useState } from "react"
 
 //component
-import SimpleBarChart from '../component/chart_organization';
-import TableArea from '../component/table_area';
-import ModalArea from '../component/modal_area';
+import SimpleBarChart from '../component/charts/chart_organization';
+import TableArea from '../component/table/table_area';
+import ModalArea from '../component/modal/modal_area';
 
 
 function Area() {

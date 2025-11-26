@@ -1,5 +1,5 @@
 import LabelCategory from "../component/labels/label_category";
-import ModalCategory from "../component/modal_category";
+import ModalCategory from "../component/modal/modal_category";
 
 function Category() {
     return (

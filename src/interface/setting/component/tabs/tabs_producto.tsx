@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 
-import TextFieldvi from './customer_input';
+import TextFieldvi from '../customer_input';
 
 
 interface TabPanelProps {

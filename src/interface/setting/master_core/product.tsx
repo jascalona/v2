@@ -1,4 +1,4 @@
-import TabsProduct from "../component/tabs_producto"
+import TabsProduct from "../component/tabs/tabs_producto"
 
 function Product() {
     return (

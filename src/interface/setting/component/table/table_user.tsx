@@ -7,17 +7,19 @@ import { Button } from 'primereact/button';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import '../../../assets/css/table.css'
+import '../../../../assets/css/table.css'
 
 
 //Componentes
+import NewMember from '../modal/modal_user';
 
-interface Area {
-    co_area: string,
-    co_empresa: string,
-    fe_registro: string,
-    nb_area: string,
-    st_area: string,
+interface Usuario {
+    coUsuario: string,
+    nbNombre: string,
+    nbApellido: string,
+    txEmail: string,
+    nucelular: string,
+    cosubarea: number
 }
 
 
@@ -26,9 +28,9 @@ const initialFilters = {
     global: { value: null as string | null, matchMode: FilterMatchMode.CONTAINS },
 };
 
-function TableEmpresa() {
+function TableMembers() {
 
-    const [area, setArea] = useState<Area[]>([]);
+    const [usuario, setUsuarios] = useState<Usuario[]>([]);
     const [cargando, setCargando] = useState(true);
 
     //Estado para manejar los filtros
@@ -37,9 +39,9 @@ function TableEmpresa() {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
 
     useEffect(() => {
-        axios.get<Area[]>('http://localhost:8080/basetomee/area/list')
+        axios.get<Usuario[]>('http://localhost:8080/basetomee/usuario/list')
             .then(response => {
-                setArea(response.data);
+                setUsuarios(response.data);
                 setCargando(false);
             })
 
@@ -52,12 +54,14 @@ function TableEmpresa() {
 
     //Funcion para exportar el exel
     const exportExcel = () => {
-        const dataForExport = area.map(area => ({
-            "Co. Area": area.co_area,
-            "nb_area": area.nb_area,
-            "Co. Empresa": area.co_empresa,
-            "Fe. Registro": area.fe_registro,
-            "Status": area.st_area
+        const dataForExport = usuario.map(usuario => ({
+            "SCID": usuario.coUsuario,
+            "Nombre": usuario.nbNombre,
+            "Apellido": usuario.nbApellido,
+            "Email": usuario.txEmail,
+            "CELE": usuario.nucelular,
+            "CO. Area": usuario.cosubarea,
+
         }));
 
         const worksheet = XLSX.utils.json_to_sheet(dataForExport);
@@ -82,11 +86,12 @@ function TableEmpresa() {
 
     //Campos donde se aplicara la busqueda
     const globalFilterFields = [
-        'co_area',
-        'co_empresa',
-        'nb_area',
-        'st_estado',
-        'fe_registro',
+        'coUsuario',
+        'nbNombre',
+        'nbApellido',
+        'txEmail',
+        'nucelular',
+        'cosubarea'
     ]
 
     if (cargando) return <p>Cargando registros...</p>
@@ -96,8 +101,8 @@ function TableEmpresa() {
             {/* Input de Búsqueda Global (Fuera del DataTable) */}
             <div className="table-empresa">
                 <div className="options">
-                    <div className="">
-                        <p style={{ color: '#504e4eff', fontSize: '14px' }}>Registros <span><strong>{area.length}</strong></span></p>
+                    <div className="title">
+                        <h2>Miembros <span className="total-row">{usuario.length}</span></h2>
                     </div>
 
                     <div className="group-btn">
@@ -109,22 +114,25 @@ function TableEmpresa() {
                                 placeholder="Buscar..."
                             />
                         </div>
+                        <div className="btn-modal" style={{marginLeft: 10}}>
+                            <NewMember />
+                        </div>
 
-                        <Button style={{ color: '#fff', padding: '10px', marginLeft: '10px', background: 'rgba(38, 67, 124, 0.24)' }}
+                        <Button style={{ color: '#fff', fontSize: '20px', padding: '10px', marginLeft: '10px', background: 'rgb(38, 66, 124)' }}
                             type="button"
                             icon="pi pi-file-excel"
                             className="p-button-success"
                             onClick={exportExcel}
-                            disabled={area.length === 0} // Desactivar si no hay datos
-                        >Exportar registros</Button>
+                            disabled={usuario.length === 0} // Desactivar si no hay datos
+                        ><FileDownloadIcon sx={{ fontSize: 15, color: '#fff' }} /></Button>
                     </div>
                 </div>
 
                 <DataTable
-                    value={area}
+                    value={usuario}
                     tableStyle={{ minWidth: '50rem' }}
                     paginator
-                    rows={10}
+                    rows={8}
                     emptyMessage="No se encontraron registros relacionados"
                     className="tabla-empresa"
                     paginatorClassName="mi-paginador-personalizado"
@@ -132,14 +140,16 @@ function TableEmpresa() {
                     filters={filters} // Se pasa el objeto de filtros actualizado
                     globalFilterFields={globalFilterFields} // Se indican las columnas a filtrar
                 >
-                    <Column field="co_area" header="Co Area"></Column>
-                    <Column field="nb_area" header="Nombre"></Column>
-                    <Column field="co_empresa" header="RIF"></Column>
-                    <Column field="fe_registro" header="Re. Registro"></Column>
-                    <Column field="st_area" header="Status"></Column>
+                    <Column field="coUsuario" header="SCID"></Column>
+                    <Column field="nbNombre" header="Nombre"></Column>
+                    <Column field="nbApellido" header="Apellido"></Column>
+                    <Column field="txEmail" header="Email"></Column>
+                    <Column field="nucelular" header="CELE"></Column>
+                    <Column field="cosubarea" header="Co. Subarea"></Column>
+
                 </DataTable>
             </div>
         </>
     )
 }
-export default TableEmpresa
+export default TableMembers

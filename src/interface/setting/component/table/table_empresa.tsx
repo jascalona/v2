@@ -7,19 +7,18 @@ import { Button } from 'primereact/button';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import '../../../assets/css/table.css'
+import '../../../../assets/css/table.css'
 
 
 //Componentes
-import NewMember from './modal_user';
+import NewMember from '../modal/modal_user';
 
-interface Usuario {
-    coUsuario: string,
-    nbNombre: string,
-    nbApellido: string,
-    txEmail: string,
-    nucelular: string,
-    cosubarea: number
+interface Empresa {
+    co_emp: string,
+    nb_emp: string,
+    st_estado: string,
+    fe_registro: string,
+    autor: string,
 }
 
 
@@ -28,9 +27,9 @@ const initialFilters = {
     global: { value: null as string | null, matchMode: FilterMatchMode.CONTAINS },
 };
 
-function TableMembers() {
+function TableEmpresa() {
 
-    const [usuario, setUsuarios] = useState<Usuario[]>([]);
+    const [empresa, setEmpresa] = useState<Empresa[]>([]);
     const [cargando, setCargando] = useState(true);
 
     //Estado para manejar los filtros
@@ -39,9 +38,9 @@ function TableMembers() {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
 
     useEffect(() => {
-        axios.get<Usuario[]>('http://localhost:8080/basetomee/usuario/list')
+        axios.get<Empresa[]>('http://localhost:8080/basetomee/empresas/listar')
             .then(response => {
-                setUsuarios(response.data);
+                setEmpresa(response.data);
                 setCargando(false);
             })
 
@@ -54,14 +53,12 @@ function TableMembers() {
 
     //Funcion para exportar el exel
     const exportExcel = () => {
-        const dataForExport = usuario.map(usuario => ({
-            "SCID": usuario.coUsuario,
-            "Nombre": usuario.nbNombre,
-            "Apellido": usuario.nbApellido,
-            "Email": usuario.txEmail,
-            "CELE": usuario.nucelular,
-            "CO. Area": usuario.cosubarea,
-
+        const dataForExport = empresa.map(empresa => ({
+            "CoEmpresa": empresa.co_emp,
+            "Nombre": empresa.nb_emp,
+            "Estado": empresa.st_estado,
+            "Fe Registro": empresa.fe_registro,
+            "Autor": empresa.autor
         }));
 
         const worksheet = XLSX.utils.json_to_sheet(dataForExport);
@@ -86,12 +83,11 @@ function TableMembers() {
 
     //Campos donde se aplicara la busqueda
     const globalFilterFields = [
-        'coUsuario',
-        'nbNombre',
-        'nbApellido',
-        'txEmail',
-        'nucelular',
-        'cosubarea'
+        'co_emp',
+        'nb_emp',
+        'st_estado',
+        'fe_registro',
+        'autor'
     ]
 
     if (cargando) return <p>Cargando registros...</p>
@@ -101,8 +97,8 @@ function TableMembers() {
             {/* Input de Búsqueda Global (Fuera del DataTable) */}
             <div className="table-empresa">
                 <div className="options">
-                    <div className="title">
-                        <h2>Miembros <span className="total-row">{usuario.length}</span></h2>
+                    <div className="">
+                        <p style={{color: '#504e4eff', fontSize: '14px'}}>Registros <span><strong>{empresa.length}</strong></span></p>
                     </div>
 
                     <div className="group-btn">
@@ -114,25 +110,22 @@ function TableMembers() {
                                 placeholder="Buscar..."
                             />
                         </div>
-                        <div className="btn-modal" style={{marginLeft: 10}}>
-                            <NewMember />
-                        </div>
-
-                        <Button style={{ color: '#fff', fontSize: '20px', padding: '10px', marginLeft: '10px', background: 'rgb(38, 66, 124)' }}
+                       
+                        <Button style={{ color: '#fff', padding: '10px', marginLeft: '10px', background: 'rgba(38, 67, 124, 0.24)' }}
                             type="button"
                             icon="pi pi-file-excel"
                             className="p-button-success"
                             onClick={exportExcel}
-                            disabled={usuario.length === 0} // Desactivar si no hay datos
-                        ><FileDownloadIcon sx={{ fontSize: 15, color: '#fff' }} /></Button>
+                            disabled={empresa.length === 0} // Desactivar si no hay datos
+                        >Exportar registros</Button>
                     </div>
                 </div>
 
                 <DataTable
-                    value={usuario}
+                    value={empresa}
                     tableStyle={{ minWidth: '50rem' }}
                     paginator
-                    rows={8}
+                    rows={10}
                     emptyMessage="No se encontraron registros relacionados"
                     className="tabla-empresa"
                     paginatorClassName="mi-paginador-personalizado"
@@ -140,16 +133,15 @@ function TableMembers() {
                     filters={filters} // Se pasa el objeto de filtros actualizado
                     globalFilterFields={globalFilterFields} // Se indican las columnas a filtrar
                 >
-                    <Column field="coUsuario" header="SCID"></Column>
-                    <Column field="nbNombre" header="Nombre"></Column>
-                    <Column field="nbApellido" header="Apellido"></Column>
-                    <Column field="txEmail" header="Email"></Column>
-                    <Column field="nucelular" header="CELE"></Column>
-                    <Column field="cosubarea" header="Co. Subarea"></Column>
+                    <Column field="co_emp" header="Co Empresa"></Column>
+                    <Column field="nb_emp" header="Nombre"></Column>
+                    <Column field="st_estado" header="Status"></Column>
+                    <Column field="fe_registro" header="Re. Registro"></Column>
+                    <Column field="auto" header="Autor"></Column>
 
                 </DataTable>
             </div>
         </>
     )
 }
-export default TableMembers
+export default TableEmpresa

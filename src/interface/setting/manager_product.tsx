@@ -1,5 +1,5 @@
 import '../../assets/css/setting.css';
-import TabsProduct from '../setting/component/tabs_producto';
+import TabsProduct from './component/tabs/tabs_producto';
 
 function ManagerProduct() {
     return (

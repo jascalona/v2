@@ -1,9 +1,9 @@
 import { useState } from "react"
 
 //component
-import SimpleBarChart from '../component/chart_organization';
-import TableEmpresa from '../component/table_empresa';
-import ModalEmpresa from '../component/modal_empresa'
+import SimpleBarChart from '../component/charts/chart_organization';
+import TableEmpresa from '../component/table/table_empresa';
+import ModalEmpresa from '../component/modal/modal_empresa'
 
 
 function Empresa() {

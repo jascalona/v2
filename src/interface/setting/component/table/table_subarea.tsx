@@ -7,11 +7,11 @@ import { Button } from 'primereact/button';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import '../../../assets/css/table.css'
+import '../../../../assets/css/table.css'
 
 
 //Componentes
-import NewMember from './modal_user';
+import NewMember from '../modal/modal_user';
 
 interface Subarea {
     co_area: string,

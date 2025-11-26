@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CardUser from './component/card_user';
-import TableMembers from "./component/table_user";
+import TableMembers from "./component/table/table_user";
 import '../../assets/css/card_users.css';
 import { red } from "@mui/material/colors";
 

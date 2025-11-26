@@ -6,7 +6,7 @@ import axios from 'axios';
 // Asegúrate de que esta ruta de CSS sea correcta
 import '../../../assets/css/view_project.css';
 
-import NewProject from './modal_project'
+import NewProject from './modal/modal_project'
 
 
 // Interfaz para los proyectos estáticos (usados en CardView)

@@ -7,18 +7,17 @@ import { Button } from 'primereact/button';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import '../../../assets/css/table.css'
+import '../../../../assets/css/table.css'
 
 
 //Componentes
-import NewMember from './modal_user';
 
-interface Empresa {
-    co_emp: string,
-    nb_emp: string,
-    st_estado: string,
+interface Area {
+    co_area: string,
+    co_empresa: string,
     fe_registro: string,
-    autor: string,
+    nb_area: string,
+    st_area: string,
 }
 
 
@@ -29,7 +28,7 @@ const initialFilters = {
 
 function TableEmpresa() {
 
-    const [empresa, setEmpresa] = useState<Empresa[]>([]);
+    const [area, setArea] = useState<Area[]>([]);
     const [cargando, setCargando] = useState(true);
 
     //Estado para manejar los filtros
@@ -38,9 +37,9 @@ function TableEmpresa() {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
 
     useEffect(() => {
-        axios.get<Empresa[]>('http://localhost:8080/basetomee/empresas/listar')
+        axios.get<Area[]>('http://localhost:8080/basetomee/area/list')
             .then(response => {
-                setEmpresa(response.data);
+                setArea(response.data);
                 setCargando(false);
             })
 
@@ -53,12 +52,12 @@ function TableEmpresa() {
 
     //Funcion para exportar el exel
     const exportExcel = () => {
-        const dataForExport = empresa.map(empresa => ({
-            "CoEmpresa": empresa.co_emp,
-            "Nombre": empresa.nb_emp,
-            "Estado": empresa.st_estado,
-            "Fe Registro": empresa.fe_registro,
-            "Autor": empresa.autor
+        const dataForExport = area.map(area => ({
+            "Co. Area": area.co_area,
+            "nb_area": area.nb_area,
+            "Co. Empresa": area.co_empresa,
+            "Fe. Registro": area.fe_registro,
+            "Status": area.st_area
         }));
 
         const worksheet = XLSX.utils.json_to_sheet(dataForExport);
@@ -83,11 +82,11 @@ function TableEmpresa() {
 
     //Campos donde se aplicara la busqueda
     const globalFilterFields = [
-        'co_emp',
-        'nb_emp',
+        'co_area',
+        'co_empresa',
+        'nb_area',
         'st_estado',
         'fe_registro',
-        'autor'
     ]
 
     if (cargando) return <p>Cargando registros...</p>
@@ -98,7 +97,7 @@ function TableEmpresa() {
             <div className="table-empresa">
                 <div className="options">
                     <div className="">
-                        <p style={{color: '#504e4eff', fontSize: '14px'}}>Registros <span><strong>{empresa.length}</strong></span></p>
+                        <p style={{ color: '#504e4eff', fontSize: '14px' }}>Registros <span><strong>{area.length}</strong></span></p>
                     </div>
 
                     <div className="group-btn">
@@ -110,19 +109,19 @@ function TableEmpresa() {
                                 placeholder="Buscar..."
                             />
                         </div>
-                       
+
                         <Button style={{ color: '#fff', padding: '10px', marginLeft: '10px', background: 'rgba(38, 67, 124, 0.24)' }}
                             type="button"
                             icon="pi pi-file-excel"
                             className="p-button-success"
                             onClick={exportExcel}
-                            disabled={empresa.length === 0} // Desactivar si no hay datos
+                            disabled={area.length === 0} // Desactivar si no hay datos
                         >Exportar registros</Button>
                     </div>
                 </div>
 
                 <DataTable
-                    value={empresa}
+                    value={area}
                     tableStyle={{ minWidth: '50rem' }}
                     paginator
                     rows={10}
@@ -133,12 +132,11 @@ function TableEmpresa() {
                     filters={filters} // Se pasa el objeto de filtros actualizado
                     globalFilterFields={globalFilterFields} // Se indican las columnas a filtrar
                 >
-                    <Column field="co_emp" header="Co Empresa"></Column>
-                    <Column field="nb_emp" header="Nombre"></Column>
-                    <Column field="st_estado" header="Status"></Column>
+                    <Column field="co_area" header="Co Area"></Column>
+                    <Column field="nb_area" header="Nombre"></Column>
+                    <Column field="co_empresa" header="RIF"></Column>
                     <Column field="fe_registro" header="Re. Registro"></Column>
-                    <Column field="auto" header="Autor"></Column>
-
+                    <Column field="st_area" header="Status"></Column>
                 </DataTable>
             </div>
         </>
