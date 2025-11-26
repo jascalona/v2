@@ -42,11 +42,6 @@ function MasterCore() {
 
                             <div className="other-setting" style={{ marginTop: 40 }}>
 
-                                <h2> Configuración </h2>
-                                <p>
-                                    En este apartado podra administrar y diseñar distintos recursos de su organizacion
-                                </p>
-
                                 <div className="row-item">
                                     <span className="icon-ite"><PrecisionManufacturingIcon /></span>
                                     <div className="content-setting">
