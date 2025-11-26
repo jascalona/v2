@@ -29,6 +29,7 @@ import Componentes from './interface/setting/master_core/componentes';
 import Category from './interface/setting/master_core/category';
 import SubCategory from './interface/setting/master_core/sub_category';
 import Article from './interface/setting/master_core/article';
+import SLA from './interface/setting/master_core/sla';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -59,7 +60,8 @@ function App() {
               <Route path='category' element={<Category />} />
               <Route path='subcategory' element={<SubCategory />} />
               <Route path='article' element={<Article />} />
-              
+              <Route path='sla' element={<SLA />} />
+
             </Route>
 
             <Route path='members' element={<Members />} />

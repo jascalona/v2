@@ -6,7 +6,7 @@ import AppsOutageIcon from '@mui/icons-material/AppsOutage';
 import CategoryIcon from '@mui/icons-material/Category';
 import SpokeIcon from '@mui/icons-material/Spoke';
 import PostAddIcon from '@mui/icons-material/PostAdd';
-
+import FmdBadIcon from '@mui/icons-material/FmdBad';
 
 function MasterCore() {
 
@@ -98,6 +98,18 @@ function MasterCore() {
                                             <small style={{ lineHeight: 1 }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, culpa.</small>
                                         </div>
                                         <Link style={{ marginRight: 30, marginTop: 20 }} to={"article"}>Administrar</Link>
+
+                                    </div>
+                                </div>
+
+                                <div className="row-item">
+                                    <span className="icon-ite"><FmdBadIcon /></span>
+                                    <div className="content-setting">
+                                        <div>
+                                            <p>SLA</p>
+                                            <small style={{ lineHeight: 1 }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, culpa.</small>
+                                        </div>
+                                        <Link style={{ marginRight: 30, marginTop: 20 }} to={"sla"}>Administrar</Link>
 
                                     </div>
                                 </div>

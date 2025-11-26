@@ -59,3 +59,21 @@
         grid-template-columns: 1fr;
     }
 }
+
+
+/*ESTILO DEL PAGINADO PARA LAS ADMINISTRACION DE ETIQUETAS*/
+.pagination-controls button:not(:disabled):hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    border-color: #28587d;
+}
+
+.pagination-controls button.page-button:not(.active):hover {
+    background-color: #f0f8ff;
+    /* Color muy sutil */
+}
+
+.pagination-controls button.control-button:not(:disabled):hover {
+    color: #28587d;
+    background-color: #f0f8ff;
+}
