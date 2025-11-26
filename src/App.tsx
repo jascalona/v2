@@ -8,6 +8,8 @@ import Home from './interface/home'
 import Inbox from './interface/inbox'
 import Activities from './interface/activities'
 import Project from './interface/product';
+import UIRequest from './interface/request';
+
 
 //Setting
 import Setting from './interface/setting';
@@ -43,6 +45,7 @@ function App() {
           <Route path='inbox' element={<Inbox />} />
           <Route path='activities' element={<Activities />} />
           <Route path='product' element={<Project />} />
+          <Route path='uirequest' element={<UIRequest />} />
 
           {/*RUTA PARA DIRECTORIO SETTING*/}
           <Route path='setting' element={<Setting />}>

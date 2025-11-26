@@ -12,7 +12,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import GroupsIcon from '@mui/icons-material/Groups';
-
+import MarkUnreadChatAltIcon from '@mui/icons-material/MarkUnreadChatAlt';
 
 // Definir las props del componente Sidebar
 interface SidebarProps {
@@ -48,6 +48,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           <li className="nav-item has-dropdown">
             <Link to="setting" onClick={toggleSidebar}><span className="nav-icon"><SettingsIcon /></span> Herramientas</Link>
           </li>
+
+          <li className="nav-item has-dropdown">
+            <Link to="uirequest" onClick={toggleSidebar}><span className="nav-icon"><MarkUnreadChatAltIcon /></span> Solicitudes</Link>
+          </li>
         </ul>
 
         <div className="nav-separator">Espacio de trabajo</div>
@@ -58,7 +62,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           </li>
 
           <li className="nav-item">
-            <Link to="product" onClick={toggleSidebar}><span className="nav-icon"><ColorLensIcon /></span> Proyectos</Link>
+            <Link to="proyectos" onClick={toggleSidebar}><span className="nav-icon"><ColorLensIcon /></span> Proyectos</Link>
           </li>
 
           <li className="nav-item has-dropdown">
