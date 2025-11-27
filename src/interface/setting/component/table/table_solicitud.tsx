@@ -141,7 +141,7 @@ function TableSolicitud() {
     return (
         <>
             {/* Input de Búsqueda Global (Fuera del DataTable) */}
-            <div className="table-empresa">
+            <div className="table-empresa" style={{ width: '100%'}}>
                 <div className="options">
                     <div className="registros-count">
                         <p style={{ color: '#504e4eff', fontSize: '14px' }}>Registros <span><strong>{solicitud.length}</strong></span></p>
@@ -168,7 +168,7 @@ function TableSolicitud() {
                 </div>
 
                 {/* Contenedor ajustado a 500px con scroll horizontal */}
-                <div style={{ width: '100%', overflowX: 'auto' }}>
+                <div>
                     <DataTable
                         value={solicitud}
                         tableStyle={{ minWidth: '100rem' }} /* Ancho MÍNIMO grande para forzar el scroll horizontal */
@@ -191,6 +191,10 @@ function TableSolicitud() {
                         <Column field="cousercredorsoli" header="Creador"></Column>
                         <Column field="feregistro" header="Fec. Registro"></Column>
                         <Column field="fevencimiento" header="Fec. Vencimiento"></Column>
+
+                        <Column field="fevencimiento" header="Fec. Vencimiento"></Column>
+                        <Column field="fevencimiento" header="Fec. Vencimiento"></Column>
+
                     </DataTable>
                 </div>
             </div>

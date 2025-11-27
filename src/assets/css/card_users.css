@@ -160,7 +160,6 @@
 /* ============================================== */
 /******************CARD FOR REQUEST****************/
 /* ============================================== */
-
 .container-solicitudes {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -189,6 +188,12 @@
 .container-request h3 {
     font-size: 23px;
 }
+
+.request-generate {
+    width: 100%;
+    overflow: hidden;
+}
+
 
 .card-request {
     background: #fff;
@@ -260,7 +265,7 @@
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    max-width: 500px;
+    width: auto;
     margin-bottom: 10px;
 }
 
@@ -370,17 +375,18 @@
 
 /*ESTILOS RESPONSIVOS*/
 @media (max-width: 1590px) {
-    .container-solicitudes{
+    .container-solicitudes {
         gap: 10px;
     }
 }
 
 
 @media (max-width: 1520px) {
-    .container-solicitudes{
+    .container-solicitudes {
         grid-template-columns: 1fr;
     }
-    .container-solicitudes .chart-container{
+
+    .container-solicitudes .chart-container {
         background: red;
     }
 }

@@ -46,7 +46,7 @@ function UIRequest() {
 
             <div className="container-solicitudes" style={{ marginTop: '20px', alignItems: 'start' }}>
 
-                <div className="request-generate" style={{maxWidth: '1000px'}}>
+                <div className="request-generate">
                     <TableSolicitud />
                 </div>
 
@@ -94,8 +94,7 @@ function UIRequest() {
 
                         </div>
                     </div>
-
-                    {/*SEGUNDO */}
+                    {/*
                     <div className="card-expenses-summary">
                         <div className="summary-header">
                             <p>Elementos Asignados</p>
@@ -139,7 +138,6 @@ function UIRequest() {
                         </div>
                     </div>
 
-                    {/*TERCEROS */}
                     <div className="card-expenses-summary">
                         <div className="summary-header">
                             <p>Elementos Asignados</p>
@@ -182,7 +180,7 @@ function UIRequest() {
 
                         </div>
                     </div>
-
+ */}
                 </div>
 
 
