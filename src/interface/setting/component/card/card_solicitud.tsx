@@ -8,13 +8,15 @@ function CardRequest() {
     return (
         <>
             <div className="card-request">
-                <span><MultilineChartIcon /></span>
-                <h3>Producto</h3>
-                <div className="content-request">
-                    <span><small>Pendientes</small><strong className="count-span warning">10</strong></span>
-                    <span><small>Cerrados</small><strong className="count-span success">20</strong></span>  
+                <div className="content-header-request">
+                    <span><MultilineChartIcon sx={{fontSize: 30}}/></span>
+                    <h3>Producto</h3>
                 </div>
-                <p>Total solicitudes: <strong>30</strong></p>
+                <div className="content-request">
+                    <span className="warning"><small>Pendientes</small> 10</span>
+                    <span className="success"><small>Cerrados</small> 20</span>
+                </div>
+                <p>Total solicitudes: <strong> 30</strong></p>
             </div>
         </>
     )
