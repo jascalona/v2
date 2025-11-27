@@ -77,7 +77,6 @@ function LabelCategory() {
 
 
     //Logica del paginado
-
     const totalPages = Math.ceil(labels.length / ITEMS_PER_PAGE);
 
     const indexOfLastItem = currentPage * ITEMS_PER_PAGE;

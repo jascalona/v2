@@ -3,9 +3,9 @@ import { PieChart } from '@mui/x-charts/PieChart';
 // 1. Definición de los Datos Estáticos (Ejemplo)
 // Los datos deben ser un array de objetos con las claves 'id', 'value', y 'label'.
 const STATIC_DATA = [
-  { id: 0, value: 10, label: 'Windows' },
-  { id: 1, value: 15, label: 'macOS' },
-  { id: 2, value: 20, label: 'Linux' },
+  { id: 0, value: 10, label: 'SyPago' },
+  { id: 1, value: 15, label: 'SIMF/SGLPAR' },
+  { id: 2, value: 20, label: 'SIMF' },
   { id: 3, value: 5, label: 'Otros' },
 ];
 const staticValueFormatter = (value, context) => {

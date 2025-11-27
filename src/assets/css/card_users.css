@@ -194,6 +194,8 @@
     background: #fff;
     padding: 20px;
     border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
 }
 
 .content-header-request {
@@ -232,6 +234,7 @@
     background: #fff;
     border-radius: 10px;
     padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 /* ============================================== */
@@ -247,5 +250,137 @@
     .container-request {
         grid-template-columns: 1fr;
         gap: 15px;
+    }
+}
+
+
+/*CONTENDIO CARD CREATE*/
+.card-expenses-summary {
+    background-color: #ffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    max-width: 500px;
+    margin-bottom: 10px;
+}
+
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 5px;
+}
+
+.summary-header h3 {
+    color: #333344;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.month-selector {
+    color: #333344;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.summary-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-basis: 40%;
+}
+
+.total-expense-bar {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.total-expense-bar .percentage {
+    color: #666677;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.progress-bar-outline {
+    height: 6px;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    width: 72%;
+    height: 100%;
+    background-color: #5d677a;
+    border-radius: 3px;
+}
+
+.categories-information {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex-basis: 60%;
+}
+
+.category-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-marker {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #5d677a;
+    flex-shrink: 0;
+}
+
+.category-name {
+    color: #333344;
+    font-size: 13px;
+    margin: 5px 0;
+}
+
+.category-amount {
+    color: #333344;
+    font-size: 18px;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.category-amount strong {
+    font-weight: 700;
+}
+
+/*ESTILOS RESPONSIVOS*/
+@media (max-width: 1590px) {
+    .container-solicitudes{
+        gap: 10px;
+    }
+}
+
+
+@media (max-width: 1520px) {
+    .container-solicitudes{
+        grid-template-columns: 1fr;
+    }
+    .container-solicitudes .chart-container{
+        background: red;
     }
 }
