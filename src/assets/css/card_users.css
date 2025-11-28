@@ -373,6 +373,14 @@
     font-weight: 700;
 }
 
+/*ESTILOS CONTENIDO FORMULARIO*/
+.content-formulario{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+
 /*ESTILOS RESPONSIVOS*/
 @media (max-width: 1590px) {
     .container-solicitudes {
@@ -390,3 +398,4 @@
         background: red;
     }
 }
+

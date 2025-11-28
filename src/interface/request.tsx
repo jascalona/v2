@@ -6,16 +6,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 
-
 // Componentes
 import CardRequest from "./setting/component/card/card_solicitud";
 import BarsProduct from "./setting/component/charts/chart_product";
 import PieActiveArc from "./setting/component/charts/chart_product_all";
 import RequestCreate from "./setting/component/charts/chart_elemet_create";
 import TableSolicitud from "./setting/component/table/table_solicitud";
+import CustomDropdown from "./setting/component/dropdown/dropdown_i";
 
-
-
+import '../assets/css/dropdown.css'
 
 //Icons
 import AddIcon from '@mui/icons-material/Add';
@@ -180,15 +179,31 @@ function UIRequest() {
 
                             {/* Contenido principal con campos de entrada */}
                             <Box sx={{ p: 3, pt: 2 }}>
-                                <Grid container spacing={2} alignItems="center">
 
-                                    {/* Campo de Email */}
-                                    <Grid container spacing={2} alignItems="center">
+                                <Grid alignItems="center">
+                                    <TextField
+                                        fullWidth
+                                        label="CO. Area"
+                                        placeholder="Por ejemplo, 1"
+                                        variant="outlined"
+                                        size="small"
+                                        sx={{
+                                            '& .MuiOutlinedInput-root': {
+                                                borderRadius: '5px',
+                                                marginBottom: '15px'
+                                            },
+                                        }}
+                                    />
+                                    <div className="content-formulario">
+
+<CustomDropdown />
+
+
 
                                         <TextField
                                             fullWidth
-                                            label="CO. Area"
-                                            placeholder="Por ejemplo, 1"
+                                            label="Nombre"
+                                            placeholder="Por ejemplo, Base de Datos"
                                             variant="outlined"
                                             size="small"
                                             sx={{
@@ -211,9 +226,19 @@ function UIRequest() {
                                             }}
                                         />
 
-                                    </Grid>
-
-                                    {/* Selector de Rol */}
+                                        <TextField
+                                            fullWidth
+                                            label="Nombre"
+                                            placeholder="Por ejemplo, Base de Datos"
+                                            variant="outlined"
+                                            size="small"
+                                            sx={{
+                                                '& .MuiOutlinedInput-root': {
+                                                    borderRadius: '5px',
+                                                },
+                                            }}
+                                        />
+                                    </div>
 
                                 </Grid>
 
