@@ -13,6 +13,8 @@ import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturi
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import GroupsIcon from '@mui/icons-material/Groups';
 import MarkUnreadChatAltIcon from '@mui/icons-material/MarkUnreadChatAlt';
+import WidgetsIcon from '@mui/icons-material/Widgets';
+
 
 // Definir las props del componente Sidebar
 interface SidebarProps {
@@ -26,11 +28,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     // Aplicar la clase 'is-open' si isOpen es true
     <div className={`sidebar ${isOpen ? 'is-open' : ''}`}>
       {/* Sección Superior de Búsqueda y Creación */}
-      <div className="sidebar-header">
-        <a href="#" className="create-button">
-          <span className="icon">+</span> Nuevo elemento
-        </a>
-      </div>
+    
 
       {/* Menú Principal */}
       <nav className="sidebar-nav">
@@ -78,12 +76,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
       {/* Pie de la Barra Lateral */}
       <div className="sidebar-footer">
-        <a href="#" className="footer-link"><span className="icon"><GroupsIcon /></span> Comunidad</a>
-        <div className="footer-icons">
-          <span className="footer-icon">💬</span>
-          <span className="footer-icon">⚙️</span>
-          <span className="footer-icon">⏹</span>
-        </div>
+        <a href="#" className="footer-link"><span className="icon"><GroupsIcon /> </span> Comunidad</a>
+        
       </div>
     </div>
   );
