@@ -1,0 +1,156 @@
+body {
+    margin: 0;
+    background-color: #ffff;
+    color: #fff;
+    min-height: 100vh;
+}
+
+.container-login {
+    display: flex;
+    margin: 15px;
+    height: calc(100vh - 30px); /* Ajusta la altura dinámicamente */
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.content-login {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    background-color: #FFFF;
+}
+
+.content-login h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: rgb(78, 77, 77);
+    margin-bottom: 0;
+}
+
+.content-login small {
+    color: #777;
+    margin-top: 5px;
+    margin-bottom: 25px;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 350px;
+    margin-bottom: 20px;
+}
+
+.inputs input {
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #f3f3f3f3;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    border: solid 1px #09173945;
+    color: #091739;
+    transition: all .1s;
+    transition: .2s;
+}
+
+.inputs input:hover{
+    transform: translateX(-2px);
+}
+
+.btn-login button {
+    width: 100%; 
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px; 
+    color: white;
+    background-image: linear-gradient(to right, #130634, #091739);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.btn-login button:hover {
+    transform: scale(1.02);
+}
+
+.container-image {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Añadido para centrar el contenido */
+    text-align: center;
+    background-image: linear-gradient(to right, #130634, #17306a);
+    padding: 10px;
+    position: relative; /* Necesario para posicionar el fondo */
+    overflow: hidden;
+    margin-top: -80px;
+}
+
+/* Fondo de imagen */
+.container-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../image/login.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 460px; 
+    z-index: 0; 
+    opacity: 0.8;
+}
+
+.container-image h4, .container-image span, .container-image img {
+    z-index: 1; 
+    position: relative;
+}
+
+.container-image img {
+    width: 120px;
+    margin-bottom: 20px;
+}
+
+.container-image h4 {
+    margin-top: 450px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.container-image span {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    max-width: 400px;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .container-login {
+        flex-direction: column;
+        margin: 10px;
+        border-radius: 0px;
+        height: auto;
+    }
+    
+
+    .content-login {
+        margin-top: 50%;
+    }
+
+    .container-image {
+        display: none;
+    }
+
+    .container-image::after {
+        background-size: 80%; /* Aumenta el tamaño en móviles */
+    }
+}
