@@ -13,8 +13,6 @@ import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturi
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import GroupsIcon from '@mui/icons-material/Groups';
 import MarkUnreadChatAltIcon from '@mui/icons-material/MarkUnreadChatAlt';
-import WidgetsIcon from '@mui/icons-material/Widgets';
-
 
 // Definir las props del componente Sidebar
 interface SidebarProps {

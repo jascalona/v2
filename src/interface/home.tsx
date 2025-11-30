@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+//Icons
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
+
+
 function Home() {
     return (
         <>
@@ -9,7 +13,7 @@ function Home() {
                 <div className="content-header">
                     <h2>Buenas noches, José Escalona</h2>
                     <p>
-                        <span className="header-emoji">⚡</span> Jueves, 13 de noviembre, 22:19
+                        <span className="header-emoji"><OfflineBoltIcon /> </span> Jueves, 13 de noviembre, 22:19
                     </p>
                 </div>
 
