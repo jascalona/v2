@@ -374,10 +374,8 @@
 }
 
 /*ESTILOS CONTENIDO FORMULARIO*/
-.content-formulario{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+.content-formulario {
+    margin: 10px;
 }
 
 
@@ -398,4 +396,3 @@
         background: red;
     }
 }
-

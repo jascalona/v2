@@ -1,36 +1,31 @@
+// CustomDropdown.tsx
+
 import React, { useState, useRef, useEffect } from 'react';
 
-//Icons
+// Icons
 import PersonIcon from '@mui/icons-material/Person';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import SettingsIcon from '@mui/icons-material/Settings';
 
+// *** IMPORTAMOS LA INTERFAZ CENTRALIZADA ***
+import type {MenuItem} from '../dropdown/interface';
 
-interface MenuItem {
-    id: string;
-    label: string;
-    type: 'personal' | 'project';
+// Definición de Props usando la interfaz MenuItem importada
+interface CustomDropdownProps {
+    items: MenuItem[];
+    title: string;
+    icon?: React.ReactNode;
 }
 
-// Define los datos estáticos para simular la estructura de la imagen
-const initialItems: MenuItem[] = [
-    { id: '1', label: 'Lista personal', type: 'personal' },
-    { id: 'p1', label: 'Proyecto 1', type: 'project' },
-    { id: 'p2', label: 'Proyecto 2', type: 'project' },
-    { id: 'p3', label: 'Empieza con ClickUp', type: 'project' },
-];
-
-const CustomDropdown: React.FC = () => {
-    // Estado para controlar si el menú está abierto o cerrado
+const CustomDropdown: React.FC<CustomDropdownProps> = ({ items, title, icon }) => {
     const [isOpen, setIsOpen] = useState(false);
-    // Estado para el término de búsqueda
     const [searchTerm, setSearchTerm] = useState('');
-
-    // Referencia para detectar clics fuera del dropdown y cerrarlo
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    // Lógica de filtrado de elementos
-    const filteredItems = initialItems.filter(item =>
+    // Lógica de filtrado
+    const filteredItems = items.filter(item =>
         item.label.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -50,9 +45,9 @@ const CustomDropdown: React.FC = () => {
     // Función para renderizar los elementos
     const renderItem = (item: MenuItem) => (
         <div key={item.id} className="dropdown-item">
-            {/* Podrías añadir íconos aquí basados en item.type */}
-            {item.type === 'personal' && <span><PersonIcon /></span>}
-            {item.type === 'project' && <span>✅</span>}
+            {item.type === 'ambiente' && <span><PersonIcon /></span>}
+            {item.type === 'producto' && <span><BusinessCenterIcon sx={{ fontSize: 15 }} /></span>}
+
             <span>{item.label}</span>
         </div>
     );
@@ -60,17 +55,17 @@ const CustomDropdown: React.FC = () => {
     return (
         <div className="custom-dropdown-container" ref={dropdownRef}>
             {/* Botón de Activación */}
-            <button className="dropdown-toggle" onClick={() => setIsOpen(!isOpen)} style={{ display: 'flex', alignContent: 'center' }}>
-                <ChecklistIcon sx={{ fontSize: 15 }} /> Asignar...
+            <button className="dropdown-toggle" onClick={() => setIsOpen(!isOpen)} style={{ display: 'flex', alignContent: 'center', margin: 3 }}>
+                {icon && <span style={{ marginRight: 5 }}>{icon}</span>}
+                {title}
             </button>
 
             {/* Menú Desplegable */}
             {isOpen && (
                 <div className="dropdown-menu">
-
                     {/* Campo de Búsqueda */}
                     <div className="search-box">
-                        <span><ManageSearchIcon /></span> {/* Ícono de búsqueda */}
+                        <span><ManageSearchIcon /></span>
                         <input
                             type="text"
                             placeholder="Buscar..."
@@ -82,32 +77,17 @@ const CustomDropdown: React.FC = () => {
                     {/* Lista de Resultados */}
                     <div className="dropdown-list">
 
-                        {/* Título de Lista Personal */}
-                        <div className="dropdown-group-title">
-                            <span className="group-icon">👤</span>
-                            Lista personal
-                        </div>
-
-                        {/* Renderizar Lista Personal Filtrada */}
+                        {/* Renderizar Ambiente Filtrado */}
                         {filteredItems
-                            .filter(item => item.type === 'personal')
+                            .filter(item => item.type === 'ambiente')
                             .map(renderItem)}
 
                         <div className="separator"></div>
 
-                        {/* Título de Espacios de Equipo */}
-                        <div className="dropdown-group-header">
-                            <div className="group-title-left">
-                                <span>▼</span>
-                                Espacios de Equipo
-                            </div>
-                            <button className="add-button">+</button>
-                        </div>
-
-                        {/* Renderizar Proyectos Filtrados */}
+                        {/* Renderizar Productos Filtrados */}
                         <div className="project-list">
                             {filteredItems
-                                .filter(item => item.type === 'project')
+                                .filter(item => item.type === 'producto' || item.type === 'project')
                                 .map(renderItem)}
                         </div>
 

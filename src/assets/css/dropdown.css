@@ -9,8 +9,8 @@
 .dropdown-toggle {
     padding: 8px 12px;
     border: 1px solid #ccc;
-    border-radius: 6px;
-    background: #f8f8f8;
+    border-radius: 4px;
+    background: #fff;
     cursor: pointer;
 }
 

@@ -5,7 +5,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
+
+//Data para los Dropdown
+import { DROPDOWN_PRODUCTO, CONFIG_PRODUCTO } from '../dropdown/DT_productos'; 
+import {DROPDOWN_AMBIENTE, CONFIG_AMBIENTE} from '../dropdown/TD_ambiente';
 
 
 //Icons
@@ -108,7 +111,7 @@ function ModalSolicitud() {
 
 
 
-                                    <TextField style={{marginTop: 5}}
+                                    <TextField style={{ marginTop: 5 }}
                                         fullWidth
                                         label="Descripción  de la Solicitud"
                                         placeholder="Por ejemplo, El error fue detectado en la base de datos..."
@@ -121,15 +124,27 @@ function ModalSolicitud() {
                                             '& .MuiOutlinedInput-root': {
                                                 borderRadius: '5px',
                                                 '& textarea': {
-                                                    resize: 'none',                                                },
+                                                    resize: 'none',
+                                                },
                                             },
                                         }}
                                     />
 
                                     <div className="content-formulario">
+                                        {/*AMBIENTE, PRIORIDAD, PRODUCTO, TP-SOLI, SLA, CREADOR-SOLI, USER-ASIGANDO, ESTADO-SOLI*/}
+                                        <CustomDropdown
+                                            items={DROPDOWN_PRODUCTO}
+                                            title={CONFIG_PRODUCTO.title}
+                                            icon={CONFIG_PRODUCTO.icon}
+                                        />
 
-                                        <CustomDropdown />
+                                        <CustomDropdown
+                                            items={DROPDOWN_AMBIENTE}
+                                            title={CONFIG_AMBIENTE.title}
+                                            icon={CONFIG_AMBIENTE.icon}
+                                        />
 
+                                   
 
                                     </div>
 
