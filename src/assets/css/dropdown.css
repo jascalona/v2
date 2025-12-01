@@ -1,96 +1,44 @@
-/* Estilos para el contenedor principal */
-.custom-dropdown-container {
-    position: relative;
-    display: inline-block; /* Para que no ocupe todo el ancho */
-    font-family: sans-serif;
-}
-
-/* Estilos para el botón de toggle */
-.dropdown-toggle {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: #fff;
-    cursor: pointer;
-}
-
-/* Estilos para el menú desplegable */
-.dropdown-menu {
-    position: absolute;
-    top: 100%; /* Se coloca justo debajo del toggle */
-    left: 0;
-    width: 300px; /* Ancho fijo, ajústalo según necesites */
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    padding: 8px;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-/* Estilos para la caja de búsqueda */
-.search-box {
-    display: flex;
-    align-items: center;
+.styled-select {
+    width: auto;
+    padding: 8px 15px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    padding: 5px 10px;
-    margin-bottom: 10px;
-    background-color: #f7f7f7;
-}
-
-.search-box input {
-    border: none;
-    outline: none;
-    padding: 5px 0 5px 10px;
-    flex-grow: 1;
-    background-color: transparent;
-}
-
-/* Estilos para los títulos de grupo (Lista personal, Espacios de Equipo) */
-.dropdown-group-title,
-.dropdown-group-header {
+    background-color: #ffff;
     font-size: 14px;
-    color: #666;
-    padding: 8px 0;
-    margin-top: 5px;
-}
-
-.dropdown-group-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: bold;
     color: #333;
-}
-
-.dropdown-list {
-    padding: 0;
-}
-
-/* Estilos para cada elemento de la lista (Proyecto 1, Proyecto 2, etc.) */
-.dropdown-item {
-    display: flex;
-    align-items: center;
-    padding: 8px 10px;
     cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.2s;
-    margin-left: 20px; /* Para simular la indentación de proyectos */
+    outline: none;
+    transition: border-color 0.2s;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Simula la flecha de dropdown con un SVG o un carácter */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23999999" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
 }
 
-.dropdown-item:hover {
-    background-color: #f0f0f0;
+.styled-select:hover {
+    border-color: #aaa;
 }
 
-.dropdown-item span:first-child {
-    margin-right: 8px;
+.styled-select:focus {
+    border-color: #6d5bfa;
+    box-shadow: 0 0 0 2px rgba(109, 91, 250, 0.2);
 }
 
-.separator {
-    height: 1px;
-    background-color: #eee;
-    margin: 10px 0;
+/* Estilos para mensajes de estado */
+.loading-message,
+.error-message,
+.no-records-message {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.error-message {
+    color: #d9534f;
 }

@@ -7,13 +7,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 //Data para los Dropdown
-import { DROPDOWN_PRODUCTO, CONFIG_PRODUCTO } from '../dropdown/DT_productos'; 
-import {DROPDOWN_AMBIENTE, CONFIG_AMBIENTE} from '../dropdown/TD_ambiente';
+import OptionAmbiente from '../dropdown/option_ambiente';
+import OptionProducto from '../dropdown/option_producto';
+import OptionUsuario from '../dropdown/option_users';
+import OptionTPS from '../dropdown/option_tps';
+import OptionPrioridad from '../dropdown/option_sla';
 
 
 //Icons
 import AddIcon from '@mui/icons-material/Add';
-import CustomDropdown from '../dropdown/dropdown_i';
 
 
 function ModalSolicitud() {
@@ -110,7 +112,6 @@ function ModalSolicitud() {
                                     />
 
 
-
                                     <TextField style={{ marginTop: 5 }}
                                         fullWidth
                                         label="Descripción  de la Solicitud"
@@ -131,21 +132,12 @@ function ModalSolicitud() {
                                     />
 
                                     <div className="content-formulario">
-                                        {/*AMBIENTE, PRIORIDAD, PRODUCTO, TP-SOLI, SLA, CREADOR-SOLI, USER-ASIGANDO, ESTADO-SOLI*/}
-                                        <CustomDropdown
-                                            items={DROPDOWN_PRODUCTO}
-                                            title={CONFIG_PRODUCTO.title}
-                                            icon={CONFIG_PRODUCTO.icon}
-                                        />
-
-                                        <CustomDropdown
-                                            items={DROPDOWN_AMBIENTE}
-                                            title={CONFIG_AMBIENTE.title}
-                                            icon={CONFIG_AMBIENTE.icon}
-                                        />
-
-                                   
-
+                                        {/*ESTADO-SOLI*/}
+                                        <OptionAmbiente />
+                                        <OptionProducto />
+                                        <OptionUsuario />
+                                        <OptionTPS />
+                                        <OptionPrioridad />
                                     </div>
 
                                 </Grid>

@@ -102,7 +102,7 @@ function UIRequest() {
                         <div className="summary-header">
                             <p>Tarea recientes</p>
                             <div className="month-selector">
-                                <span>Filtros</span>
+                                <span>Todas las Tareas</span>
                             </div>
                         </div>
 
