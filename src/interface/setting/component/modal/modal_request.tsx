@@ -14,6 +14,7 @@ import OptionTPS from '../dropdown/option_tps';
 import OptionPrioridad from '../dropdown/option_sla';
 import OptionEstado from '../dropdown/option_estado';
 import TimeDate from '../dropdown/option_date';
+import AccordionEvidencias from '../accordion/evidencias_solicitud';
 
 
 //Icons
@@ -230,19 +231,8 @@ function ModalSolicitud() {
                                 </Grid>
 
                                 {/* Enlace para añadir más */}
-                                <Button
-                                    variant="text"
-                                    startIcon={<span style={{ fontSize: 18 }}>+</span>}
-                                    sx={{
-                                        mt: 1,
-                                        textTransform: 'none',
-                                        color: '#1976d2',
-                                        p: 0,
-                                        fontSize: '0.875rem'
-                                    }}
-                                >
-                                    Añadir más
-                                </Button>
+                                <AccordionEvidencias />
+
                             </Box>
 
                             {/* Pie de página con botones de acción */}
