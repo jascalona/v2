@@ -12,6 +12,8 @@ import OptionProducto from '../dropdown/option_producto';
 import OptionUsuario from '../dropdown/option_users';
 import OptionTPS from '../dropdown/option_tps';
 import OptionPrioridad from '../dropdown/option_sla';
+import OptionEstado from '../dropdown/option_estado';
+import TimeDate from '../dropdown/option_date';
 
 
 //Icons
@@ -99,8 +101,22 @@ function ModalSolicitud() {
                                 <Grid alignItems="center">
                                     <TextField
                                         fullWidth
-                                        label="CO. Area"
-                                        placeholder="Por ejemplo, 1"
+                                        label="Asunto"
+                                        placeholder="Por ejemplo, Revision de logs microservicios"
+                                        variant="outlined"
+                                        size="small"
+                                        sx={{
+                                            '& .MuiOutlinedInput-root': {
+                                                borderRadius: '5px',
+                                                marginBottom: '15px'
+                                            },
+                                        }}
+                                    />
+
+                                     <TextField
+                                        fullWidth
+                                        label="Causa de la intervención"
+                                        placeholder="Por ejemplo, Fallo en los microservicios"
                                         variant="outlined"
                                         size="small"
                                         sx={{
@@ -131,6 +147,44 @@ function ModalSolicitud() {
                                         }}
                                     />
 
+                                    <div className="persona-contacto">
+
+                                        <TextField
+                                            fullWidth
+                                            label="Persona de Contacto"
+                                            placeholder="Por ejemplo, 1"
+                                            variant="outlined"
+                                            size="small"
+                                            sx={{
+                                                '& .MuiOutlinedInput-root': {
+                                                    borderRadius: '5px',
+                                                    marginBottom: '15px'
+                                                },
+                                            }}
+                                        />
+
+                                        <TextField
+                                            fullWidth
+                                            label="Contacto"
+                                            placeholder="Por ejemplo, 1"
+                                            variant="outlined"
+                                            size="small"
+                                            sx={{
+                                                '& .MuiOutlinedInput-root': {
+                                                    borderRadius: '5px',
+                                                    marginBottom: '15px'
+                                                },
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="content-formulario">
+                                        <TimeDate label='Fe. Registro' />
+                                        <TimeDate label='Fe. Vencimiento' />
+                                    </div>
+
+
+
                                     <div className="content-formulario">
                                         {/*ESTADO-SOLI*/}
                                         <OptionAmbiente />
@@ -138,6 +192,7 @@ function ModalSolicitud() {
                                         <OptionUsuario />
                                         <OptionTPS />
                                         <OptionPrioridad />
+                                        <OptionEstado />
                                     </div>
 
                                 </Grid>
@@ -169,6 +224,7 @@ function ModalSolicitud() {
                                     borderTop: '1px solid #eee'
                                 }}
                             >
+
                                 <Button
                                     onClick={toggleModal}
                                     variant="outlined"
@@ -180,6 +236,7 @@ function ModalSolicitud() {
                                 >
                                     Cancelar
                                 </Button>
+
                                 <Button
                                     variant="contained"
                                     sx={{

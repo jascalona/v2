@@ -378,9 +378,16 @@
     display: flex;
     flex-wrap: wrap;
     padding: 10px;
-    gap: 10px;    
+    gap: 10px;
 }
 
+
+.persona-contacto {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+
+}
 
 
 /*ESTILOS RESPONSIVOS*/
@@ -402,7 +409,7 @@
 }
 
 /*******************LIST ITEM***********************/
-.item-task{
+.item-task {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -416,7 +423,7 @@
 }
 
 @media (max-width: 450px) {
-    .item-task{
+    .item-task {
         display: block;
     }
 }
@@ -424,50 +431,50 @@
 /*******************ESTILOS PARA EL PAGINADO***********************/
 .pagination {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
-    margin-top: 20px; 
-    gap: 8px; 
+    margin-top: 20px;
+    gap: 8px;
 }
 
 /* Estilos base para todos los botones de paginación */
 .pagination button {
     background-color: #f0f0f0;
-    border: 1px solid #e0e0e0; 
-    border-radius: 8px; 
-    padding: 10px 15px; 
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px 15px;
     font-size: 16px;
     font-weight: 500;
-    color: #555; 
+    color: #555;
     cursor: pointer;
-    transition: all 0.2s ease-in-out; 
-    min-width: 40px; 
-    height: 40px; 
-    display: flex; 
+    transition: all 0.2s ease-in-out;
+    min-width: 40px;
+    height: 40px;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
 /* Estilo para los botones cuando el mouse pasa por encima (hover) */
 .pagination button:not(.active):not(:disabled):hover {
-    background-color: #e5e5e5; 
+    background-color: #e5e5e5;
     border-color: #d0d0d0;
     color: #333;
 }
 
 /* Estilo para el botón de página actual (active) */
 .pagination button.active {
-    background-color: #2a6f97; 
+    background-color: #2a6f97;
     border-color: #2a6f97;
-    color: #ffffff; 
+    color: #ffffff;
     font-weight: bold;
     cursor: default;
 }
 
 /* Estilo para los botones deshabilitados (primera y última página) */
 .pagination button:disabled {
-    background-color: #f8f8f8; 
+    background-color: #f8f8f8;
     border-color: #f0f0f0;
-    color: #b0b0b0; 
-    cursor: not-allowed; 
+    color: #b0b0b0;
+    cursor: not-allowed;
 }
