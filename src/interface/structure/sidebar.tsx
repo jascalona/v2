@@ -13,6 +13,7 @@ import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturi
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import GroupsIcon from '@mui/icons-material/Groups';
 import MarkUnreadChatAltIcon from '@mui/icons-material/MarkUnreadChatAlt';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 
 // Definir las props del componente Sidebar
 interface SidebarProps {
@@ -26,7 +27,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     // Aplicar la clase 'is-open' si isOpen es true
     <div className={`sidebar ${isOpen ? 'is-open' : ''}`}>
       {/* Sección Superior de Búsqueda y Creación */}
-    
+
 
       {/* Menú Principal */}
       <nav className="sidebar-nav">
@@ -44,7 +45,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           <li className="nav-item has-dropdown">
             <Link to="setting" onClick={toggleSidebar}><span className="nav-icon"><SettingsIcon /></span> Herramientas</Link>
           </li>
-
           <li className="nav-item has-dropdown">
             <Link to="uirequest" onClick={toggleSidebar}><span className="nav-icon"><MarkUnreadChatAltIcon /></span> Solicitudes</Link>
           </li>
@@ -56,7 +56,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           <li className="nav-item">
             <Link to="product" onClick={toggleSidebar}><span className="nav-icon"><PrecisionManufacturingIcon /></span> Productos</Link>
           </li>
-
+          <li className="nav-item">
+            <Link to="inbox" onClick={toggleSidebar}><span className="nav-icon"><SupervisorAccountIcon /></span> Clientes</Link>
+          </li>
           <li className="nav-item">
             <Link to="proyectos" onClick={toggleSidebar}><span className="nav-icon"><ColorLensIcon /></span> Proyectos</Link>
           </li>
@@ -75,7 +77,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       {/* Pie de la Barra Lateral */}
       <div className="sidebar-footer">
         <a href="#" className="footer-link"><span className="icon"><GroupsIcon /> </span> Comunidad</a>
-        
+
       </div>
     </div>
   );

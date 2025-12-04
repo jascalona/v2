@@ -99,6 +99,38 @@ function ModalSolicitud() {
                             <Box sx={{ p: 3, pt: 2 }}>
 
                                 <Grid alignItems="center">
+                                    <div className="persona-contacto">
+
+                                        <TextField
+                                            fullWidth
+                                            label="Cliente Directo"
+                                            placeholder="Por ejemplo, Bancaribe"
+                                            variant="outlined"
+                                            size="small"
+                                            sx={{
+                                                '& .MuiOutlinedInput-root': {
+                                                    borderRadius: '5px',
+                                                    marginBottom: '15px'
+                                                },
+                                            }}
+                                        />
+
+                                        <TextField
+                                            fullWidth
+                                            label="Comercio"
+                                            placeholder="Por ejemplo, Seguros FRP"
+                                            variant="outlined"
+                                            size="small"
+                                            sx={{
+                                                '& .MuiOutlinedInput-root': {
+                                                    borderRadius: '5px',
+                                                    marginBottom: '15px'
+                                                },
+                                            }}
+                                        />
+                                    </div>
+
+
                                     <TextField
                                         fullWidth
                                         label="Asunto"
@@ -113,7 +145,7 @@ function ModalSolicitud() {
                                         }}
                                     />
 
-                                     <TextField
+                                    <TextField
                                         fullWidth
                                         label="Causa de la intervención"
                                         placeholder="Por ejemplo, Fallo en los microservicios"
