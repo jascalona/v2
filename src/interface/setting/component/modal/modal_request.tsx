@@ -1,4 +1,5 @@
 
+import '../../../../assets/css/scroll.css';
 import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -83,8 +84,11 @@ function ModalSolicitud() {
                             boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
                             width: '100%',
                             maxWidth: '50%',
+                            maxHeight: '750px',
+                            overflow: 'auto'
                         }}
                         onClick={(e) => e.stopPropagation()}
+                        className='contenedor-con-scroll'
                     >
                         <div className="container-formulario">
                             <Box sx={{ p: 3, pb: 1, borderBottom: '1px solid #eee' }}>
