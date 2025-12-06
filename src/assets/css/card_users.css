@@ -1,3 +1,4 @@
+
 /* GALLERY CARD USERS */
 .gallery_card_user {
     display: grid;
@@ -360,10 +361,6 @@
     font-size: 18px;
     margin: 0;
     line-height: 1.2;
-}
-
-.category-amount strong {
-    font-weight: 700;
 }
 
 /*ESTILOS CONTENIDO FORMULARIO*/
