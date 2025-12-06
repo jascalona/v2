@@ -14,6 +14,8 @@ import ColorLensIcon from '@mui/icons-material/ColorLens';
 import GroupsIcon from '@mui/icons-material/Groups';
 import MarkUnreadChatAltIcon from '@mui/icons-material/MarkUnreadChatAlt';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import AddTaskIcon from '@mui/icons-material/AddTask';
+
 
 // Definir las props del componente Sidebar
 interface SidebarProps {
@@ -47,6 +49,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           </li>
           <li className="nav-item has-dropdown">
             <Link to="uirequest" onClick={toggleSidebar}><span className="nav-icon"><MarkUnreadChatAltIcon /></span> Solicitudes</Link>
+          </li>
+          <li className="nav-item has-dropdown">
+            <Link to="taskmanager" onClick={toggleSidebar}><span className="nav-icon"><AddTaskIcon /></span> Task Manager</Link>
           </li>
         </ul>
 

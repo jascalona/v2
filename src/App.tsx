@@ -9,7 +9,7 @@ import Inbox from './interface/inbox'
 import Activities from './interface/activities'
 import Project from './interface/product';
 import UIRequest from './interface/request';
-
+import TaskManager from './interface/taskmanager';
 
 //Setting
 import Setting from './interface/setting';
@@ -50,6 +50,7 @@ function App() {
             <Route path='activities' element={<Activities />} />
             <Route path='product' element={<Project />} />
             <Route path='uirequest' element={<UIRequest />} />
+            <Route path='taskmanager' element={<TaskManager />} />
 
             {/*RUTA PARA DIRECTORIO SETTING*/}
             <Route path='setting' element={<Setting />}>
