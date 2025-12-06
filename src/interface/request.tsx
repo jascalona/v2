@@ -85,36 +85,14 @@ function UIRequest() {
 
             </div>
 
-            <div className="container-solicitudes" style={{ marginTop: '20px', alignItems: 'start' }}>
 
                 <div className="request-generate">
                     <TableSolicitud />
                 </div>
 
 
-                <div>
-
-                    <div className="creation-task">
-                        <CreateTask />
-                    </div>
-
-                    <div className="card-expenses-summary">
-                        <div className="summary-header">
-                            <p>Tarea recientes</p>
-                            <div className="month-selector">
-                                <span>Todas las Tareas</span>
-                            </div>
-                        </div>
-
-                        <ListTask />
-
-                    </div>
-
-                </div>
-
                 <ModalSolicitud />
 
-            </div>
 
         </>
     )
