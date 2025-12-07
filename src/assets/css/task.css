@@ -1,4 +1,19 @@
+.container-solicitudes{
+    align-items: start;
+}
 
-.bt-task{
-    margin: 20px;
+.chart-task{
+    display: grid;
+    gap: 10px;  
+    align-items: start; 
+}
+
+.chart-escalamientos{
+    padding-top: 30px;
+}
+
+@media (min-width: 1100px) {
+    .chart-task{
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

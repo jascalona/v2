@@ -12,7 +12,7 @@ import BeenhereIcon from '@mui/icons-material/Beenhere';
 
 
 //COMPONENTES GRAFICOS
-import TableSolicitud from '../table/table_solicitud';
+import TaskList from '../table/table_soli';
 import CreateTask from '../modal/modal_task';
 
 import AvatarI from '../Avatar';
@@ -67,36 +67,8 @@ function TabsTaskMnagaer() {
       </Box>
       <CustomTabPanel value={value} index={0}>
         <div className="container-resumen-activities">
-          <h3>Descripción general</h3>
+          <h3>Gestion de Tareas</h3>
 
-          <div className="gallery-indicators-i">
-
-            <div className="card-item-indicator">
-              <span className='icon'><EventRepeatIcon sx={{ fontSize: 18 }} /></span>
-              <div className="item-body">
-                <small>Tareas en curso</small><br />
-                <small>1</small>
-              </div>
-            </div>
-
-            <div className="card-item-indicator">
-              <span className='icon'><CrisisAlertIcon sx={{ fontSize: 18 }} /></span>
-              <div className="item-body">
-                <small>Tareas Pendientes</small><br />
-                <small>2</small>
-              </div>
-            </div>
-
-            <div className="card-item-indicator">
-              <span className='icon'><TaskAltIcon sx={{ fontSize: 18 }} /></span>
-
-              <div className="item-body">
-                <small>Tareas en Finalizadas</small><br />
-                <small>2</small>
-              </div>
-            </div>
-          </div>
-          
           <div className='bt-task' >
             <div className="btn-tarea">
               <CreateTask />
@@ -104,7 +76,7 @@ function TabsTaskMnagaer() {
           </div>
 
           <div className="request-generate">
-            <TableSolicitud />
+            <TaskList />
           </div>
 
         </div>
