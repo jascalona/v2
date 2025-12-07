@@ -31,7 +31,6 @@ function DetallesSolicitud() {
                     <div className="activities">
                         <h4>Actividades vinculadas</h4>
 
-
                         <div className="asociados">
                             <DetallesTarea />
                         </div>
@@ -40,7 +39,6 @@ function DetallesSolicitud() {
                             <DetallesEscalamiento />
                         </div>
                     </div>
-
                 </div>
 
                 {/* Este será el Sidebar derecho */}
