@@ -78,11 +78,23 @@ function TabsTaskMnagaer() {
           <div className="request-generate">
             <TaskList />
           </div>
-
         </div>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Asignado
+        <div className="container-resumen-activities">
+          <h3>Gestion de Escalamientos</h3>
+
+          <div className='bt-task' >
+            <div className="btn-tarea">
+              <CreateTask />
+            </div>
+          </div>
+
+          <div className="request-generate">
+            <TaskList />
+          </div>
+
+        </div>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         Actividades

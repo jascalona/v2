@@ -1,0 +1,98 @@
+.container-interface-description {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.container-desc-soli {
+    grid-column: 1 / 2;
+    padding-right: 20px;
+}
+
+.content-details {
+    padding: 0px 25px;
+    max-height: 450px;
+    overflow: auto;
+}
+
+h2 {
+    font-size: 25px;
+}
+
+h4 {
+    font-size: 20px;
+}
+
+hr {
+    border: solid 1px #ccc2c271;
+}
+
+.content-details p {
+    line-height: 1.5;
+    font-size: 18px;
+}
+
+.activities {
+    margin-top: 50px;
+}
+
+.sidebar-content-soli {
+    line-height: 3;
+}
+
+.descript-solution{
+    padding: 8px;
+}
+
+.descript-solution p{
+    font-size: 14px;
+}
+
+.sidebar-content-soli .item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container-detalles {
+    grid-column: 2 / 3;
+    border-left: 1px solid #ddd;
+    padding: 10px;
+}
+
+/* Estilos de la barra de scroll para .content-details (Webkit) */
+.content-details::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content-details::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.content-details::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.content-details::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Estilos de la barra de scroll para .content-details (Firefox) */
+.content-details {
+    scrollbar-width: thin;
+    scrollbar-color: #ccc #f1f1f1;
+}
+
+@media (max-width: 1660px) {
+    .container-interface-description {
+        grid-template-columns: 1fr;
+    }
+
+    .container-detalles {
+        margin-top: 30px;
+        grid-column: 1 / 1;
+        border-left: none;
+    }
+}

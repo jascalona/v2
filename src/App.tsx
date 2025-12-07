@@ -33,6 +33,7 @@ import SubCategory from './interface/setting/master_core/sub_category';
 import Article from './interface/setting/master_core/article';
 import SLA from './interface/setting/master_core/sla';
 import Login from './interface/login';
+import DetallesSolicitud from './interface/setting/component/details'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -51,6 +52,7 @@ function App() {
             <Route path='product' element={<Project />} />
             <Route path='uirequest' element={<UIRequest />} />
             <Route path='taskmanager' element={<TaskManager />} />
+            <Route path='detalles' element={<DetallesSolicitud />}/>
 
             {/*RUTA PARA DIRECTORIO SETTING*/}
             <Route path='setting' element={<Setting />}>
