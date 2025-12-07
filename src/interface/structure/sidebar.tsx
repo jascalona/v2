@@ -45,24 +45,23 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             <Link to="activities" onClick={toggleSidebar}><span className="nav-icon"><AutoStoriesIcon /></span> Para mi</Link>
           </li>
           <li className="nav-item has-dropdown">
-            <Link to="setting" onClick={toggleSidebar}><span className="nav-icon"><SettingsIcon /></span> Herramientas</Link>
-          </li>
-          <li className="nav-item has-dropdown">
             <Link to="uirequest" onClick={toggleSidebar}><span className="nav-icon"><MarkUnreadChatAltIcon /></span> Solicitudes</Link>
           </li>
           <li className="nav-item has-dropdown">
             <Link to="taskmanager" onClick={toggleSidebar}><span className="nav-icon"><AddTaskIcon /></span> Task Manager</Link>
           </li>
         </ul>
-
+        <li className="nav-item">
+          <Link to="inbox" onClick={toggleSidebar}><span className="nav-icon"><SupervisorAccountIcon /></span> Clientes</Link>
+        </li>
         <div className="nav-separator">Espacio de trabajo</div>
 
         <ul>
           <li className="nav-item">
             <Link to="product" onClick={toggleSidebar}><span className="nav-icon"><PrecisionManufacturingIcon /></span> Productos</Link>
           </li>
-          <li className="nav-item">
-            <Link to="inbox" onClick={toggleSidebar}><span className="nav-icon"><SupervisorAccountIcon /></span> Clientes</Link>
+          <li className="nav-item has-dropdown">
+            <Link to="setting" onClick={toggleSidebar}><span className="nav-icon"><SettingsIcon /></span> Herramientas</Link>
           </li>
           <li className="nav-item">
             <Link to="proyectos" onClick={toggleSidebar}><span className="nav-icon"><ColorLensIcon /></span> Proyectos</Link>

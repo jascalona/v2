@@ -1,0 +1,160 @@
+/*
+ * Archivo: TaskList.css
+ * Contiene todos los estilos para el componente TaskList.tsx
+ */
+
+/* --- Contenedor Principal --- */
+.task-list-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 20px 0; /* Estilo adicional para centrar/mostrar mejor */
+}
+
+/* --- Estructura de la Tabla (Grid) --- */
+.task-row-grid,
+.header-row {
+    display: grid;
+    /* Definición de columnas: Nombre | Persona | Fecha | Prioridad | Extra */
+    grid-template-columns: minmax(200px, 4fr) 1fr 1fr 1fr 20px;
+    align-items: center;
+    transition: .1s;
+}
+
+.task-row-grid:hover{
+    background: #9498a243;
+}
+
+/* --- Fila de Cabecera (Header) --- */
+.header-row {
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+    color: #909090;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.header-row > div:first-child {
+    /* Ajuste para alinear con el círculo de estado de la tarea */
+    margin-left: 26px; 
+}
+
+/* --- Filas de Tarea --- */
+.task-row-grid {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.task-row-active {
+    background-color: #F7F7F7; /* Fondo gris claro para tarea seleccionada/activa */
+}
+
+/* --- Columna Nombre de la Tarea --- */
+.task-name-cell {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    color: #303030;
+}
+
+.group-task-count {
+    background-color: #e0e0e0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+/* --- Añadir Tarea --- */
+.add-task-button {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #909090;
+    padding: 5px 0;
+    margin-top: 5px;
+}
+
+.add-task-text {
+    margin-left: 8px;
+}
+
+/* --- Componentes de Iconos Reutilizables --- */
+
+/* Círculo de Estado (StatusCircle) */
+.status-circle {
+    font-size: 18px;
+    margin-right: 8px;
+    cursor: pointer;
+    color: #909090; /* Gris por defecto (pendiente) */
+}
+
+.status-circle.completed {
+    color: #1A73E8; /* Azul (completado/seleccionado) */
+}
+
+/* Información de Tarea (TaskInfoIcons) */
+.task-info-icons {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #909090;
+}
+
+.task-info-icons .active-marker {
+    color: #1A73E8;
+    margin-right: 4px;
+}
+
+/* Estilos de los detalles de la tarea */
+.task-detail-icon {
+    margin-right: 4px;
+}
+
+/* Estilos de la etiqueta (Tag) */
+.task-tag {
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    margin-right: 4px;
+}
+
+/* Icono de Persona Asignada (AssignedPersonIcon) */
+.assigned-person-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #303030;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+/* Fecha Límite (Date) */
+.date-text {
+    color: #909090;
+    font-size: 14px;
+}
+
+.date-text.urgent-date {
+    color: red;
+    font-weight: bold;
+}
+
+/* Prioridad (PriorityIcon) */
+.priority-icon {
+    font-size: 18px;
+    color: #909090;
+}
+
+.priority-urgent-text {
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: 4px;
+}

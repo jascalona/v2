@@ -9,7 +9,7 @@ import TableSolicitud from "./setting/component/table/table_solicitud";
 import ModalSolicitud from "./setting/component/modal/modal_request";
 import CreateTask from "./setting/component/modal/modal_task";
 import ListTask from "./setting/component/card/list_task";
-
+import TaskList from './setting/component/table/table_soli'
 
 import '../assets/css/dropdown.css'
 
@@ -87,7 +87,7 @@ function UIRequest() {
 
 
                 <div className="request-generate">
-                    <TableSolicitud />
+                    <TaskList />
                 </div>
 
 
