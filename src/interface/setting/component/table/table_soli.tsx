@@ -6,7 +6,7 @@ import '../../../../assets/css/table_task.css'
 //Icons
 import FlagIcon from '@mui/icons-material/Flag';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-
+import CircleIcon from '@mui/icons-material/Circle';
 
 // --- TIPOS DE DATOS ---
 interface Solicitud {
@@ -76,7 +76,7 @@ const StatusCircle: React.FC<{ status: Solicitud['stSolicitud'] }> = ({ status }
 
     return (
         <span className={statusClass} title={`Estado: ${status}`}>
-            {isCompleted ? '🔵' : '🟡'}
+            <CircleIcon sx={{fontSize: 20}}/>
         </span>
     );
 };

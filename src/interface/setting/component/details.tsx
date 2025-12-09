@@ -3,19 +3,18 @@ import TextField from '@mui/material/TextField';
 import { styled } from '@mui/system';
 
 // Hooks para recibir datos y redirigir
-import { useLocation, useNavigate } from 'react-router-dom'; 
+import { useLocation, useNavigate } from 'react-router-dom';
 
-// Componentes Auxiliares
+// Componentes
 import DetailsSoli from '../component/accordion/detalle_soli';
 import DetallesTarea from '../component/accordion/detalle_tareas';
 import DetallesEscalamiento from '../component/accordion/detalle_escalamiento';
 
-// --- TIPOS DE DATOS ---
 interface Solicitud {
     cliComercio: string,
     cliDirecto: string,
     coAmbiente: string,
-    coPrioridad: string, 
+    coPrioridad: string,
     coProducto: string,
     coSLA: string,
     coSolicitud: string,
@@ -24,23 +23,20 @@ interface Solicitud {
     co_user_credor_soli: string,
     c_user_resolutor: string,
     feCierre: string,
-    feRegistro: string, 
+    feRegistro: string,
     feResolucion: string,
     fe_ult_modif: string,
-    feVencimiento: string, 
+    feVencimiento: string,
     nbContacto: string,
     nuContacto: string,
-    stSolicitud: string, 
-    txAsunto: string, 
+    stSolicitud: string,
+    txAsunto: string,
     txCusaSoli: string,
     tx_desc_resolucion: string,
-    txDesSoli: string, // Usado para el INPUT DE DESCRIPCIÓN
+    txDesSoli: string,
     txNota: string,
 }
 
-// ----------------------------------------------------
-// DEFINICIÓN COMPLETA DE StyledTextField (sin cambios)
-// ----------------------------------------------------
 const StyledTextField = styled(TextField, {
     shouldForwardProp: (prop) => prop !== 'isCurrentlyEditing' && prop !== 'multilineInput',
 })(({ theme, isCurrentlyEditing, multilineInput }) => ({
@@ -75,7 +71,7 @@ const StyledTextField = styled(TextField, {
 function DetallesSolicitud() {
     // Obtener la data y el hook de navegación
     const location = useLocation();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const selectedSolicitud: Solicitud | undefined = location.state?.solicitudSeleccionada;
 
     // Estados
@@ -90,14 +86,14 @@ function DetallesSolicitud() {
         if (!selectedSolicitud) {
             console.warn("Acceso directo detectado. Redirigiendo a la lista.");
             // Redirige a la ruta donde está TaskList, asumiendo /taskmanager
-            navigate('/', { replace: true });
-            return; 
+            navigate('/uirequest', { replace: true });
+            return;
         }
 
         // Renderizado: Si hay datos, pobla los estados.
-        setDescripcionValue(selectedSolicitud.txDesSoli || 'No se encontró descripción.'); 
+        setDescripcionValue(selectedSolicitud.txDesSoli || 'No se encontró descripción.');
         setTitulo(selectedSolicitud.txAsunto || `Solicitud ${selectedSolicitud.coSolicitud}`);
-        
+
         const registro = selectedSolicitud.feRegistro ? selectedSolicitud.feRegistro.replace('T', ' ').substring(0, 19) : 'N/A';
         setFechaRegistro(registro);
 
@@ -108,9 +104,8 @@ function DetallesSolicitud() {
     const handleInputBlur = () => { setEditingField(null); };
     const isCurrentlyEditing = (fieldName) => editingField === fieldName;
 
-    // Si no hay datos, mostramos un mensaje temporal mientras ocurre la redirección
     if (!selectedSolicitud) {
-        return <p>Cargando o redirigiendo...</p>; 
+        return <p>Cargando o redirigiendo...</p>;
     }
 
     return (
@@ -118,21 +113,19 @@ function DetallesSolicitud() {
             <div className="container-interface-description">
                 <div className="container-desc-soli">
 
-                    {/* Título dinámico */}
                     <h2 style={{ margin: 0, paddingBottom: '5px' }}>{titulo}</h2>
                     <small style={{ fontSize: 13 }}><strong> Creado el: <span>{fechaRegistro}</span></strong></small>
 
 
                     <h4 style={{ marginTop: '40px' }}>Descripción</h4>
                     <div className="content-details">
-                        {/* INPUT: Descripción (Renderizado con datos de la fila) */}
                         <StyledTextField
                             fullWidth
                             placeholder="Haz clic para editar la descripción..."
                             variant="outlined"
                             size="small"
                             multiline
-                            value={descripcionValue} 
+                            value={descripcionValue}
                             onChange={(e) => setDescripcionValue(e.target.value)}
                             onFocus={() => handleInputFocus('descripcion')}
                             onBlur={handleInputBlur}
@@ -155,7 +148,6 @@ function DetallesSolicitud() {
                     </div>
                 </div>
 
-                {/* Sidebar derecho */}
                 <div className="container-detalles">
                     <DetailsSoli solicitud={selectedSolicitud} />
                 </div>

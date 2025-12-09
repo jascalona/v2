@@ -20,7 +20,7 @@ const StyledTextField = styled(TextField, {
         height: multilineInput ? 'auto' : '40px',
         cursor: isCurrentlyEditing ? 'text' : 'pointer',
 
-        // 1. ESTILOS DE SÓLO LECTURA
+        // ESTILOS DE SÓLO LECTURA
         ...(isCurrentlyEditing === false && {
             '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
             '& .MuiOutlinedInput-input': { padding: multilineInput ? '0px 14px' : '6px 14px' },
@@ -65,7 +65,7 @@ interface DetailsSoliProps {
 }
 
 
-// 🔑 Componente que recibe 'solicitud' como prop
+// Componente que recibe 'solicitud' como prop
 function DetailsSoli({ solicitud }: DetailsSoliProps) {
     const [editingField, setEditingField] = useState<string | null>(null);
 
