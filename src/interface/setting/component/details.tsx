@@ -12,6 +12,7 @@ import DetallesEscalamiento from '../component/accordion/detalle_escalamiento';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import SaveIcon from '@mui/icons-material/Save';
+import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 
 
 interface Solicitud {
@@ -120,6 +121,11 @@ function DetallesSolicitud() {
                     <h2 style={{ margin: 0, paddingBottom: '5px' }}>{titulo}</h2>
                     <small style={{ fontSize: 13 }}><strong> Creado el: <span>{fechaRegistro}</span></strong></small>
 
+                    <div className="btn-group">
+                        <button className='btn-crud'>
+                            <StickyNote2Icon sx={{color: '#fff'}}/>
+                        </button>
+                    </div>
 
                     <h4 style={{ marginTop: '40px' }}>Descripción</h4>
                     <div className="content-details">
@@ -136,7 +142,7 @@ function DetallesSolicitud() {
                             onClick={() => handleInputFocus('descripcion')}
                             isCurrentlyEditing={isCurrentlyEditing('descripcion')}
                             multilineInput={true}
-                        />  
+                        />
                     </div>
 
                     <div className="activities">
@@ -171,7 +177,7 @@ function DetallesSolicitud() {
                     zIndex: 1000,
                 }}
             >
-                <Fab color='primary' variant="extended">
+                <Fab variant="extended" style={{background: 'rgb(0, 0, 255)', color: '#fff'}}>
                     <SaveIcon sx={{ mr: 1 }} />
                     Guardar
                 </Fab>

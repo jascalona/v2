@@ -88,3 +88,17 @@ hr {
         border-left: none;
     }
 }
+
+
+/*BOTON CROUD*/
+.btn-group{
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.btn-crud{
+    background: rgb(0, 0, 255);
+    border: none;
+    border-radius: 10px;
+    padding: 5px 8px;
+}
