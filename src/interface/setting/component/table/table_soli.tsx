@@ -29,8 +29,8 @@ interface Solicitud {
     feVencimiento: string, // Usaremos este como "Fecha Límite"
     nbContacto: string,
     nuContacto: string,
-    stSolicitud: string, // Usaremos este para el estado/grupo (PENDIENTE, EN PROCESO, CERRADO, etc.)
-    txAsunto: string, // Usaremos este como el "Asunto" de la tarea
+    stSolicitud: string, 
+    txAsunto: string, 
     txCusaSoli: string,
     tx_desc_resolucion: string,
     txDesSoli: string,
@@ -57,10 +57,8 @@ const CalendarIcon: React.FC = () => (
 
 const PriorityIcon: React.FC<{ priority: Solicitud['coPrioridad'] }> = ({ priority }) => {
 
-    // 1. Aseguramos que 'priority' es un string válido, si no lo es, usamos un string vacío o 'SIN PRIORIDAD'
-    const priorityString = String(priority || '').trim(); // Convierte a string, usa '' si es null/undefined, y limpia espacios.
+    const priorityString = String(priority || '').trim(); 
 
-    // 2. Usamos el string seguro para convertir a mayúsculas
     const p = priorityString.toUpperCase();
 
     // Clasificación de prioridad (la misma lógica que antes)
@@ -82,7 +80,6 @@ const AddIcon: React.FC = () => (
 
 // Modificado para usar stSolicitud
 const StatusCircle: React.FC<{ status: Solicitud['stSolicitud'] }> = ({ status }) => {
-    // Asumimos 'CERRADO' o 'RESUELTO' es completado, ajusta según tu lógica de BD
     const isCompleted = status?.toUpperCase() === 'CERRADO' || status?.toUpperCase() === 'RESUELTO';
     const statusClass = `status-circle ${isCompleted ? 'completed' : 'in-progress'}`;
 
@@ -114,7 +111,7 @@ const TaskList: React.FC = () => {
             });
     }, []);
 
-    // 2. Lógica de Agrupación (useMemo para optimizar el rendimiento)
+    // Lógica de Agrupación (useMemo para optimizar el rendimiento)
     const groupedTasks: TaskGroup[] = useMemo(() => {
         if (solicitudes.length === 0) return [];
 
@@ -149,7 +146,7 @@ const TaskList: React.FC = () => {
         return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     };
 
-    // 3. Renderizado de los datos agrupados
+    // Renderizado de los datos agrupados
     return (
         <div className="task-list-container">
 
@@ -205,7 +202,7 @@ const TaskList: React.FC = () => {
 
                                 {/* Columna Fecha límite (feVencimiento) */}
                                 <div className={dateClass}>
-                                    {soli.feVencimiento ? soli.feVencimiento.split('T')[0] : <CalendarIcon />} {/* Muestra solo la fecha */}
+                                    {soli.feVencimiento ? soli.feVencimiento.split('T')[0] : <CalendarIcon />} 
                                 </div>
 
                                 {/* Columna Prioridad (coPrioridad) */}

@@ -37,10 +37,6 @@ hr {
     margin-top: 50px;
 }
 
-.sidebar-content-soli {
-    line-height: 3;
-}
-
 .descript-solution{
     padding: 8px;
 }
@@ -49,10 +45,6 @@ hr {
     font-size: 14px;
 }
 
-.sidebar-content-soli .item {
-    display: flex;
-    justify-content: space-between;
-}
 
 .container-detalles {
     grid-column: 2 / 3;
@@ -96,3 +88,5 @@ hr {
         border-left: none;
     }
 }
+
+

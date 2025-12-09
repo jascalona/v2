@@ -1,33 +1,110 @@
-import { useState } from "react";
-// Asegúrate de que esta ruta apunte al archivo CSS que contendrá los nuevos estilos
-import '../../../assets/css/details.css';
+import React, { useState } from 'react'; 
+import TextField from '@mui/material/TextField';
+import { styled } from '@mui/system';
 
-// componentes
+// Componentes Auxiliares
 import DetailsSoli from '../component/accordion/detalle_soli';
 import DetallesTarea from '../component/accordion/detalle_tareas';
 import DetallesEscalamiento from '../component/accordion/detalle_escalamiento';
 
+// ----------------------------------------------------
+// DEFINICIÓN COMPLETA DE StyledTextField (Ajustes de Borde Incluidos)
+// ----------------------------------------------------
+const StyledTextField = styled(TextField, {
+    shouldForwardProp: (prop) => prop !== 'isCurrentlyEditing' && prop !== 'multilineInput',
+})(({ theme, isCurrentlyEditing, multilineInput }) => ({
+    flexGrow: 1, 
+
+    '& .MuiOutlinedInput-root': {
+        borderRadius: '5px',
+        marginBottom: '0px',
+        height: multilineInput ? 'auto' : '40px',
+        cursor: isCurrentlyEditing ? 'text' : 'pointer',
+
+        // ESTILOS DE SÓLO LECTURA (isCurrentlyEditing === false)
+        ...(isCurrentlyEditing === false && {
+            '& .MuiOutlinedInput-notchedOutline': {
+                border: 'none', 
+            },
+            '& .MuiOutlinedInput-input': {
+                padding: multilineInput ? '0px 14px' : '6px 14px', 
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+                border: 'none',
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                border: 'none',
+            },
+        }),
+        
+        // ESTILOS DE EDICIÓN (isCurrentlyEditing === true) - BORDES PERSONALIZADOS
+        ...(isCurrentlyEditing === true && {
+             '& .MuiOutlinedInput-input': {
+                padding: multilineInput ? '10px' : '6px 14px',
+            },
+
+            '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#A0A0A0', // Color base del borde
+                borderWidth: '1px',      
+            },
+
+            // B. Borde en HOVER
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#707070', // Color al pasar el ratón
+            },
+            
+            // C. Borde en FOCO
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#7070709d', // Color de foco personalizado
+            },
+        }),
+    },
+}));
+// ----------------------------------------------------
+
 
 function DetallesSolicitud() {
+    const [descripcionValue, setDescripcionValue] = useState('Texto de la descripción actual...');
+    const [editingField, setEditingField] = useState(null); 
+
+    const handleInputFocus = (fieldName) => {
+        setEditingField(fieldName);
+    };
+
+    const handleInputBlur = () => {
+        setEditingField(null);
+    };
+
+    const isCurrentlyEditing = (fieldName) => editingField === fieldName;
+
     return (
         <>
-            {/* Usaremos esta clase para establecer Flexbox/Grid y la disposición de las columnas */}
             <div className="container-interface-description">
                 <div className="container-desc-soli">
+                    
                     <h2 style={{ margin: 0, paddingBottom: '5px' }}>REVISION DE INCIDENCIA SIMF PRODUCCION</h2>
                     <small style={{ fontSize: 13 }}><strong> Creado el: <span>2025-12-05 12:25:01</span></strong></small>
 
                     <h4 style={{ marginTop: '40px' }}>Descripción</h4>
                     <div className="content-details">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, sequi?
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut cupiditate facere exercitationem rem ipsum minus quisquam suscipit.
-                            Tempora debitis, molestias quis omnis illum eveniet nisi explicabo odit porro voluptas facere?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi a maxime et praesentium cupiditate vitae possimus tenetur adipisci, illo sit, velit culpa deserunt nisi! Dicta porro alias eos exercitationem! Quis dolorum omnis deleniti nihil quibusdam, iure incidunt optio itaque, esse, alias sed ipsam maiores cum facilis fuga illum? Pariatur voluptate nulla temporibus voluptatem esse sint omnis, consequatur, praesentium repudiandae quia iure sed, suscipit sapiente cumque assumenda accusamus dolorum rem natus enim ipsam libero ad perferendis nobis. Reprehenderit aliquid dolores aut maiores error commodi corrupti amet veniam at, itaque, magni tempora, labore temporibus harum ex a minus quam eum ab cum!
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi a maxime et praesentium cupiditate vitae possimus tenetur adipisci, illo sit, velit culpa deserunt nisi! Dicta porro alias eos exercitationem! Quis dolorum omnis deleniti nihil quibusdam, iure incidunt optio itaque, esse, alias sed ipsam maiores cum facilis fuga illum? Pariatur voluptate nulla temporibus voluptatem esse sint omnis, consequatur, praesentium repudiandae quia iure sed, suscipit sapiente cumque assumenda accusamus dolorum rem natus enim ipsam libero ad perferendis nobis. Reprehenderit aliquid dolores aut maiores error commodi corrupti amet veniam at, itaque, magni tempora, labore temporibus harum ex a minus quam eum ab cum!
-
-                        </p>
+                        {/* INPUT: Descripción */}
+                        <StyledTextField 
+                            fullWidth
+                            placeholder="Haz clic para editar la descripción..."
+                            variant="outlined"
+                            size="small"
+                            multiline
+                            value={descripcionValue}
+                            onChange={(e) => setDescripcionValue(e.target.value)}
+                            // Lógica de edición
+                            onFocus={() => handleInputFocus('descripcion')}
+                            onBlur={handleInputBlur}
+                            onClick={() => handleInputFocus('descripcion')} 
+                            isCurrentlyEditing={isCurrentlyEditing('descripcion')}
+                            multilineInput={true}
+                        />
                     </div>
-
+                    
                     <div className="activities">
                         <h4>Actividades vinculadas</h4>
 
@@ -41,7 +118,7 @@ function DetallesSolicitud() {
                     </div>
                 </div>
 
-                {/* Este será el Sidebar derecho */}
+                {/* Sidebar derecho */}
                 <div className="container-detalles">
                     <DetailsSoli />
                 </div>
@@ -49,4 +126,4 @@ function DetallesSolicitud() {
         </>
     )
 }
-export default DetallesSolicitud
+export default DetallesSolicitud;

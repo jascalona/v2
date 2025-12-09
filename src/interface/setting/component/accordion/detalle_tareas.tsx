@@ -5,6 +5,10 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../../../../assets/css/details.css'
 
+//Componentes
+import TaskList from '../table/table_soli';
+
+
 //Icons
 
 function DetallesTarea() {
@@ -24,8 +28,7 @@ function DetallesTarea() {
                 </AccordionSummary>
                 <AccordionDetails style={{paddingTop: 30}}>
                     <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                       <TaskList />
                     </Typography>
                 </AccordionDetails>
             </Accordion>
