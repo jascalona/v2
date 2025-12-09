@@ -43,43 +43,43 @@ function App() {
       <Routes>
         <Route path='/' element={<Login />} />
 
-          <Route path='' element={<Layout />}>
+        <Route path='' element={<Layout />}>
 
-            <Route path='home' element={<Home />} />
-            <Route path='init' element={<MainInterface />} />
-            <Route path='inbox' element={<Inbox />} />
-            <Route path='activities' element={<Activities />} />
-            <Route path='product' element={<Project />} />
-            <Route path='uirequest' element={<UIRequest />} />
-            <Route path='taskmanager' element={<TaskManager />} />
-            <Route path='detalles' element={<DetallesSolicitud />}/>
+          <Route path='home' element={<Home />} />
+          <Route path='init' element={<MainInterface />} />
+          <Route path='inbox' element={<Inbox />} />
+          <Route path='activities' element={<Activities />} />
+          <Route path='product' element={<Project />} />
+          <Route path='uirequest' element={<UIRequest />} />
+          <Route path='taskmanager' element={<TaskManager />} />
+          <Route path='detalles' element={<DetallesSolicitud />} />
+          
+          {/*RUTA PARA DIRECTORIO SETTING*/}
+          <Route path='setting' element={<Setting />}>
 
-            {/*RUTA PARA DIRECTORIO SETTING*/}
-            <Route path='setting' element={<Setting />}>
+            <Route path='general' element={<General />} >
+              <Route path='empresa' element={<Empresa />} />
+              <Route path='area' element={<Area />} />
+              <Route path='subarea' element={<Subarea />} />
+            </Route>
 
-              <Route path='general' element={<General />} >
-                <Route path='empresa' element={<Empresa />} />
-                <Route path='area' element={<Area />} />
-                <Route path='subarea' element={<Subarea />} />
-              </Route>
-
-              {/*RUTAS PARA DIRECTORIO CORE MASTER*/}
-              <Route path='mastercore' element={<MasterCore />} >
-                <Route path='product' element={<Product />} />
-                <Route path='componentes' element={<Componentes />} />
-                <Route path='category' element={<Category />} />
-                <Route path='subcategory' element={<SubCategory />} />
-                <Route path='article' element={<Article />} />
-                <Route path='sla' element={<SLA />} />
-
-              </Route>
-
-              <Route path='members' element={<Members />} />
-              <Route path='managerproduct' element={<ManagerProduct />} />
+            {/*RUTAS PARA DIRECTORIO CORE MASTER*/}
+            <Route path='mastercore' element={<MasterCore />} >
+              <Route path='product' element={<Product />} />
+              <Route path='componentes' element={<Componentes />} />
+              <Route path='category' element={<Category />} />
+              <Route path='subcategory' element={<SubCategory />} />
+              <Route path='article' element={<Article />} />
+              <Route path='sla' element={<SLA />} />
 
             </Route>
 
+            <Route path='members' element={<Members />} />
+            <Route path='managerproduct' element={<ManagerProduct />} />
+
           </Route>
+
+        </Route>
 
 
       </Routes >

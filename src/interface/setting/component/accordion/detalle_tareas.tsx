@@ -6,7 +6,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../../../../assets/css/details.css'
 
 //Componentes
-import TaskList from '../table/table_soli';
+import TaskList from '../table/tabla_tarea';
 
 
 //Icons

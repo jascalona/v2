@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import '../../../../assets/css/table_task.css' // Asumiendo que esta ruta es correcta
+import { useNavigate } from 'react-router-dom'; // <-- Hook para la navegación
+import '../../../../assets/css/table_task.css' 
 
 //Icons
 import FlagIcon from '@mui/icons-material/Flag';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
 
@@ -14,26 +13,26 @@ interface Solicitud {
     cliComercio: string,
     cliDirecto: string,
     coAmbiente: string,
-    coPrioridad: string, // Usaremos este para la prioridad
+    coPrioridad: string, 
     coProducto: string,
     coSLA: string,
     coSolicitud: string,
     co_tip_solicitud: string,
     coUserCierre: string,
     co_user_credor_soli: string,
-    c_user_resolutor: string, // Usaremos este como "Persona asignada"
+    c_user_resolutor: string, // Persona asignada
     feCierre: string,
-    feRegistro: string,
+    feRegistro: string, // Fecha de registro
     feResolucion: string,
     fe_ult_modif: string,
-    feVencimiento: string, // Usaremos este como "Fecha Límite"
+    feVencimiento: string, // Fecha Límite
     nbContacto: string,
     nuContacto: string,
-    stSolicitud: string, 
-    txAsunto: string, 
+    stSolicitud: string, // Estado
+    txAsunto: string, // Título
     txCusaSoli: string,
     tx_desc_resolucion: string,
-    txDesSoli: string,
+    txDesSoli: string, // Descripción
     txNota: string,
 }
 
@@ -43,7 +42,7 @@ interface TaskGroup {
     tasks: Solicitud[];
 }
 
-// --- COMPONENTES REUTILIZABLES (Actualizados) ---
+// --- COMPONENTES REUTILIZABLES ---
 
 const AssignedPersonIcon: React.FC<{ initials: string }> = ({ initials }) => (
     <div className="assigned-person-icon">
@@ -56,16 +55,9 @@ const CalendarIcon: React.FC = () => (
 );
 
 const PriorityIcon: React.FC<{ priority: Solicitud['coPrioridad'] }> = ({ priority }) => {
-
     const priorityString = String(priority || '').trim(); 
-
-    const p = priorityString.toUpperCase();
-
-    // Clasificación de prioridad (la misma lógica que antes)
-    let icon = <FlagIcon sx={{ fontSize: 18 }} />; // Por defecto
+    let icon = <FlagIcon sx={{ fontSize: 18 }} />; 
     let iconClass = 'priority-icon';
-
-
 
     return (
         <span className={iconClass} title={`Prioridad: ${priorityString}`}>
@@ -78,7 +70,6 @@ const AddIcon: React.FC = () => (
     <span className="add-icon">+</span>
 );
 
-// Modificado para usar stSolicitud
 const StatusCircle: React.FC<{ status: Solicitud['stSolicitud'] }> = ({ status }) => {
     const isCompleted = status?.toUpperCase() === 'CERRADO' || status?.toUpperCase() === 'RESUELTO';
     const statusClass = `status-circle ${isCompleted ? 'completed' : 'in-progress'}`;
@@ -95,8 +86,17 @@ const StatusCircle: React.FC<{ status: Solicitud['stSolicitud'] }> = ({ status }
 const TaskList: React.FC = () => {
     const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
     const [cargando, setCargando] = useState(true);
+    
+    const navigate = useNavigate(); 
 
-    // 1. Carga de datos de la BD
+    // Función para manejar el click en la fila y la redirección
+    const handleRowClick = (solicitud: Solicitud) => {
+        // Redirige a /detalles y pasa el objeto 'solicitud' completo en el estado
+        navigate('/detalles', { state: { solicitudSeleccionada: solicitud } });
+    };
+
+
+    // Carga de datos de la BD
     useEffect(() => {
         axios.get<Solicitud[]>("http://localhost:8080/basetomee/solicitud/list")
             .then(response => {
@@ -106,17 +106,16 @@ const TaskList: React.FC = () => {
             .catch(error => {
                 console.error("Hubo un error al obtener los registros", error);
                 setCargando(false);
-                // Si la solicitud falla, inicializa con un array vacío para evitar errores
                 setSolicitudes([]);
             });
     }, []);
 
-    // Lógica de Agrupación (useMemo para optimizar el rendimiento)
+
+    // Lógica de Agrupación
     const groupedTasks: TaskGroup[] = useMemo(() => {
         if (solicitudes.length === 0) return [];
 
         const groupsMap = solicitudes.reduce((acc, soli) => {
-            // Usamos stSolicitud como la clave para agrupar
             const status = soli.stSolicitud || 'SIN ESTADO';
 
             if (!acc[status]) {
@@ -127,9 +126,8 @@ const TaskList: React.FC = () => {
             return acc;
         }, {} as Record<string, TaskGroup>);
 
-        // Convertir el mapa de grupos a un array para renderizar
         return Object.values(groupsMap);
-    }, [solicitudes]); // Se recalcula si 'solicitudes' cambia
+    }, [solicitudes]); 
 
 
     if (cargando) return <p>Cargando registros...</p>
@@ -138,7 +136,7 @@ const TaskList: React.FC = () => {
 
     // Función auxiliar para obtener las iniciales del asignado
     const getInitials = (fullName: string | undefined): string => {
-        if (!fullName) return 'NA'; // No Asignado
+        if (!fullName) return 'NA'; 
         const parts = fullName.split(' ').filter(p => p.length > 0);
         if (parts.length === 0) return 'NA';
         if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
@@ -163,19 +161,17 @@ const TaskList: React.FC = () => {
                 <span className="add-task-text">Solicitudes</span>
             </div>
 
-            {/* Renderizado de los grupos de solicitudes (agrupados por stSolicitud) */}
+            {/* Renderizado de los grupos de solicitudes */}
             {groupedTasks.map((group) => (
                 <React.Fragment key={group.name}>
 
                     {/* Renderizado de las solicitudes dentro del grupo */}
                     {group.tasks.map((soli) => {
 
-                        // Determinar si la fecha de vencimiento es urgente
                         const dueDate = soli.feVencimiento ? new Date(soli.feVencimiento) : null;
                         const today = new Date();
                         const isOverdue = dueDate && dueDate < today;
 
-                        // Clases condicionales
                         const rowClass = `task-row-grid`;
                         const dateClass = `date-text ${isOverdue ? 'urgent-date' : ''}`;
 
@@ -183,7 +179,11 @@ const TaskList: React.FC = () => {
                         const assignedInitials = getInitials(assignedUser);
 
                         return (
-                            <div key={soli.coSolicitud} className={rowClass}>
+                            <div 
+                                key={soli.coSolicitud} 
+                                className={rowClass}
+                                onClick={() => handleRowClick(soli)} // <-- Click que redirige
+                                style={{cursor: 'pointer' }}    >
 
                                 {/* Columna Asunto (txAsunto) */}
                                 <div className="task-name-cell">
@@ -202,7 +202,7 @@ const TaskList: React.FC = () => {
 
                                 {/* Columna Fecha límite (feVencimiento) */}
                                 <div className={dateClass}>
-                                    {soli.feVencimiento ? soli.feVencimiento.split('T')[0] : <CalendarIcon />} 
+                                    {soli.feVencimiento ? soli.feVencimiento.split('T')[0] : <CalendarIcon />}
                                 </div>
 
                                 {/* Columna Prioridad (coPrioridad) */}

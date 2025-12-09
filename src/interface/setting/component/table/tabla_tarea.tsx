@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import '../../../../assets/css/table_task.css' // Asumiendo que esta ruta es correcta
+import '../../../../assets/css/table_task.css' 
 
 //Icons
 import FlagIcon from '@mui/icons-material/Flag';
@@ -63,6 +63,18 @@ const AddIcon: React.FC = () => (
 );
 
 
+
+// Modificado para usar stSolicitud
+const StatusCircle: React.FC<{ status: Solicitud['st_estado'] }> = ({ status }) => {
+    const isCompleted = status?.toUpperCase() === 'CERRADO' || status?.toUpperCase() === 'RESUELTO';
+    const statusClass = `status-circle ${isCompleted ? 'completed' : 'in-progress'}`;
+
+    return (
+        <span className={statusClass} title={`Estado: ${status}`}>
+            {isCompleted ? '🔵' : '🟡'}
+        </span>
+    );
+};
 
 // --- COMPONENTE PRINCIPAL ---
 

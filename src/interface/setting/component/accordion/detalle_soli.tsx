@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // <-- Importar useEffect
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import { styled } from '@mui/system';
 
 
-// Componente auxiliar para aplicar estilos condicionales al TextField
+// Componente auxiliar para aplicar estilos condicionales al TextField (sin cambios)
 const StyledTextField = styled(TextField, {
     shouldForwardProp: (prop) => prop !== 'isCurrentlyEditing' && prop !== 'multilineInput',
 })(({ theme, isCurrentlyEditing, multilineInput }) => ({
@@ -18,57 +18,102 @@ const StyledTextField = styled(TextField, {
         borderRadius: '5px',
         marginBottom: '0px',
         height: multilineInput ? 'auto' : '40px',
-        // Cursor: pointer cuando es solo lectura, text cuando está en edición
         cursor: isCurrentlyEditing ? 'text' : 'pointer',
 
-        // 1. ESTILOS DE SÓLO LECTURA (isCurrentlyEditing === false)
+        // 1. ESTILOS DE SÓLO LECTURA
         ...(isCurrentlyEditing === false && {
-            '& .MuiOutlinedInput-notchedOutline': {
-                border: 'none',
-            },
-            '& .MuiOutlinedInput-input': {
-                padding: multilineInput ? '0px 14px' : '6px 14px',
-            },
-            '&:hover .MuiOutlinedInput-notchedOutline': {
-                border: 'none',
-            },
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                border: 'none',
-            },
+            '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+            '& .MuiOutlinedInput-input': { padding: multilineInput ? '0px 14px' : '6px 14px' },
+            '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none' },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none' },
         }),
 
-        // ESTILOS DE EDICIÓN (isCurrentlyEditing === true) - BORDES PERSONALIZADOS
+        // ESTILOS DE EDICIÓN
         ...(isCurrentlyEditing === true && {
-            '& .MuiOutlinedInput-input': {
-                // Restaurar padding estándar
-                padding: multilineInput ? '10px' : '6px 14px',
-            },
-            '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#A0A0A0', // Color base del borde
-                borderWidth: '1px',
-            },
-
-            // B. Borde en HOVER
-            '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#707070', // Color al pasar el ratón
-            },
-
-            // C. Borde en FOCO
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#7070709d', // Color de foco personalizado
-            },
+            '& .MuiOutlinedInput-input': { padding: multilineInput ? '10px' : '6px 14px' },
+            '& .MuiOutlinedInput-notchedOutline': { borderColor: '#A0A0A0', borderWidth: '1px' },
+            '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#707070' },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#7070709d' },
         }),
     },
 }));
 
+interface Solicitud {
+    cliComercio: string,
+    cliDirecto: string,
+    coAmbiente: string,
+    coPrioridad: string,
+    coProducto: string,
+    coSLA: string,
+    coSolicitud: string,
+    co_tip_solicitud: string,
+    coUserCierre: string,
+    c_user_resolutor: string,
+    feRegistro: string,
+    feVencimiento: string,
+    stSolicitud: string,
+    txDesSoli: string,
+    feResolucion: string,
+    txCusaSoli: string,
+    tx_desc_resolucion: string,
+    txNota: string,
+}
 
-function DetailsSoli() {
-    const [editingField, setEditingField] = useState(null);
-    const [estadoValue, setEstadoValue] = useState('Asignado');
-    const [fechaSolucionValue, setFechaSolucionValue] = useState('2025-12-05');
-    const [resueltoPorValue, setResueltoPorValue] = useState('Jose Escalona');
-    const [causaValue, setCausaValue] = useState('El error fue detectado en la base de datos...');
-    const [observacionesValue, setObservacionesValue] = useState('Todo parece indicar que es un problema de concurrencia.');
+// interfaz de Props: Recibe la solicitud completa
+interface DetailsSoliProps {
+    solicitud?: Solicitud; // Es opcional porque el padre puede pasar 'undefined' si no hay registro
+}
+
+
+// 🔑 Componente que recibe 'solicitud' como prop
+function DetailsSoli({ solicitud }: DetailsSoliProps) {
+    const [editingField, setEditingField] = useState<string | null>(null);
+
+    // Estados iniciales para los inputs
+    const [ambienteValue, setAmbienteValue] = useState('N/A');
+    const [productoValue, setProductoValue] = useState('N/A');
+    const [tipoValue, setTipoValue] = useState('N/A');
+    const [asignadoValue, setAsignadoValue] = useState('N/A');
+    const [prioridadValue, setPrioridadValue] = useState('N/A');
+    const [estadoValue, setEstadoValue] = useState('N/A');
+    const [fechaRegistroValue, setFechaRegistroValue] = useState('N/A');
+    const [fechaVencimientoValue, setFechaVencimientoValue] = useState('N/A');
+    const [clienteValue, setClienteValue] = useState('N/A');
+    const [comercioValue, setComercioValue] = useState('N/A');
+
+    // Estados para la sección "Detalles de Solución"
+    const [estadoSolucionValue, setEstadoSolucionValue] = useState('N/A');
+    const [fechaSolucionValue, setFechaSolucionValue] = useState('N/A');
+    const [resueltoPorValue, setResueltoPorValue] = useState('N/A');
+    const [causaValue, setCausaValue] = useState('N/A');
+    const [observacionesValue, setObservacionesValue] = useState('N/A');
+
+
+    useEffect(() => {
+        if (solicitud) {
+            // Sección "Detalles"
+            setAmbienteValue(solicitud.coAmbiente || 'No definido');
+            setProductoValue(solicitud.coProducto || 'No definido');
+            setTipoValue(solicitud.co_tip_solicitud || 'No definido');
+            setAsignadoValue(solicitud.c_user_resolutor || 'No asignado');
+            setPrioridadValue(solicitud.coPrioridad || 'Baja');
+            setEstadoValue(solicitud.stSolicitud || 'Nuevo');
+            setFechaRegistroValue(solicitud.feRegistro ? solicitud.feRegistro.split('T')[0] : 'N/A');
+            setFechaVencimientoValue(solicitud.feVencimiento ? solicitud.feVencimiento.split('T')[0] : 'N/A');
+            setClienteValue(solicitud.cliDirecto || 'N/A');
+            setComercioValue(solicitud.cliComercio || 'N/A');
+            setEstadoSolucionValue(solicitud.stSolicitud || 'N/A');
+            setFechaSolucionValue(solicitud.feResolucion ? solicitud.feResolucion.split('T')[0] : 'N/A');
+            setResueltoPorValue(solicitud.coUserCierre || 'N/A');
+            setCausaValue(solicitud.txCusaSoli || 'Sin causa registrada.');
+            setObservacionesValue(solicitud.tx_desc_resolucion || 'Sin observaciones.');
+
+        } else {
+            // Resetear o mantener N/A si no hay datos
+            // Los estados iniciales de 'N/A' manejan este caso.
+        }
+    }, [solicitud]); // Se vuelve a ejecutar si la prop 'solicitud' cambia
+
 
     const handleInputFocus = (fieldName) => {
         setEditingField(fieldName);
@@ -101,7 +146,6 @@ function DetailsSoli() {
 
     return (
         <div>
-            {/* Primer Accordion (Detalles) */}
             <Accordion defaultExpanded style={{ background: 'none', boxShadow: 'none', border: 'solid 1px #ccc2c271', borderRadius: '5px' }}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
@@ -115,20 +159,20 @@ function DetailsSoli() {
                     <Typography component="div">
                         <div className="sidebar-content-soli">
 
-                            {/* INPUT: Estado (Añadí onClick para activar la edición en un click) */}
+                            {/* INPUT: Ambiente */}
                             <div style={itemStyle}>
                                 <span style={spanStyle}>Ambiente: </span>
                                 <StyledTextField
                                     fullWidth
-                                    placeholder="Produccion"
+                                    placeholder="N/A"
                                     variant="outlined"
                                     size="small"
-                                    value={estadoValue}
-                                    onChange={(e) => setEstadoValue(e.target.value)}
-                                    onFocus={() => handleInputFocus('estado')}
+                                    value={ambienteValue}
+                                    onChange={(e) => setAmbienteValue(e.target.value)}
+                                    onFocus={() => handleInputFocus('ambiente')}
                                     onBlur={handleInputBlur}
-                                    onClick={() => handleInputFocus('estado')}
-                                    isCurrentlyEditing={isCurrentlyEditing('estado')}
+                                    onClick={() => handleInputFocus('ambiente')}
+                                    isCurrentlyEditing={isCurrentlyEditing('ambiente')}
                                 />
                             </div>
 
@@ -136,15 +180,15 @@ function DetailsSoli() {
                                 <span style={spanStyle}>Prodcuto: </span>
                                 <StyledTextField
                                     fullWidth
-                                    placeholder="Produccion"
+                                    placeholder="N/A"
                                     variant="outlined"
                                     size="small"
-                                    value={estadoValue}
-                                    onChange={(e) => setEstadoValue(e.target.value)}
-                                    onFocus={() => handleInputFocus('estado')}
+                                    value={productoValue}
+                                    onChange={(e) => setProductoValue(e.target.value)}
+                                    onFocus={() => handleInputFocus('producto')}
                                     onBlur={handleInputBlur}
-                                    onClick={() => handleInputFocus('estado')}
-                                    isCurrentlyEditing={isCurrentlyEditing('estado')}
+                                    onClick={() => handleInputFocus('producto')}
+                                    isCurrentlyEditing={isCurrentlyEditing('producto')}
                                 />
                             </div>
 
@@ -153,49 +197,47 @@ function DetailsSoli() {
                                 <span style={spanStyle}>Tipo: </span>
                                 <StyledTextField
                                     fullWidth
-                                    placeholder="Produccion"
+                                    placeholder="N/A"
                                     variant="outlined"
                                     size="small"
-                                    value={estadoValue}
-                                    onChange={(e) => setEstadoValue(e.target.value)}
-                                    onFocus={() => handleInputFocus('estado')}
+                                    value={tipoValue}
+                                    onChange={(e) => setTipoValue(e.target.value)}
+                                    onFocus={() => handleInputFocus('tipo')}
                                     onBlur={handleInputBlur}
-                                    onClick={() => handleInputFocus('estado')}
-                                    isCurrentlyEditing={isCurrentlyEditing('estado')}
+                                    onClick={() => handleInputFocus('tipo')}
+                                    isCurrentlyEditing={isCurrentlyEditing('tipo')}
                                 />
                             </div>
-
 
                             <div style={itemStyle}>
                                 <span style={spanStyle}>Personal asignado: </span>
                                 <StyledTextField
                                     fullWidth
-                                    placeholder="Produccion"
+                                    placeholder="N/A"
                                     variant="outlined"
                                     size="small"
-                                    value={estadoValue}
-                                    onChange={(e) => setEstadoValue(e.target.value)}
-                                    onFocus={() => handleInputFocus('estado')}
+                                    value={asignadoValue}
+                                    onChange={(e) => setAsignadoValue(e.target.value)}
+                                    onFocus={() => handleInputFocus('asignado')}
                                     onBlur={handleInputBlur}
-                                    onClick={() => handleInputFocus('estado')}
-                                    isCurrentlyEditing={isCurrentlyEditing('estado')}
+                                    onClick={() => handleInputFocus('asignado')}
+                                    isCurrentlyEditing={isCurrentlyEditing('asignado')}
                                 />
                             </div>
-
 
                             <div style={itemStyle}>
                                 <span style={spanStyle}>Prioridad: </span>
                                 <StyledTextField
                                     fullWidth
-                                    placeholder="Produccion"
+                                    placeholder="N/A"
                                     variant="outlined"
                                     size="small"
-                                    value={estadoValue}
-                                    onChange={(e) => setEstadoValue(e.target.value)}
-                                    onFocus={() => handleInputFocus('estado')}
+                                    value={prioridadValue}
+                                    onChange={(e) => setPrioridadValue(e.target.value)}
+                                    onFocus={() => handleInputFocus('prioridad')}
                                     onBlur={handleInputBlur}
-                                    onClick={() => handleInputFocus('estado')}
-                                    isCurrentlyEditing={isCurrentlyEditing('estado')}
+                                    onClick={() => handleInputFocus('prioridad')}
+                                    isCurrentlyEditing={isCurrentlyEditing('prioridad')}
                                 />
                             </div>
 
@@ -203,7 +245,7 @@ function DetailsSoli() {
                                 <span style={spanStyle}>Estado: </span>
                                 <StyledTextField
                                     fullWidth
-                                    placeholder="Produccion"
+                                    placeholder="N/A"
                                     variant="outlined"
                                     size="small"
                                     value={estadoValue}
@@ -219,15 +261,15 @@ function DetailsSoli() {
                                 <span style={spanStyle}>Creado el: </span>
                                 <StyledTextField
                                     fullWidth
-                                    placeholder="Produccion"
+                                    placeholder="N/A"
                                     variant="outlined"
                                     size="small"
-                                    value={estadoValue}
-                                    onChange={(e) => setEstadoValue(e.target.value)}
-                                    onFocus={() => handleInputFocus('estado')}
+                                    value={fechaRegistroValue}
+                                    onChange={(e) => setFechaRegistroValue(e.target.value)}
+                                    onFocus={() => handleInputFocus('fechaRegistro')}
                                     onBlur={handleInputBlur}
-                                    onClick={() => handleInputFocus('estado')}
-                                    isCurrentlyEditing={isCurrentlyEditing('estado')}
+                                    onClick={() => handleInputFocus('fechaRegistro')}
+                                    isCurrentlyEditing={isCurrentlyEditing('fechaRegistro')}
                                 />
                             </div>
 
@@ -235,32 +277,31 @@ function DetailsSoli() {
                                 <span style={spanStyle}>Fecha de vencimiento: </span>
                                 <StyledTextField
                                     fullWidth
-                                    placeholder="Produccion"
+                                    placeholder="N/A"
                                     variant="outlined"
                                     size="small"
-                                    value={estadoValue}
-                                    onChange={(e) => setEstadoValue(e.target.value)}
-                                    onFocus={() => handleInputFocus('estado')}
+                                    value={fechaVencimientoValue}
+                                    onChange={(e) => setFechaVencimientoValue(e.target.value)}
+                                    onFocus={() => handleInputFocus('fechaVencimiento')}
                                     onBlur={handleInputBlur}
-                                    onClick={() => handleInputFocus('estado')}
-                                    isCurrentlyEditing={isCurrentlyEditing('estado')}
+                                    onClick={() => handleInputFocus('fechaVencimiento')}
+                                    isCurrentlyEditing={isCurrentlyEditing('fechaVencimiento')}
                                 />
                             </div>
-
 
                             <div style={itemStyle}>
                                 <span style={spanStyle}>Cliente: </span>
                                 <StyledTextField
                                     fullWidth
-                                    placeholder="Produccion"
+                                    placeholder="N/A"
                                     variant="outlined"
                                     size="small"
-                                    value={estadoValue}
-                                    onChange={(e) => setEstadoValue(e.target.value)}
-                                    onFocus={() => handleInputFocus('estado')}
+                                    value={clienteValue}
+                                    onChange={(e) => setClienteValue(e.target.value)}
+                                    onFocus={() => handleInputFocus('cliente')}
                                     onBlur={handleInputBlur}
-                                    onClick={() => handleInputFocus('estado')}
-                                    isCurrentlyEditing={isCurrentlyEditing('estado')}
+                                    onClick={() => handleInputFocus('cliente')}
+                                    isCurrentlyEditing={isCurrentlyEditing('cliente')}
                                 />
                             </div>
 
@@ -268,15 +309,15 @@ function DetailsSoli() {
                                 <span style={spanStyle}>Comercio: </span>
                                 <StyledTextField
                                     fullWidth
-                                    placeholder="Produccion"
+                                    placeholder="N/A"
                                     variant="outlined"
                                     size="small"
-                                    value={estadoValue}
-                                    onChange={(e) => setEstadoValue(e.target.value)}
-                                    onFocus={() => handleInputFocus('estado')}
+                                    value={comercioValue}
+                                    onChange={(e) => setComercioValue(e.target.value)}
+                                    onFocus={() => handleInputFocus('comercio')}
                                     onBlur={handleInputBlur}
-                                    onClick={() => handleInputFocus('estado')}
-                                    isCurrentlyEditing={isCurrentlyEditing('estado')}
+                                    onClick={() => handleInputFocus('comercio')}
+                                    isCurrentlyEditing={isCurrentlyEditing('comercio')}
                                 />
                             </div>
 
@@ -285,7 +326,6 @@ function DetailsSoli() {
                 </AccordionDetails>
             </Accordion>
 
-            {/* Segundo Accordion (Detalles de Solucion) - Inputs */}
             <Accordion style={{ background: 'none', boxShadow: 'none', border: 'solid 1px #ccc2c271', borderRadius: '5px' }}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
@@ -299,7 +339,6 @@ function DetailsSoli() {
                     <Typography component="div">
                         <div className="sidebar-content-soli">
 
-                            {/* INPUT: Estado (Añadí onClick para activar la edición en un click) */}
                             <div style={itemStyle}>
                                 <span style={spanStyle}>Estado: </span>
                                 <StyledTextField
@@ -307,20 +346,20 @@ function DetailsSoli() {
                                     placeholder="Estado de la solución"
                                     variant="outlined"
                                     size="small"
-                                    value={estadoValue}
-                                    onChange={(e) => setEstadoValue(e.target.value)}
-                                    onFocus={() => handleInputFocus('estado')}
+                                    value={estadoSolucionValue}
+                                    onChange={(e) => setEstadoSolucionValue(e.target.value)}
+                                    onFocus={() => handleInputFocus('estadoSolucion')}
                                     onBlur={handleInputBlur}
-                                    onClick={() => handleInputFocus('estado')}
-                                    isCurrentlyEditing={isCurrentlyEditing('estado')}
+                                    onClick={() => handleInputFocus('estadoSolucion')}
+                                    isCurrentlyEditing={isCurrentlyEditing('estadoSolucion')}
                                 />
                             </div>
 
-                            {/* INPUT: Fecha de solucion (Añadí onClick) */}
                             <div style={itemStyle}>
                                 <span style={spanStyle}>Fecha de solucion:</span>
                                 <StyledTextField
                                     fullWidth
+                                    placeholder="N/A"
                                     variant="outlined"
                                     size="small"
                                     value={fechaSolucionValue}
@@ -332,11 +371,11 @@ function DetailsSoli() {
                                 />
                             </div>
 
-                            {/* INPUT: Resuelto por (Añadí onClick) */}
                             <div style={itemStyle}>
                                 <span style={spanStyle}>Resuelto por: </span>
                                 <StyledTextField
                                     fullWidth
+                                    placeholder="N/A"
                                     variant="outlined"
                                     size="small"
                                     value={resueltoPorValue}
@@ -352,11 +391,11 @@ function DetailsSoli() {
                         <hr style={{ margin: '10px 0' }} />
 
                         <div className="descript-solution">
-                            {/* TEXTAREA: Causa de la Incidencia (Añadí onClick) */}
                             <div className="item-multiline">
                                 <span style={titleMultilineStyle}><strong>Causa de la Incidencia:</strong> </span>
                                 <StyledTextField
                                     fullWidth
+                                    placeholder="Sin causa registrada."
                                     variant="outlined"
                                     size="small"
                                     multiline
@@ -374,12 +413,11 @@ function DetailsSoli() {
 
                             <br />
 
-                            {/* TEXTAREA: Observaciones (Añadí onClick) */}
                             <div className="item-multiline">
                                 <span style={titleMultilineStyle}><strong>Observaciones:</strong> </span>
                                 <StyledTextField
                                     fullWidth
-                                    placeholder="Por ejemplo, El error fue detectado en la base de datos..."
+                                    placeholder="Sin observaciones."
                                     variant="outlined"
                                     size="small"
                                     multiline
