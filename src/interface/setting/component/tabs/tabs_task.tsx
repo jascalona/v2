@@ -12,7 +12,7 @@ import BeenhereIcon from '@mui/icons-material/Beenhere';
 
 
 //COMPONENTES GRAFICOS
-import TaskList from '../table/table_soli';
+import TaskList from '../table/tabla_tarea';
 import CreateTask from '../modal/modal_task';
 
 import AvatarI from '../Avatar';

@@ -52,7 +52,7 @@ function ModalSolicitud() {
                     alignItems: 'center',
                     cursor: 'pointer',
                     boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
-                    zIndex: 1000, // Asegura que esté por encima de otros elementos
+                    zIndex: 1000, 
                 }}
             >
                 <AddIcon style={{ fontSize: '30px' }} />

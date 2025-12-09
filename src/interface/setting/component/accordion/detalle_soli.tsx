@@ -146,7 +146,10 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
 
     return (
         <div>
-            <Accordion defaultExpanded style={{ background: 'none', boxShadow: 'none', border: 'solid 1px #ccc2c271', borderRadius: '5px' }}>
+
+    
+            <Accordion defaultExpanded
+                style={{ background: 'none', boxShadow: 'none', border: 'solid 1px #ccc2c271', borderRadius: '5px', backgroundColor: '#fff' }}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1-content"
@@ -326,7 +329,7 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
                 </AccordionDetails>
             </Accordion>
 
-            <Accordion style={{ background: 'none', boxShadow: 'none', border: 'solid 1px #ccc2c271', borderRadius: '5px' }}>
+            <Accordion style={{ background: 'none', boxShadow: 'none', border: 'solid 1px #ccc2c271', borderRadius: '5px', backgroundColor: '#fff' }}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel2-content"
@@ -414,7 +417,7 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
                             <br />
 
                             <div className="item-multiline">
-                                <span style={titleMultilineStyle}><strong>Observaciones:</strong> </span>
+                                <span style={titleMultilineStyle}><strong>Resolucion:</strong> </span>
                                 <StyledTextField
                                     fullWidth
                                     placeholder="Sin observaciones."
@@ -437,6 +440,8 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
                     </Typography>
                 </AccordionDetails>
             </Accordion>
+            <p style={{ fontSize: 13, textAlign: 'end' }}><strong> Creado el: <span>{fechaRegistroValue}</span></strong></p>
+
 
         </div >
     );

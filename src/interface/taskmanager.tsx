@@ -9,7 +9,6 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import GppGoodIcon from '@mui/icons-material/GppGood';
 
 //Componentes
-import CardRequest from "./setting/component/card/card_solicitud";
 import TabsTaskMnagaer from "./setting/component/tabs/tabs_task"
 
 

@@ -9,6 +9,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DetailsSoli from '../component/accordion/detalle_soli';
 import DetallesTarea from '../component/accordion/detalle_tareas';
 import DetallesEscalamiento from '../component/accordion/detalle_escalamiento';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import SaveIcon from '@mui/icons-material/Save';
+
 
 interface Solicitud {
     cliComercio: string,
@@ -132,7 +136,7 @@ function DetallesSolicitud() {
                             onClick={() => handleInputFocus('descripcion')}
                             isCurrentlyEditing={isCurrentlyEditing('descripcion')}
                             multilineInput={true}
-                        />
+                        />  
                     </div>
 
                     <div className="activities">
@@ -152,6 +156,26 @@ function DetallesSolicitud() {
                     <DetailsSoli solicitud={selectedSolicitud} />
                 </div>
             </div>
+
+            <Box sx={{ '& > :not(style)': { m: 1 } }}
+
+                style={{
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    color: 'white',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    zIndex: 1000,
+                }}
+            >
+                <Fab color='primary' variant="extended">
+                    <SaveIcon sx={{ mr: 1 }} />
+                    Guardar
+                </Fab>
+            </Box>
         </>
     )
 }
