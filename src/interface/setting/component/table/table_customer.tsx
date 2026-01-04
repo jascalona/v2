@@ -4,11 +4,12 @@ import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 import { FilterMatchMode } from 'primereact/api';
 import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog'; // 1. Importar Dialog
 import axios from 'axios';
 import '../../../../assets/css/table_customer.css'
 
-
 import EditSquareIcon from '@mui/icons-material/EditSquare';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 interface Customer {
     co_cliente: string,
@@ -20,8 +21,6 @@ interface Customer {
     co_producto: string,
 }
 
-
-//Definicion inical de filtros para el Datatable
 const initialFilters = {
     global: { value: null as string | null, matchMode: FilterMatchMode.CONTAINS },
 };
@@ -31,6 +30,10 @@ function TableCustomer() {
     const [cargando, setCargando] = useState(true);
     const [filters, setFilters] = useState(initialFilters);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
+
+    // --- ESTADOS PARA EL MODAL ---
+    const [displayModal, setDisplayModal] = useState(false);
+    const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
 
     useEffect(() => {
         axios.get<Customer[]>('http://localhost:8081/customers')
@@ -43,6 +46,12 @@ function TableCustomer() {
                 setCargando(false);
             });
     }, []);
+
+    // --- FUNCIÓN PARA ABRIR MODAL ---
+    const openCustomerModal = (customer: Customer) => {
+        setSelectedCustomer(customer);
+        setDisplayModal(true);
+    };
 
     const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -67,22 +76,25 @@ function TableCustomer() {
                 </div>
             </header>
 
+
             <div className="table-card">
                 <div className="table-toolbar">
                     <div className="toolbar-left">
                         <button className="filter-tab active">Ver todos</button>
                         <button className="filter-tab">Produccion</button>
                         <button className="filter-tab">Certificacion</button>
+
                     </div>
+
                     <div className="toolbar-right">
                         <span className="p-input-icon-left search-container">
                             <i className="pi pi-search" />
-                            <InputText
-                                value={globalFilterValue}
+                            <InputText value={globalFilterValue}
                                 onChange={onGlobalFilterChange}
                                 placeholder="Buscar..."
                                 className="search-input"
                             />
+
                         </span>
                     </div>
                 </div>
@@ -106,17 +118,73 @@ function TableCustomer() {
                     <Column field="co_rol" header="Rol"></Column>
                     <Column field="co_producto" header="Producto"></Column>
                     <Column field="fe_registro" header="Último registro"></Column>
-                    <Column body={() => (
+
+
+                    {/* COLUMNA DE ACCIONES MODIFICADA */}
+                    <Column body={(rowData: Customer) => (
                         <div className="action-buttons">
-                            <button className="p-button-text p-button-secondary">
-                                <EditSquareIcon sx={{fontSize: 15, color: '#17306a'}}/>
+                            <button className="p-button-text p-button-secondary" style={{ marginRight: 4 }}>
+                                <EditSquareIcon sx={{ fontSize: 15, color: '#17306a' }} />
+                            </button>
+
+                            <button
+                                className="p-button-text p-button-secondary"
+                                onClick={() => openCustomerModal(rowData)}
+                            >
+                                <VisibilityIcon sx={{ fontSize: 15, color: '#17306a' }} />
                             </button>
                         </div>
                     )} headerStyle={{ width: '8rem' }}></Column>
                 </DataTable>
             </div>
+
+            {/* --- COMPONENTE DIALOG (MODAL) --- */}
+            <Dialog
+                header="Detalles del Cliente"
+                visible={displayModal}
+                style={{ width: '40%' }} // Ancho fijo o responsivo
+                breakpoints={{ '960px': '75vw', '641px': '90vw' }} // Responsividad
+                onHide={() => setDisplayModal(false)}
+                draggable={false}
+                resizable={false}
+                className="custom-customer-modal" // Clase para el contenedor principal
+                footer={
+                    <div className="modal-footer">
+                        <Button label="Cerrar" icon="pi pi-times" onClick={() => setDisplayModal(false)} className="p-button-outlined p-button-secondary" />
+                    </div>
+                }
+            >
+                {selectedCustomer && (
+                    <div className="customer-info-grid">
+                        <div className="info-item full-width">
+                            <label>Nombre del Cliente</label>
+                            <span>{selectedCustomer.nb_cliente}</span>
+                        </div>
+                        <div className="info-item">
+                            <label>RIF</label>
+                            <span>{selectedCustomer.co_rif}</span>
+                        </div>
+                        <div className="info-item">
+                            <label>ID Cliente</label>
+                            <span>{selectedCustomer.co_cliente}</span>
+                        </div>
+                        <div className="info-item">
+                            <label>Rol</label>
+                            <span className="badge-rol">{selectedCustomer.co_rol}</span>
+                        </div>
+                        <div className="info-item">
+                            <label>Producto</label>
+                            <span>{selectedCustomer.co_producto}</span>
+                        </div>
+                        <div className="info-item full-width">
+                            <label>Fecha de Registro</label>
+                            <span>{selectedCustomer.fe_registro}</span>
+                        </div>
+                    </div>
+                )}
+            </Dialog>
         </div>
     );
 }
 
-export default TableCustomer
+export default TableCustomer;
