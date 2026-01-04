@@ -11,15 +11,15 @@ import CircleIcon from '@mui/icons-material/Circle';
 // --- TIPOS DE DATOS ---
 interface Solicitud {
     co_tarea: string,
-    co_solicitud: string,
-    co_prioridad: string,
-    co_producto: string,
+    tx_asunto: string,
+    tx_description: string,
     fe_registro: string,
     fe_vencimiento: string,
-    st_estado: string,
-    co_user_asig: string,
-    tx_actividad: string,
-    tx_desc: string
+    co_user_emisor: string,
+    co_user_asignado: string,
+    fe_cierre: string,
+    co_solicitud: string,
+    nb_prioridad: string,
 }
 
 // Para la agrupación por estado
@@ -40,14 +40,14 @@ const CalendarIcon: React.FC = () => (
     <span className="calendar-icon">🗓</span>
 );
 
-const PriorityIcon: React.FC<{ priority: Solicitud['co_prioridad'] }> = ({ priority }) => {
+const PriorityIcon: React.FC<{ priority: Solicitud['nb_prioridad'] }> = ({ priority }) => {
 
     const priorityString = String(priority || '').trim();
 
     const p = priorityString.toUpperCase();
 
     // Clasificación de prioridad (la misma lógica que antes)
-    let icon = <FlagIcon sx={{ fontSize: 18 }} />; // Por defecto
+    let icon = <FlagIcon sx={{ fontSize: 15}} />; // Por defecto
     let iconClass = 'priority-icon';
 
 
@@ -64,19 +64,6 @@ const AddIcon: React.FC = () => (
 );
 
 
-
-// Modificado para usar stSolicitud
-const StatusCircle: React.FC<{ status: Solicitud['st_estado'] }> = ({ status }) => {
-    const isCompleted = status?.toUpperCase() === 'CERRADO' || status?.toUpperCase() === 'RESUELTO';
-    const statusClass = `status-circle ${isCompleted ? 'completed' : 'in-progress'}`;
-
-    return (
-        <span className={statusClass} title={`Estado: ${status}`}>
-            <CircleIcon sx={{ fontSize: 20 }} />
-        </span>
-    );
-};
-
 // --- COMPONENTE PRINCIPAL ---
 
 const TaskList: React.FC = () => {
@@ -85,7 +72,7 @@ const TaskList: React.FC = () => {
 
     // 1. Carga de datos de la BD
     useEffect(() => {
-        axios.get<Solicitud[]>("http://localhost:8080/basetomee/tarea/list")
+        axios.get<Solicitud[]>("http://localhost:8081/task")
             .then(response => {
                 setSolicitudes(response.data);
                 setCargando(false);
@@ -105,7 +92,7 @@ const TaskList: React.FC = () => {
 
         const groupsMap = solicitudes.reduce((acc, soli) => {
             // Usamos stSolicitud como la clave para agrupar
-            const status = soli.st_estado || 'SIN ESTADO';
+            const status = soli.nb_prioridad || 'SIN ESTADO';
 
             if (!acc[status]) {
                 acc[status] = { name: status, tasks: [] };
@@ -148,8 +135,8 @@ const TaskList: React.FC = () => {
             </div>
 
             <div className="add-task-button">
-                <TaskAltIcon />
-                <span className="add-task-text">Solicitudes</span>
+                <TaskAltIcon sx={{fontSize: 16}}/>
+                <span className="add-task-text">Tareas</span>
             </div>
 
             {/* Renderizado de los grupos de solicitudes (agrupados por stSolicitud) */}
@@ -168,7 +155,7 @@ const TaskList: React.FC = () => {
                         const rowClass = `task-row-grid`;
                         const dateClass = `date-text ${isOverdue ? 'urgent-date' : ''}`;
 
-                        const assignedUser = soli.co_user_asig;
+                        const assignedUser = soli.co_user_asignado;
                         const assignedInitials = getInitials(assignedUser);
 
                         return (
@@ -176,8 +163,7 @@ const TaskList: React.FC = () => {
 
                                 {/* Columna Asunto (txAsunto) */}
                                 <div className="task-name-cell">
-                                    <StatusCircle status={soli.co_solicitud} />
-                                    {soli.tx_actividad}
+                                    {soli.tx_asunto}
                                 </div>
 
                                 {/* Columna Persona asignada (c_user_resolutor) */}
@@ -196,8 +182,8 @@ const TaskList: React.FC = () => {
 
                                 {/* Columna Prioridad (coPrioridad) */}
                                 <div>
-                                    <PriorityIcon priority={soli.co_prioridad} />
-                                    {soli.co_prioridad}
+                                    <PriorityIcon priority={soli.nb_prioridad} />
+                                    <span > {soli.nb_prioridad}</span>
                                 </div>
 
                             </div>

@@ -82,7 +82,7 @@ const StatusCircle: React.FC<{ status: Solicitud['co_estado'] }> = ({ status }) 
 
 // --- COMPONENTE PRINCIPAL ---
 
-const TaskList: React.FC = () => {
+const TaskListSoli: React.FC = () => {
     const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
     const [cargando, setCargando] = useState(true);
     
@@ -219,4 +219,4 @@ const TaskList: React.FC = () => {
     );
 };
 
-export default TaskList;
+export default TaskListSoli;

@@ -52,7 +52,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           </li>
         </ul>
         <li className="nav-item">
-          <Link to="inbox" onClick={toggleSidebar}><span className="nav-icon"><SupervisorAccountIcon /></span> Clientes</Link>
+          <Link to="customer" onClick={toggleSidebar}><span className="nav-icon"><SupervisorAccountIcon /></span> Clientes</Link>
         </li>
         <div className="nav-separator">Espacio de trabajo</div>
 

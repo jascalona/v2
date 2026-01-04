@@ -1,0 +1,161 @@
+:root {
+    --primary-color: rgb(38, 66, 124);
+    --border-color: #eaecf0;
+    --text-main: #101828;
+    --text-sub: #667085;
+    --bg-light: #f9fafb;
+}
+
+
+/* Header superior */
+.table-header-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.header-left h2 {
+    font-size: 1.5rem;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.badge-count {
+    background: #f4f3ff;
+    color: var(--primary-color);
+    font-size: 0.8rem;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-left: 10px;
+}
+
+.subtitle {
+    color: var(--text-sub);
+    margin-top: 4px;
+}
+
+/* Botones */
+.btn-primary {
+    background: var(--primary-color) !important;
+    color: #fff;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px;
+}
+
+.btn-secondary {
+    background: white !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    margin-right: 12px;
+    padding: 10px;
+}
+
+/* Card de la tabla */
+.table-card {
+    overflow: hidden;
+}
+
+.table-toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.filter-tab {
+    background: none;
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.filter-tab.active {
+    background: var(--bg-light);
+    color: var(--text-main);
+}
+
+/* Estilos de la DataTable */
+.custom-datatable .p-datatable-thead > tr > th {
+    background: var(--bg-light);
+    color: var(--text-sub);
+    font-weight: 500;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 16px;
+}
+
+.custom-datatable .p-datatable-tbody > tr > td {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.client-cell {
+    display: flex;
+    flex-direction: column;
+}
+
+.client-name {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.client-sub {
+    color: var(--text-sub);
+    font-size: 0.85rem;
+}
+
+.search-input {
+    border-radius: 8px;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    width: 290px;
+}
+
+
+/* --- ESTILOS DEL PAGINADOR --- */
+
+/* Contenedor principal del paginado */
+.custom-datatable .p-paginator {
+    border-top: 1px solid var(--border-color);
+    padding: 0.75rem;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+/* Botones de números y flechas */
+.custom-datatable .p-paginator .p-paginator-pages .p-paginator-page,
+.custom-datatable .p-paginator .p-link {
+    min-width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    transition: all 0.2s;
+    color: var(--text-sub);
+}
+
+/* Estilo para la página activa */
+.custom-datatable .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background-color: var(--bg-light); 
+    color: var(--primary-color);      
+    font-weight: 600;
+}
+
+.custom-datatable .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover,
+.custom-datatable .p-paginator .p-link:not(.p-disabled):hover {
+    background-color: var(--bg-light);
+    color: var(--text-main);
+}
+
+.custom-datatable .p-paginator .p-link:focus {
+    box-shadow: 0 0 0 2px rgba(38, 66, 124, 0.2);
+}
+
+.custom-datatable .p-paginator .p-paginator-current {
+    font-size: 0.85rem;
+    color: var(--text-sub);
+    margin-right: auto; 
+}
