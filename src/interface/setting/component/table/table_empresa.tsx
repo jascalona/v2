@@ -38,7 +38,7 @@ function TableEmpresa() {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
 
     useEffect(() => {
-        axios.get<Empresa[]>('http://localhost:8080/basetomee/empresas/listar')
+        axios.get<Empresa[]>('http://localhost:8081/company')
             .then(response => {
                 setEmpresa(response.data);
                 setCargando(false);
@@ -137,7 +137,7 @@ function TableEmpresa() {
                     <Column field="nb_emp" header="Nombre"></Column>
                     <Column field="st_estado" header="Status"></Column>
                     <Column field="fe_registro" header="Re. Registro"></Column>
-                    <Column field="auto" header="Autor"></Column>
+                    <Column field="autor" header="Autor"></Column>
 
                 </DataTable>
             </div>
