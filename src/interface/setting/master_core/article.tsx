@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Labels from '../component/labels/labels_article';
+import Labels from '../component/labels/labels_estado';
 
 
 function Article() {
@@ -18,7 +18,7 @@ function Article() {
 
                         <div className="other-setting" style={{ marginTop: 40 }}>
 
-                            <h2>Articulos (Labels)</h2>
+                            <h2>Estados</h2>
                             <p>
                                 En este apartado podra administrar y diseñar distintos recursos de su organizacion
                             </p>

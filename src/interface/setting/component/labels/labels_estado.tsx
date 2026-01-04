@@ -18,8 +18,8 @@ import { green } from "@mui/material/colors";
 
 // Interfaz para la respuesta de la API (Categoría)
 interface Articulo {
-    coarticulo: string,
-    nbarticulo: string
+    co_estado: string,
+    nb_estado: string
 }
 
 // Interfaz para la estructura de datos que usa el componente internamente
@@ -47,7 +47,7 @@ function Labels() {
     // Estado local para el formulario de edición
     const [newTitle, setNewTitle] = useState('');
 
-    const API_URL = "http://localhost:8080/basetomee/articulo/listar"
+    const API_URL = "http://localhost:8081/status"
 
     useEffect(() => {
         const fetchCategorias = async () => {
@@ -56,8 +56,8 @@ function Labels() {
 
                 // Mapeo de los datos de la API a la estructura interna (Label)
                 const transformedLabels: Label[] = response.data.map(articulo => ({
-                    id: articulo.coarticulo,
-                    title: articulo.nbarticulo,
+                    id: articulo.co_estado,
+                    title: articulo.nb_estado,
                 }));
 
                 setLabels(transformedLabels); // Establecemos los datos mapeados
@@ -323,7 +323,7 @@ function Labels() {
                     }}>
                         <h3>Editar etiqueta</h3>
                         <div style={{ marginBottom: '20px' }}>
-                            <label htmlFor="newTitle" style={{ display: 'block', marginBottom: '5px' }}>Nombre del Articulo:</label>
+                            <label htmlFor="newTitle" style={{ display: 'block', marginBottom: '5px' }}>Nombre del estado:</label>
                             <TextField
                                 fullWidth
                                 placeholder="Por ejemplo, Desarrollo"

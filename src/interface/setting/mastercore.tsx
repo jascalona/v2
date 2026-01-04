@@ -94,7 +94,7 @@ function MasterCore() {
                                     <span className="icon-ite"><PostAddIcon /></span>
                                     <div className="content-setting">
                                         <div>
-                                            <p>Articulos</p>
+                                            <p>Estados</p>
                                             <small style={{ lineHeight: 1 }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, culpa.</small>
                                         </div>
                                         <Link style={{ marginRight: 30, marginTop: 20 }} to={"article"}>Administrar</Link>

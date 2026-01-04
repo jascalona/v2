@@ -13,30 +13,29 @@ import '../../../../assets/css/table.css'
 import NewMember from '../modal/modal_user';
 
 interface Solicitud {
-    cliComercio: string,
-    cliDirecto: string,
-    coAmbiente: string,
-    coPrioridad: string,
-    coProducto: string,
-    coSLA: string,
-    coSolicitud: string,
-    co_tip_solicitud: string,
-    coUserCierre: string,
+   co_solicitud: string,
+    fe_registro: string,
+    fe_vencimiento: string,
+    fe_resolucion: string, 
+    fe_cierre: string,
     co_user_credor_soli: string,
-    c_user_resolutor: string,
-    feCierre: string,
-    feRegistro: string,
-    feResolucion: string,
-    fe_ult_modif: string,
-    feVencimiento: string,
-    nbContacto: string,
-    nuContacto: string,
-    stSolicitud: string,
-    txAsunto: string,
-    txCusaSoli: string,
+    co_user_resolutor: string,
+    co_tip_solicitud: string,
+    nb_contacto: string,
+    nu_celular_contacto: string,
+    tx_asunto: string, 
+    tx_descripcion: string,
+    tx_causa: string, 
+    co_ambiente: string,
+    co_producto: string,
+    co_sla: string, 
+    co_user_cierre: string,
     tx_desc_resolucion: string,
-    txDesSoli: string,
-    txNota: string,
+    tx_nota: string, 
+    nb_prioridad: string, 
+    co_estado: string,
+    co_cliente: string,
+    co_tp_solicitud: string, 
 }
 
 //Definicion inical de filtros para el Datatable
@@ -55,7 +54,7 @@ function TableSolicitud() {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
 
     useEffect(() => {
-        axios.get<Solicitud[]>("http://localhost:8080/basetomee/solicitud/list")
+        axios.get<Solicitud[]>("http://localhost:8081/request")
             .then(response => {
                 setSolicitud(response.data);
                 setCargando(false);
@@ -71,30 +70,28 @@ function TableSolicitud() {
     //Funcion para exportar el excel
     const exportExcel = () => {
         const dataForExport = solicitud.map(solicitud => ({
-            "Cliente": solicitud.cliDirecto,
-            "Comercio": solicitud.cliComercio,
-            "Co. Ambiente": solicitud.coAmbiente,
-            "Co. Prioridad": solicitud.coPrioridad,
-            "Co. Producto": solicitud.coProducto,
-            "Co. SLA": solicitud.coSLA,
-            "Co. Solicitud": solicitud.coSolicitud,
+            "Cliente": solicitud.co_cliente,
+            "Co. Ambiente": solicitud.co_ambiente,
+            "Co. Prioridad": solicitud.nb_prioridad,
+            "Co. Producto": solicitud.co_producto,
+            "Co. SLA": solicitud.co_sla,
+            "Co. Solicitud": solicitud.co_solicitud,
             "Co. Tipo solicitud": solicitud.co_tip_solicitud,
-            "Co. User cierre": solicitud.coUserCierre,
+            "Co. User cierre": solicitud.co_user_cierre,
             "Co. User creador soli": solicitud.co_user_credor_soli,
-            "Co. user resolutor": solicitud.c_user_resolutor,
-            "Fe. cierre": solicitud.feCierre,
-            "Fe. registro": solicitud.feRegistro,
-            "Fe. resolucion": solicitud.feResolucion,
-            "Fe. ultmodif": solicitud.fe_ult_modif,
-            "Fe. vencimiento": solicitud.feVencimiento,
-            "Nb. contacto": solicitud.nbContacto,
-            "Nb. celular contacto": solicitud.nuContacto,
-            "St. solicitud": solicitud.stSolicitud,
-            "Tx. asunto solic": solicitud.txAsunto,
-            "Tx. causa soli": solicitud.txCusaSoli,
+            "Co. user resolutor": solicitud.co_user_resolutor,
+            "Fe. cierre": solicitud.fe_cierre,
+            "Fe. registro": solicitud.fe_registro,
+            "Fe. resolucion": solicitud.fe_resolucion,
+            "Fe. vencimiento": solicitud.fe_vencimiento,
+            "Nb. contacto": solicitud.nb_contacto,
+            "Nb. celular contacto": solicitud.nu_celular_contacto,
+            "St. solicitud": solicitud.co_estado,
+            "Tx. asunto solic": solicitud.tx_asunto,
+            "Tx. causa soli": solicitud.tx_causa,
             "Tx. descrip. solucion": solicitud.tx_desc_resolucion,
-            "Tx. descrip solic": solicitud.txDesSoli,
-            "Tx. nota": solicitud.txNota,
+            "Tx. descrip solic": solicitud.tx_desc_resolucion,
+            "Tx. nota": solicitud.tx_nota,
         }));
 
         const worksheet = XLSX.utils.json_to_sheet(dataForExport);
@@ -119,27 +116,28 @@ function TableSolicitud() {
 
     //Campos donde se aplicara la busqueda
     const globalFilterFields = [
-        'cliComercio',
-        'cliDirecto',
-        'coAmbiente',
-        'coPrioridad',
-        'coProducto',
-        'coSLA',
-        'coSolicitud',
-        'co_tip_solicitud',
-        'coUserCierre',
+        'co_solicitud',
+        'fe_registro',
+        'fe_vencimiento',
+        'fe_resolucion',
+        'fe_cierre',
         'co_user_credor_soli',
-        'c_user_resolutor',
-        'feCierre',
-        'feRegistro',
-        'feResolucion',
-        'fe_ult_modif',
-        'feVencimiento',
-        'nbContacto',
-        'nuContacto',
-        'stSolicitud',
-        'txAsunto',
-        'txCusaSoli'
+        'co_user_resolutor',
+        'co_tip_solicitud',
+        'co_tip_solicitud',
+        'nb_contacto',
+        'nu_celular_contacto',
+        'tx_asunto',
+        'co_ambiente',
+        'co_producto',
+        'co_sla',
+        'co_user_cierre',
+        'tx_nota',
+        'nb_prioridad',
+        'co_estado',
+        'co_cliente',
+        'txCusaSoli',
+        'co_tp_solicitud'
     ]
 
     if (cargando) return <p>Cargando registros...</p>
@@ -188,17 +186,16 @@ function TableSolicitud() {
                         globalFilterFields={globalFilterFields}
                     >
                         {/* COLUMNAS CON LOS DATOS BASICOS */}
-                        <Column field="coSolicitud" header="Código Solicitud"></Column>
-                        <Column field="cliDirecto" header="Cliente"></Column>
-                        <Column field="cliComercio" header="Comercio"></Column>
-                        <Column field="txAsunto" header="Asunto"></Column>
-                        <Column field="stSolicitud" header="Estado"></Column>
-                        <Column field="coPrioridad" header="Prioridad"></Column>
+                        <Column field="co_solicitud" header="Código Solicitud"></Column>
+                        <Column field="co_cliente" header="Cliente"></Column>
+                        <Column field="tx_asunto" header="Asunto"></Column>
+                        <Column field="co_estado" header="Estado"></Column>
+                        <Column field="nb_proridad" header="Prioridad"></Column>
                         <Column field="co_tip_solicitud" header="Tipo Solicitud"></Column>
-                        <Column field="coProducto" header="Producto"></Column>
-                        <Column field="c_user_resolutor" header="Creador"></Column>
-                        <Column field="feRegistro" header="Fec. Registro"></Column>
-                        <Column field="feVencimiento" header="Fec. Vencimiento"></Column>
+                        <Column field="co_producto" header="Producto"></Column>
+                        <Column field="co_user_resolutor" header="Creador"></Column>
+                        <Column field="fe_registro" header="Fec. Registro"></Column>
+                        <Column field="fe_vencimiento" header="Fec. Vencimiento"></Column>
                     </DataTable>
                 </div>
             </div>

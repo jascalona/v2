@@ -10,30 +10,29 @@ import CircleIcon from '@mui/icons-material/Circle';
 
 // --- TIPOS DE DATOS ---
 interface Solicitud {
-    cliComercio: string,
-    cliDirecto: string,
-    coAmbiente: string,
-    coPrioridad: string, 
-    coProducto: string,
-    coSLA: string,
-    coSolicitud: string,
-    co_tip_solicitud: string,
-    coUserCierre: string,
+    co_solicitud: string,
+    fe_registro: string,
+    fe_vencimiento: string,
+    fe_resolucion: string, 
+    fe_cierre: string,
     co_user_credor_soli: string,
-    c_user_resolutor: string, // Persona asignada
-    feCierre: string,
-    feRegistro: string, // Fecha de registro
-    feResolucion: string,
-    fe_ult_modif: string,
-    feVencimiento: string, // Fecha Límite
-    nbContacto: string,
-    nuContacto: string,
-    stSolicitud: string, // Estado
-    txAsunto: string, // Título
-    txCusaSoli: string,
+    co_user_resolutor: string,
+    co_tip_solicitud: string,
+    nb_contacto: string,
+    nu_celular_contacto: string,
+    tx_asunto: string, 
+    tx_descripcion: string,
+    tx_causa: string, 
+    co_ambiente: string,
+    co_producto: string,
+    co_sla: string, 
+    co_user_cierre: string,
     tx_desc_resolucion: string,
-    txDesSoli: string, // Descripción
-    txNota: string,
+    tx_nota: string, 
+    nb_prioridad: string, 
+    co_estado: string,
+    co_cliente: string,
+    co_tp_solicitud: string, 
 }
 
 // Para la agrupación por estado
@@ -54,7 +53,7 @@ const CalendarIcon: React.FC = () => (
     <span className="calendar-icon">🗓</span>
 );
 
-const PriorityIcon: React.FC<{ priority: Solicitud['coPrioridad'] }> = ({ priority }) => {
+const PriorityIcon: React.FC<{ priority: Solicitud['nb_prioridad'] }> = ({ priority }) => {
     const priorityString = String(priority || '').trim(); 
     let icon = <FlagIcon sx={{ fontSize: 18 }} />; 
     let iconClass = 'priority-icon';
@@ -70,7 +69,7 @@ const AddIcon: React.FC = () => (
     <span className="add-icon">+</span>
 );
 
-const StatusCircle: React.FC<{ status: Solicitud['stSolicitud'] }> = ({ status }) => {
+const StatusCircle: React.FC<{ status: Solicitud['co_estado'] }> = ({ status }) => {
     const isCompleted = status?.toUpperCase() === 'CERRADO' || status?.toUpperCase() === 'RESUELTO';
     const statusClass = `status-circle ${isCompleted ? 'completed' : 'in-progress'}`;
 
@@ -98,7 +97,7 @@ const TaskList: React.FC = () => {
 
     // Carga de datos de la BD
     useEffect(() => {
-        axios.get<Solicitud[]>("http://localhost:8080/basetomee/solicitud/list")
+        axios.get<Solicitud[]>("http://localhost:8081/request")
             .then(response => {
                 setSolicitudes(response.data);
                 setCargando(false);
@@ -116,7 +115,7 @@ const TaskList: React.FC = () => {
         if (solicitudes.length === 0) return [];
 
         const groupsMap = solicitudes.reduce((acc, soli) => {
-            const status = soli.stSolicitud || 'SIN ESTADO';
+            const status = soli.co_estado || 'SIN ESTADO';
 
             if (!acc[status]) {
                 acc[status] = { name: status, tasks: [] };
@@ -168,27 +167,27 @@ const TaskList: React.FC = () => {
                     {/* Renderizado de las solicitudes dentro del grupo */}
                     {group.tasks.map((soli) => {
 
-                        const dueDate = soli.feVencimiento ? new Date(soli.feVencimiento) : null;
+                        const dueDate = soli.fe_vencimiento ? new Date(soli.fe_vencimiento) : null;
                         const today = new Date();
                         const isOverdue = dueDate && dueDate < today;
 
                         const rowClass = `task-row-grid`;
                         const dateClass = `date-text ${isOverdue ? 'urgent-date' : ''}`;
 
-                        const assignedUser = soli.c_user_resolutor;
+                        const assignedUser = soli.co_user_resolutor;
                         const assignedInitials = getInitials(assignedUser);
 
                         return (
                             <div 
-                                key={soli.coSolicitud} 
+                                key={soli.co_solicitud} 
                                 className={rowClass}
                                 onClick={() => handleRowClick(soli)} // <-- Click que redirige
                                 style={{cursor: 'pointer' }}    >
 
                                 {/* Columna Asunto (txAsunto) */}
                                 <div className="task-name-cell">
-                                    <StatusCircle status={soli.stSolicitud} />
-                                    {soli.txAsunto}
+                                    <StatusCircle status={soli.co_estado} />
+                                    {soli.tx_asunto}
                                 </div>
 
                                 {/* Columna Persona asignada (c_user_resolutor) */}
@@ -202,13 +201,13 @@ const TaskList: React.FC = () => {
 
                                 {/* Columna Fecha límite (feVencimiento) */}
                                 <div className={dateClass}>
-                                    {soli.feVencimiento ? soli.feVencimiento.split('T')[0] : <CalendarIcon />}
+                                    {soli.fe_vencimiento ? soli.fe_vencimiento.split('T')[0] : <CalendarIcon />}
                                 </div>
 
                                 {/* Columna Prioridad (coPrioridad) */}
                                 <div>
-                                    <PriorityIcon priority={soli.coPrioridad} />
-                                    {soli.coPrioridad}
+                                    <PriorityIcon priority={soli.nb_prioridad} />
+                                    {soli.nb_prioridad}
                                 </div>
 
                             </div>
