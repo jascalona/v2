@@ -11,9 +11,12 @@ import TextField from '@mui/material/TextField';
 
 
 // Interfaz para la respuesta de la API (Categoría)
-interface CategoriaAPI {
-    cosubcategoria: string,
-    nbsubcategoria: string 
+interface ComponenteAPI {
+    co_subcomponente: string,
+    nb_subcomponente: string,
+    c_componente: string,
+    fe_registro: string,
+    co_use_creador: string,
 }
 
 // Interfaz para la estructura de datos que usa el componente internamente
@@ -37,17 +40,17 @@ function LabelSubCategory() {
     // Estado local para el formulario de edición
     const [newTitle, setNewTitle] = useState('');
 
-    const API_URL = "http://localhost:8080/basetomee/subcategoria/listar"
+    const API_URL = "http://localhost:8081/subcomponents"
 
     useEffect(() => {
         const fetchCategorias = async () => {
             try {
-                const response = await axios.get<CategoriaAPI[]>(API_URL);
+                const response = await axios.get<ComponenteAPI[]>(API_URL);
                 
                 // Mapeamos los datos de la API a la estructura interna (Label)
                 const transformedLabels: Label[] = response.data.map(subcategoria => ({
-                    id: subcategoria.cosubcategoria, 
-                    title: subcategoria.nbsubcategoria, 
+                    id: subcategoria.co_subcomponente, 
+                    title: subcategoria.nb_subcomponente, 
                 }));
 
                 setLabels(transformedLabels); // Establecemos los datos mapeados

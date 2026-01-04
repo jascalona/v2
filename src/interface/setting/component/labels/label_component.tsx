@@ -4,9 +4,10 @@ import axios from 'axios';
 import { useEffect } from 'react';
 
 interface Componente {
-    cocomponente: string
-    nbcomponente: string;
-    coproducto: string
+    co_componente: string
+    nb_componente: string;
+    co_producto: string
+    fe_registro: string
 }
 
 function CardComponent() {
@@ -15,7 +16,7 @@ function CardComponent() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const API_URL = "http://localhost:8080/basetomee/Componente/listar"
+    const API_URL = "http://localhost:8081/components"
 
     useEffect(() => {
         const fetchComponentes = async () => {
@@ -53,9 +54,9 @@ function CardComponent() {
             {componentes.map((componente) => (
                 <div className="label-component">
                     <div className="content-left" >
-                        <h4 >{componente.nbcomponente}</h4>
-                        <p>Codigo del Producto: {componente.coproducto}</p>
-                        <small ><strong>Creado: </strong> 24/11/2025</small>
+                        <h4 >{componente.nb_componente}</h4>
+                        <p>Codigo del Producto: {componente.co_producto}</p>
+                        <small > {componente.fe_registro}</small>
                     </div>
 
                     <div className="content-rigth">

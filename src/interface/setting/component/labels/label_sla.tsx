@@ -16,10 +16,10 @@ import TextField from '@mui/material/TextField';
 
 // Interfaz para la respuesta de la API (Categoría)
 interface SLA {
-    cosla: string,
-    cantidad: string,
-    nbsla: string,
-    unidtiempo: string
+    co_sla: string,
+    nb_sla: string,
+    co_unidad_tiempo: string,
+    nu_cantidad: string
 }
 
 // Interfaz para la estructura de datos que usa el componente internamente
@@ -42,7 +42,7 @@ function LabelSLA() {
 
     const [newTitle, setNewTitle] = useState('');
 
-    const API_URL = "http://localhost:8080/basetomee/SLA/listar"
+    const API_URL = "http://localhost:8081/sla"
 
     useEffect(() => {
         const fetchCategorias = async () => {
@@ -50,8 +50,8 @@ function LabelSLA() {
                 const response = await axios.get<SLA[]>(API_URL);
 
                 const transformedLabels: Label[] = response.data.map(subcategoria => ({
-                    id: subcategoria.cosla,
-                    title: subcategoria.nbsla,
+                    id: subcategoria.co_sla,
+                    title: subcategoria.nb_sla,
                 }));
 
                 setLabels(transformedLabels);

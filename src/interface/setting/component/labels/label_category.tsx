@@ -18,8 +18,8 @@ import TextField from '@mui/material/TextField';
 
 // Interfaz para la respuesta de la API (Categoría)
 interface CategoriaAPI {
-    cocategoria: string,
-    nbcategoria: string
+    co_categoria: string,
+    nb_categoria: string
 }
 
 // Interfaz para la estructura de datos que usa el componente internamente
@@ -48,7 +48,7 @@ function LabelCategory() {
     // Estado local para el formulario de edición
     const [newTitle, setNewTitle] = useState('');
 
-    const API_URL = "http://localhost:8080/basetomee/categoria/listar"
+    const API_URL = "http://localhost:8081/category"
 
     useEffect(() => {
         const fetchCategorias = async () => {
@@ -57,8 +57,8 @@ function LabelCategory() {
 
                 // Mapeamos los datos de la API a la estructura interna (Label)
                 const transformedLabels: Label[] = response.data.map(categoria => ({
-                    id: categoria.cocategoria,
-                    title: categoria.nbcategoria,
+                    id: categoria.co_categoria,
+                    title: categoria.nb_categoria,
                 }));
 
                 setLabels(transformedLabels); // Establecemos los datos mapeados
