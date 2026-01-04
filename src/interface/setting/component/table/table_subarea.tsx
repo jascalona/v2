@@ -38,7 +38,7 @@ function TableSubarea() {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
 
     useEffect(() => {
-        axios.get<Subarea[]>('http://localhost:8080/basetomee/subarea/list')
+        axios.get<Subarea[]>('http://localhost:8081/subarea')
             .then(response => {
                 setSubarea(response.data);
                 setCargando(false);

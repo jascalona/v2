@@ -37,7 +37,7 @@ function TableEmpresa() {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
 
     useEffect(() => {
-        axios.get<Area[]>('http://localhost:8080/basetomee/area/list')
+        axios.get<Area[]>('http://localhost:8081/area')
             .then(response => {
                 setArea(response.data);
                 setCargando(false);

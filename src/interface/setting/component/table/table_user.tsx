@@ -14,12 +14,12 @@ import '../../../../assets/css/table.css'
 import NewMember from '../modal/modal_user';
 
 interface Usuario {
-    coUsuario: string,
-    nbNombre: string,
-    nbApellido: string,
-    txEmail: string,
-    nucelular: string,
-    cosubarea: number
+    co_usuario: string,
+    nb_nombre: string,
+    nb_apellido: string,
+    tx_email: string,
+    nu_celular: string,
+    co_subarea: number
 }
 
 
@@ -39,7 +39,7 @@ function TableMembers() {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
 
     useEffect(() => {
-        axios.get<Usuario[]>('http://localhost:8080/basetomee/usuario/list')
+        axios.get<Usuario[]>('http://localhost:8081/users')
             .then(response => {
                 setUsuarios(response.data);
                 setCargando(false);
@@ -55,12 +55,12 @@ function TableMembers() {
     //Funcion para exportar el exel
     const exportExcel = () => {
         const dataForExport = usuario.map(usuario => ({
-            "SCID": usuario.coUsuario,
-            "Nombre": usuario.nbNombre,
-            "Apellido": usuario.nbApellido,
-            "Email": usuario.txEmail,
-            "CELE": usuario.nucelular,
-            "CO. Area": usuario.cosubarea,
+            "SCID": usuario.co_usuario,
+            "Nombre": usuario.nb_nombre,
+            "Apellido": usuario.nb_apellido,
+            "Email": usuario.tx_email,
+            "CELE": usuario.nu_celular,
+            "CO. Area": usuario.co_subarea,
 
         }));
 
@@ -86,12 +86,12 @@ function TableMembers() {
 
     //Campos donde se aplicara la busqueda
     const globalFilterFields = [
-        'coUsuario',
-        'nbNombre',
-        'nbApellido',
-        'txEmail',
-        'nucelular',
-        'cosubarea'
+        'co_usuario',
+        'nb_nombre',
+        'nb_apellido',
+        'tx_email',
+        'nu_celular',
+        'co_subarea'
     ]
 
     if (cargando) return <p>Cargando registros...</p>
@@ -140,12 +140,12 @@ function TableMembers() {
                     filters={filters} // Se pasa el objeto de filtros actualizado
                     globalFilterFields={globalFilterFields} // Se indican las columnas a filtrar
                 >
-                    <Column field="coUsuario" header="SCID"></Column>
-                    <Column field="nbNombre" header="Nombre"></Column>
-                    <Column field="nbApellido" header="Apellido"></Column>
-                    <Column field="txEmail" header="Email"></Column>
-                    <Column field="nucelular" header="CELE"></Column>
-                    <Column field="cosubarea" header="Co. Subarea"></Column>
+                    <Column field="co_usuario" header="SCID"></Column>
+                    <Column field="nb_nombre" header="Nombre"></Column>
+                    <Column field="nb_apellido" header="Apellido"></Column>
+                    <Column field="tx_email" header="Email"></Column>
+                    <Column field="nu_celular" header="CELE"></Column>
+                    <Column field="co_subarea" header="Co. Subarea"></Column>
 
                 </DataTable>
             </div>
