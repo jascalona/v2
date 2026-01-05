@@ -162,61 +162,88 @@
 
 
 /*SESION PARA EL MODAL*/
-/* Estilos generales del Dialog */
+/* Fondo borroso (Backdrop) */
+.custom-mask {
+    backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Contenedor del Modal */
+.custom-customer-modal {
+    border-radius: 16px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
 .custom-customer-modal .p-dialog-header {
-    background-color: #f3f3f3;
-    color: #17306a;
-    padding: 1.5rem;
-    border-bottom: 1px solid #dee2e6;
+    background: #ffffff;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.custom-customer-modal .p-dialog-header .p-dialog-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
 }
 
 .custom-customer-modal .p-dialog-content {
-    padding: 1rem;
+    padding: 2rem;
     background: #ffffff;
 }
 
-/* Grid de información */
+/* Grid de información minimalista */
 .customer-info-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas */
-    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
 }
 
 .info-item {
     display: flex;
     flex-direction: column;
+    gap: 0.25rem;
 }
 
 .info-item.full-width {
     grid-column: span 2;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f1f3f4fb;
 }
 
 .info-item label {
-    font-size: 0.8rem;
-    color: #6c757d;
+    font-size: 0.75rem;
+    color: #94a3b8;
     text-transform: uppercase;
+    letter-spacing: 0.05em;
     font-weight: 600;
-    margin-bottom: 0.3rem;
 }
 
 .info-item span {
-    font-size: 1rem;
-    color: #343a40;
+    font-size: 0.95rem;
+    color: #334155;
     font-weight: 500;
 }
 
-/* Badge decorativo para el Rol */
+/* Badge moderno para el Rol */
 .badge-rol {
-    background: #eef2ff;
-    color: #4338ca;
-    padding: 2px 8px;
-    border-radius: 4px;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 4px 12px;
+    border-radius: 9999px;
     width: fit-content;
-    font-size: 0.9rem !important;
+    font-size: 0.8rem !important;
+    border: 1px solid #e2e8f0;
 }
 
-/* Footer del modal */
-.modal-footer {
-    padding-top: 1rem;
-    border-top: 1px solid #dee2e6;
+/* Botón de cerrar (PrimeReact internal) */
+.custom-customer-modal .p-dialog-header-icon {
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.custom-customer-modal .p-dialog-header-icon:hover {
+    background-color: #f1f5f9;
+    color: #ef4444;
 }

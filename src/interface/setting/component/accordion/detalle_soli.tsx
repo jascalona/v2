@@ -39,24 +39,23 @@ const StyledTextField = styled(TextField, {
 }));
 
 interface Solicitud {
-    cliComercio: string,
-    cliDirecto: string,
-    coAmbiente: string,
-    coPrioridad: string,
-    coProducto: string,
-    coSLA: string,
-    coSolicitud: string,
+    co_cliente: string,
+    co_ambiente: string,
+    nb_prioridad: string,
+    co_producto: string,
+    co_sla: string,
+    co_solicitud: string,
     co_tip_solicitud: string,
-    coUserCierre: string,
-    c_user_resolutor: string,
-    feRegistro: string,
-    feVencimiento: string,
-    stSolicitud: string,
-    txDesSoli: string,
-    feResolucion: string,
-    txCusaSoli: string,
+    co_user_cierre: string,
+    co_user_resolutor: string,
+    fe_registro: string,
+    fe_vencimiento: string,
+    co_estado: string,
+    tx_descripcion: string,
+    fe_resolucion: string,
+    tx_causa: string,
     tx_desc_resolucion: string,
-    txNota: string,
+    tx_nota: string,
 }
 
 // interfaz de Props: Recibe la solicitud completa
@@ -92,20 +91,19 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
     useEffect(() => {
         if (solicitud) {
             // Sección "Detalles"
-            setAmbienteValue(solicitud.coAmbiente || 'No definido');
-            setProductoValue(solicitud.coProducto || 'No definido');
+            setAmbienteValue(solicitud.co_ambiente || 'No definido');
+            setProductoValue(solicitud.co_producto || 'No definido');
             setTipoValue(solicitud.co_tip_solicitud || 'No definido');
-            setAsignadoValue(solicitud.c_user_resolutor || 'No asignado');
-            setPrioridadValue(solicitud.coPrioridad || 'Baja');
-            setEstadoValue(solicitud.stSolicitud || 'Nuevo');
-            setFechaRegistroValue(solicitud.feRegistro ? solicitud.feRegistro.split('T')[0] : 'N/A');
-            setFechaVencimientoValue(solicitud.feVencimiento ? solicitud.feVencimiento.split('T')[0] : 'N/A');
-            setClienteValue(solicitud.cliDirecto || 'N/A');
-            setComercioValue(solicitud.cliComercio || 'N/A');
-            setEstadoSolucionValue(solicitud.stSolicitud || 'N/A');
-            setFechaSolucionValue(solicitud.feResolucion ? solicitud.feResolucion.split('T')[0] : 'N/A');
-            setResueltoPorValue(solicitud.coUserCierre || 'N/A');
-            setCausaValue(solicitud.txCusaSoli || 'Sin causa registrada.');
+            setAsignadoValue(solicitud.co_user_resolutor || 'No asignado');
+            setPrioridadValue(solicitud.nb_prioridad || 'Baja');
+            setEstadoValue(solicitud.co_estado || 'Nuevo');
+            setFechaRegistroValue(solicitud.fe_registro ? solicitud.fe_registro.split('T')[0] : 'N/A');
+            setFechaVencimientoValue(solicitud.fe_vencimiento ? solicitud.fe_vencimiento.split('T')[0] : 'N/A');
+            setClienteValue(solicitud.co_cliente || 'N/A');
+            setEstadoSolucionValue(solicitud.co_estado || 'N/A');
+            setFechaSolucionValue(solicitud.fe_resolucion? solicitud.fe_resolucion.split('T')[0] : 'N/A');
+            setResueltoPorValue(solicitud.co_user_cierre || 'N/A');
+            setCausaValue(solicitud.tx_causa || 'Sin causa registrada.');
             setObservacionesValue(solicitud.tx_desc_resolucion || 'Sin observaciones.');
 
         } else {

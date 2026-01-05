@@ -16,30 +16,27 @@ import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 
 
 interface Solicitud {
-    cliComercio: string,
-    cliDirecto: string,
-    coAmbiente: string,
-    coPrioridad: string,
-    coProducto: string,
-    coSLA: string,
-    coSolicitud: string,
-    co_tip_solicitud: string,
-    coUserCierre: string,
+    co_solicitud: string,
+    fe_registro: string,
+    fe_vencimiento: string,
+    fe_resolucion: string,
+    fe_cierre: string,
     co_user_credor_soli: string,
-    c_user_resolutor: string,
-    feCierre: string,
-    feRegistro: string,
-    feResolucion: string,
-    fe_ult_modif: string,
-    feVencimiento: string,
-    nbContacto: string,
-    nuContacto: string,
-    stSolicitud: string,
-    txAsunto: string,
-    txCusaSoli: string,
+    co_user_resolutor: string,
+    co_tip_solicitud: string,
+    nb_contacto: string,
+    nu_celular_contacto: string,
+    tx_asunto: string,
+    tx_descripcion: string,
+    tx_causa: string,
+    co_ambiente: string,
+    co_producto: string,
+    co_sla: string,
+    co_user_cierre: string,
     tx_desc_resolucion: string,
-    txDesSoli: string,
-    txNota: string,
+    nb_prioridad: string,
+    co_estado: string,
+    co_cliente: string,
 }
 
 const StyledTextField = styled(TextField, {
@@ -96,10 +93,10 @@ function DetallesSolicitud() {
         }
 
         // Renderizado: Si hay datos, pobla los estados.
-        setDescripcionValue(selectedSolicitud.txDesSoli || 'No se encontró descripción.');
-        setTitulo(selectedSolicitud.txAsunto || `Solicitud ${selectedSolicitud.coSolicitud}`);
+        setDescripcionValue(selectedSolicitud.tx_descripcion || 'No se encontró descripción.');
+        setTitulo(selectedSolicitud.tx_asunto || `Solicitud ${selectedSolicitud.co_solicitud}`);
 
-        const registro = selectedSolicitud.feRegistro ? selectedSolicitud.feRegistro.replace('T', ' ').substring(0, 19) : 'N/A';
+        const registro = selectedSolicitud.fe_registro ? selectedSolicitud.fe_registro.replace('T', ' ').substring(0, 19) : 'N/A';
         setFechaRegistro(registro);
 
     }, [selectedSolicitud, navigate]);
@@ -118,7 +115,7 @@ function DetallesSolicitud() {
             <div className="container-interface-description">
                 <div className="container-desc-soli">
 
-                    <h2 style={{ margin: 0, paddingBottom: '5px' }}>{titulo}</h2>
+                    <h2 style={{ margin: 0}}>{titulo}</h2>
                     <small style={{ fontSize: 13 }}><strong> Creado el: <span>{fechaRegistro}</span></strong></small>
 
                     <div className="btn-group">

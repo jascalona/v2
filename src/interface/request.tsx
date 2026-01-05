@@ -86,12 +86,12 @@ function UIRequest() {
             </div>
 
 
-                <div className="request-generate">
-                    <TaskList />
-                </div>
+            <div className="request-generate">
+                <TaskList />
+            </div>
 
 
-                <ModalSolicitud />
+            <ModalSolicitud />
 
 
         </>

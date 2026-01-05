@@ -35,7 +35,6 @@ interface Solicitud {
     nb_prioridad: string, 
     co_estado: string,
     co_cliente: string,
-    co_tp_solicitud: string, 
 }
 
 //Definicion inical de filtros para el Datatable
@@ -124,7 +123,6 @@ function TableSolicitud() {
         'co_user_credor_soli',
         'co_user_resolutor',
         'co_tip_solicitud',
-        'co_tip_solicitud',
         'nb_contacto',
         'nu_celular_contacto',
         'tx_asunto',
@@ -137,7 +135,6 @@ function TableSolicitud() {
         'co_estado',
         'co_cliente',
         'txCusaSoli',
-        'co_tp_solicitud'
     ]
 
     if (cargando) return <p>Cargando registros...</p>

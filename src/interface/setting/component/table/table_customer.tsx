@@ -123,12 +123,12 @@ function TableCustomer() {
                     {/* COLUMNA DE ACCIONES MODIFICADA */}
                     <Column body={(rowData: Customer) => (
                         <div className="action-buttons">
-                            <button className="p-button-text p-button-secondary" style={{ marginRight: 4 }}>
+                            <button className="btn-secondary" style={{ marginRight: 4 }}>
                                 <EditSquareIcon sx={{ fontSize: 15, color: '#17306a' }} />
                             </button>
 
                             <button
-                                className="p-button-text p-button-secondary"
+                                className="btn-secondary"
                                 onClick={() => openCustomerModal(rowData)}
                             >
                                 <VisibilityIcon sx={{ fontSize: 15, color: '#17306a' }} />
@@ -142,22 +142,18 @@ function TableCustomer() {
             <Dialog
                 header="Detalles del Cliente"
                 visible={displayModal}
-                style={{ width: '40%' }} // Ancho fijo o responsivo
-                breakpoints={{ '960px': '75vw', '641px': '90vw' }} // Responsividad
+                style={{ width: '45vw', minWidth: '400px' }}
+                breakpoints={{ '960px': '75vw', '641px': '90vw' }}
                 onHide={() => setDisplayModal(false)}
                 draggable={false}
                 resizable={false}
-                className="custom-customer-modal" // Clase para el contenedor principal
-                footer={
-                    <div className="modal-footer">
-                        <Button label="Cerrar" icon="pi pi-times" onClick={() => setDisplayModal(false)} className="p-button-outlined p-button-secondary" />
-                    </div>
-                }
+                maskClassName="custom-mask"
+                className="custom-customer-modal"
             >
                 {selectedCustomer && (
                     <div className="customer-info-grid">
                         <div className="info-item full-width">
-                            <label>Nombre del Cliente</label>
+                            <label>Cliente</label>
                             <span>{selectedCustomer.nb_cliente}</span>
                         </div>
                         <div className="info-item">
@@ -179,6 +175,11 @@ function TableCustomer() {
                         <div className="info-item full-width">
                             <label>Fecha de Registro</label>
                             <span>{selectedCustomer.fe_registro}</span>
+                        </div>
+
+                        <div className="info-item ">
+                            <label>Datos de Contacto</label>
+                            <span>{selectedCustomer.nb_cliente}</span>
                         </div>
                     </div>
                 )}

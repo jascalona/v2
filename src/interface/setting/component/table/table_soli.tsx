@@ -69,16 +69,7 @@ const AddIcon: React.FC = () => (
     <span className="add-icon">+</span>
 );
 
-const StatusCircle: React.FC<{ status: Solicitud['co_estado'] }> = ({ status }) => {
-    const isCompleted = status?.toUpperCase() === 'CERRADO' || status?.toUpperCase() === 'RESUELTO';
-    const statusClass = `status-circle ${isCompleted ? 'completed' : 'in-progress'}`;
 
-    return (
-        <span className={statusClass} title={`Estado: ${status}`}>
-            <CircleIcon sx={{fontSize: 20}}/>
-        </span>
-    );
-};
 
 // --- COMPONENTE PRINCIPAL ---
 
@@ -186,7 +177,6 @@ const TaskListSoli: React.FC = () => {
 
                                 {/* Columna Asunto (txAsunto) */}
                                 <div className="task-name-cell">
-                                    <StatusCircle status={soli.co_estado} />
                                     {soli.tx_asunto}
                                 </div>
 
