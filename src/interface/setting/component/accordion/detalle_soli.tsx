@@ -78,13 +78,12 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
     const [fechaRegistroValue, setFechaRegistroValue] = useState('N/A');
     const [fechaVencimientoValue, setFechaVencimientoValue] = useState('N/A');
     const [clienteValue, setClienteValue] = useState('N/A');
-    const [comercioValue, setComercioValue] = useState('N/A');
 
     // Estados para la sección "Detalles de Solución"
     const [estadoSolucionValue, setEstadoSolucionValue] = useState('N/A');
     const [fechaSolucionValue, setFechaSolucionValue] = useState('N/A');
     const [resueltoPorValue, setResueltoPorValue] = useState('N/A');
-    const [causaValue, setCausaValue] = useState('N/A');
+    const [causaValue, setCausaValue] = useState("Desconocida")
     const [observacionesValue, setObservacionesValue] = useState('N/A');
 
 
@@ -101,9 +100,10 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
             setFechaVencimientoValue(solicitud.fe_vencimiento ? solicitud.fe_vencimiento.split('T')[0] : 'N/A');
             setClienteValue(solicitud.co_cliente || 'N/A');
             setEstadoSolucionValue(solicitud.co_estado || 'N/A');
-            setFechaSolucionValue(solicitud.fe_resolucion? solicitud.fe_resolucion.split('T')[0] : 'N/A');
+            setFechaSolucionValue(solicitud.fe_resolucion ? solicitud.fe_resolucion.split('T')[0] : 'N/A');
             setResueltoPorValue(solicitud.co_user_cierre || 'N/A');
-            setCausaValue(solicitud.tx_causa || 'Sin causa registrada.');
+            setCausaValue(solicitud.tx_causa || 'Desconocida');
+
             setObservacionesValue(solicitud.tx_desc_resolucion || 'Sin observaciones.');
 
         } else {
@@ -145,7 +145,7 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
     return (
         <div>
 
-    
+
             <Accordion defaultExpanded
                 style={{ background: 'none', boxShadow: 'none', border: 'solid 1px #ccc2c271', borderRadius: '5px', backgroundColor: '#fff' }}>
                 <AccordionSummary
@@ -159,7 +159,6 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
                 <AccordionDetails>
                     <Typography component="div">
                         <div className="sidebar-content-soli">
-
                             {/* INPUT: Ambiente */}
                             <div style={itemStyle}>
                                 <span style={spanStyle}>Ambiente: </span>
@@ -306,22 +305,6 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
                                 />
                             </div>
 
-                            <div style={itemStyle}>
-                                <span style={spanStyle}>Comercio: </span>
-                                <StyledTextField
-                                    fullWidth
-                                    placeholder="N/A"
-                                    variant="outlined"
-                                    size="small"
-                                    value={comercioValue}
-                                    onChange={(e) => setComercioValue(e.target.value)}
-                                    onFocus={() => handleInputFocus('comercio')}
-                                    onBlur={handleInputBlur}
-                                    onClick={() => handleInputFocus('comercio')}
-                                    isCurrentlyEditing={isCurrentlyEditing('comercio')}
-                                />
-                            </div>
-
                         </div>
                     </Typography>
                 </AccordionDetails>
@@ -392,8 +375,8 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
                         <hr style={{ margin: '10px 0' }} />
 
                         <div className="descript-solution">
+                            <span style={titleMultilineStyle}><strong>Causa de la Incidencia:</strong> </span>
                             <div className="item-multiline">
-                                <span style={titleMultilineStyle}><strong>Causa de la Incidencia:</strong> </span>
                                 <StyledTextField
                                     fullWidth
                                     placeholder="Sin causa registrada."
@@ -433,6 +416,7 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
                                     multilineInput={true}
                                 />
                             </div>
+
                         </div>
 
                     </Typography>
