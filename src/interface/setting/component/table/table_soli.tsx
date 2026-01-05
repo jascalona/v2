@@ -134,8 +134,8 @@ const TaskListSoli: React.FC = () => {
     return (
 
         <>
-            <div className="header-left" >
-                <h2>Gestion de Clientes <span className="badge-count">{"10"} clientes</span></h2>
+            <div className="header-left" style={{ margin: 20, marginTop: 40 }} >
+                <h2>Solicitudes <span className="badge-count">{solicitudes.length} clientes</span></h2>
                 <p className="subtitle">Mantén el seguimiento de tus clientes y sus productos.</p>
             </div>
 
@@ -180,19 +180,15 @@ const TaskListSoli: React.FC = () => {
                                         onClick={() => handleRowClick(soli)} // <-- Click que redirige
                                         style={{ cursor: 'pointer' }}    >
 
-
-
-
                                         <div className="task-name-cell" style={{ marginLeft: 10 }}>
-                                            {soli.tx_asunto}
+                                            <div className="header-left" style={{lineHeight: 0.1}}>
+                                                <h3 style={{fontSize: 17}}>{soli.tx_asunto.substring(0, 35) + '...'}</h3>
+                                                <p className="subtitle">{soli.co_solicitud}</p>
+                                            </div>
                                         </div>
 
                                         <div>
-                                            {assignedUser ? (
-                                                <AssignedPersonIcon initials={assignedInitials} />
-                                            ) : (
-                                                <span className="person-placeholder" title="No Asignado">👤</span>
-                                            )}
+                                            {soli.co_user_credor_soli}
                                         </div>
 
                                         <div className={dateClass}>

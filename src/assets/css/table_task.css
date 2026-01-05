@@ -18,6 +18,7 @@
     grid-template-columns: minmax(200px, 4fr) 1fr 1fr 1fr 20px;
     align-items: center;
     transition: .1s;
+    overflow: auto;
 }
 
 .task-row-grid:hover{
