@@ -32,7 +32,6 @@ interface Solicitud {
     co_user_cierre: string,
     tx_desc_resolucion: string,
     tx_nota: string, 
-    nb_prioridad: string, 
     co_estado: string,
     co_cliente: string,
 }
@@ -71,7 +70,6 @@ function TableSolicitud() {
         const dataForExport = solicitud.map(solicitud => ({
             "Cliente": solicitud.co_cliente,
             "Co. Ambiente": solicitud.co_ambiente,
-            "Co. Prioridad": solicitud.nb_prioridad,
             "Co. Producto": solicitud.co_producto,
             "Co. SLA": solicitud.co_sla,
             "Co. Solicitud": solicitud.co_solicitud,
@@ -131,7 +129,6 @@ function TableSolicitud() {
         'co_sla',
         'co_user_cierre',
         'tx_nota',
-        'nb_prioridad',
         'co_estado',
         'co_cliente',
         'txCusaSoli',

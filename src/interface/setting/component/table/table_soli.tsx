@@ -29,7 +29,6 @@ interface Solicitud {
     co_user_cierre: string,
     tx_desc_resolucion: string,
     tx_nota: string,
-    nb_prioridad: string,
     co_estado: string,
     co_cliente: string,
     co_tp_solicitud: string,
@@ -53,7 +52,7 @@ const CalendarIcon: React.FC = () => (
     <span className="calendar-icon">🗓</span>
 );
 
-const PriorityIcon: React.FC<{ priority: Solicitud['nb_prioridad'] }> = ({ priority }) => {
+const PriorityIcon: React.FC<{ priority: Solicitud['co_estado'] }> = ({ priority }) => {
     const priorityString = String(priority || '').trim();
     let icon = <FlagIcon sx={{ fontSize: 14 }} />;
     let iconClass = 'priority-icon';
@@ -196,7 +195,7 @@ const TaskListSoli: React.FC = () => {
                                         </div>
 
                                         <div>
-                                            {soli.nb_prioridad} <PriorityIcon priority={soli.nb_prioridad} />
+                                            {soli.co_estado} <PriorityIcon priority={soli.co_estado} />
 
                                         </div>
 

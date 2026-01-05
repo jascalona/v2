@@ -34,7 +34,6 @@ interface Solicitud {
     co_sla: string,
     co_user_cierre: string,
     tx_desc_resolucion: string,
-    nb_prioridad: string,
     co_estado: string,
     co_cliente: string,
 }

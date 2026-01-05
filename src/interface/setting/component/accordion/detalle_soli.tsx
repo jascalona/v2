@@ -41,7 +41,6 @@ const StyledTextField = styled(TextField, {
 interface Solicitud {
     co_cliente: string,
     co_ambiente: string,
-    nb_prioridad: string,
     co_producto: string,
     co_sla: string,
     co_solicitud: string,
@@ -94,7 +93,6 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
             setProductoValue(solicitud.co_producto || 'No definido');
             setTipoValue(solicitud.co_tip_solicitud || 'No definido');
             setAsignadoValue(solicitud.co_user_resolutor || 'No asignado');
-            setPrioridadValue(solicitud.nb_prioridad || 'Baja');
             setEstadoValue(solicitud.co_estado || 'Nuevo');
             setFechaRegistroValue(solicitud.fe_registro ? solicitud.fe_registro.split('T')[0] : 'N/A');
             setFechaVencimientoValue(solicitud.fe_vencimiento ? solicitud.fe_vencimiento.split('T')[0] : 'N/A');

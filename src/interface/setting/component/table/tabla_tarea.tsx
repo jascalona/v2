@@ -19,7 +19,7 @@ interface Solicitud {
     co_user_asignado: string,
     fe_cierre: string,
     co_solicitud: string,
-    nb_prioridad: string,
+    co_estado: string
 }
 
 // Para la agrupación por estado
@@ -40,7 +40,7 @@ const CalendarIcon: React.FC = () => (
     <span className="calendar-icon">🗓</span>
 );
 
-const PriorityIcon: React.FC<{ priority: Solicitud['nb_prioridad'] }> = ({ priority }) => {
+const PriorityIcon: React.FC<{ priority: Solicitud['co_estado'] }> = ({ priority }) => {
 
     const priorityString = String(priority || '').trim();
 
@@ -92,7 +92,7 @@ const TaskList: React.FC = () => {
 
         const groupsMap = solicitudes.reduce((acc, soli) => {
             // Usamos stSolicitud como la clave para agrupar
-            const status = soli.nb_prioridad || 'SIN ESTADO';
+            const status = soli.co_estado || 'SIN ESTADO';
 
             if (!acc[status]) {
                 acc[status] = { name: status, tasks: [] };
@@ -182,8 +182,8 @@ const TaskList: React.FC = () => {
 
                                 {/* Columna Prioridad (coPrioridad) */}
                                 <div>
-                                    <PriorityIcon priority={soli.nb_prioridad} />
-                                    <span > {soli.nb_prioridad}</span>
+                                    <PriorityIcon priority={soli.co_estado} />
+                                    <span > {soli.co_estado}</span>
                                 </div>
 
                             </div>
