@@ -12,7 +12,7 @@ import BeenhereIcon from '@mui/icons-material/Beenhere';
 
 
 //COMPONENTES GRAFICOS
-import TaskList from '../table/tabla_tarea';
+import TableTask from '../table/tabla_tarea';
 import CreateTask from '../modal/modal_task';
 
 import AvatarI from '../Avatar';
@@ -67,16 +67,9 @@ function TabsTaskMnagaer() {
       </Box>
       <CustomTabPanel value={value} index={0}>
         <div className="container-resumen-activities">
-          <h3>Gestion de Tareas</h3>
-
-          <div className='bt-task' >
-            <div className="btn-tarea">
-              <CreateTask />
-            </div>
-          </div>
 
           <div className="request-generate">
-            <TaskList />
+            <TableTask />
           </div>
         </div>
       </CustomTabPanel>
@@ -91,7 +84,7 @@ function TabsTaskMnagaer() {
           </div>
 
           <div className="request-generate">
-            <TaskList />
+            hola mundo
           </div>
 
         </div>

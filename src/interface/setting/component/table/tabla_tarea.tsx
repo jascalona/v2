@@ -1,15 +1,20 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useEffect, useState } from "react";
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { InputText } from 'primereact/inputtext';
+import { FilterMatchMode } from 'primereact/api';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog'; // 1. Importar Dialog
 import axios from 'axios';
-import '../../../../assets/css/table_task.css'
+import '../../../../assets/css/table_customer.css'
 
-//Icons
-import FlagIcon from '@mui/icons-material/Flag';
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import CircleIcon from '@mui/icons-material/Circle';
+import EditSquareIcon from '@mui/icons-material/EditSquare';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import CreateTask from '../modal/modal_task';
 
 
-// --- TIPOS DE DATOS ---
-interface Solicitud {
+
+interface Customer {
     co_tarea: string,
     tx_asunto: string,
     tx_description: string,
@@ -19,180 +24,206 @@ interface Solicitud {
     co_user_asignado: string,
     fe_cierre: string,
     co_solicitud: string,
+    co_area: string,
     co_estado: string
 }
 
-// Para la agrupación por estado
-interface TaskGroup {
-    name: string;
-    tasks: Solicitud[];
-}
-
-// --- COMPONENTES REUTILIZABLES (Actualizados) ---
-
-const AssignedPersonIcon: React.FC<{ initials: string }> = ({ initials }) => (
-    <div className="assigned-person-icon">
-        {initials}
-    </div>
-);
-
-const CalendarIcon: React.FC = () => (
-    <span className="calendar-icon">🗓</span>
-);
-
-const PriorityIcon: React.FC<{ priority: Solicitud['co_estado'] }> = ({ priority }) => {
-
-    const priorityString = String(priority || '').trim();
-
-    const p = priorityString.toUpperCase();
-
-    // Clasificación de prioridad (la misma lógica que antes)
-    let icon = <FlagIcon sx={{ fontSize: 15}} />; // Por defecto
-    let iconClass = 'priority-icon';
-
-
-
-    return (
-        <span className={iconClass} title={`Prioridad: ${priorityString}`}>
-            {icon}
-        </span>
-    );
+const initialFilters = {
+    global: { value: null as string | null, matchMode: FilterMatchMode.CONTAINS },
 };
 
-const AddIcon: React.FC = () => (
-    <span className="add-icon">+</span>
-);
-
-
-// --- COMPONENTE PRINCIPAL ---
-
-const TaskList: React.FC = () => {
-    const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
+function TableTask() {
+    const [task, setTask] = useState<Customer[]>([]);
     const [cargando, setCargando] = useState(true);
+    const [filters, setFilters] = useState(initialFilters);
+    const [globalFilterValue, setGlobalFilterValue] = useState('');
 
-    // 1. Carga de datos de la BD
+    // --- ESTADOS PARA EL MODAL ---
+    const [displayModal, setDisplayModal] = useState(false);
+    const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+
     useEffect(() => {
-        axios.get<Solicitud[]>("http://localhost:8081/task")
+        axios.get<Customer[]>('http://localhost:8081/task')
             .then(response => {
-                setSolicitudes(response.data);
+                setTask(response.data);
                 setCargando(false);
             })
             .catch(error => {
                 console.error("Hubo un error al obtener los registros", error);
                 setCargando(false);
-                // Si la solicitud falla, inicializa con un array vacío para evitar errores
-                setSolicitudes([]);
             });
     }, []);
 
-
-    // Lógica de Agrupación (useMemo para optimizar el rendimiento)
-    const groupedTasks: TaskGroup[] = useMemo(() => {
-        if (solicitudes.length === 0) return [];
-
-        const groupsMap = solicitudes.reduce((acc, soli) => {
-            // Usamos stSolicitud como la clave para agrupar
-            const status = soli.co_estado || 'SIN ESTADO';
-
-            if (!acc[status]) {
-                acc[status] = { name: status, tasks: [] };
-            }
-
-            acc[status].tasks.push(soli);
-            return acc;
-        }, {} as Record<string, TaskGroup>);
-
-        // Convertir el mapa de grupos a un array para renderizar
-        return Object.values(groupsMap);
-    }, [solicitudes]); // Se recalcula si 'solicitudes' cambia
-
-
-
-    if (cargando) return <p>Cargando registros...</p>
-    if (solicitudes.length === 0) return <p>No se encontraron Tarea.</p>
-
-
-    // Función auxiliar para obtener las iniciales del asignado
-    const getInitials = (fullName: string | undefined): string => {
-        if (!fullName) return 'NA'; // No Asignado
-        const parts = fullName.split(' ').filter(p => p.length > 0);
-        if (parts.length === 0) return 'NA';
-        if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
-
-        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    // --- FUNCIÓN PARA ABRIR MODAL ---
+    const openCustomerModal = (customer: Customer) => {
+        setSelectedCustomer(customer);
+        setDisplayModal(true);
     };
 
-    // Renderizado de los datos agrupados
+    const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        let _filters = { ...filters };
+        _filters['global'].value = value;
+        setFilters(_filters);
+        setGlobalFilterValue(value);
+    };
+
+    if (cargando) return <p>Cargando registros...</p>
+
     return (
-        <div className="task-list-container">
+        <div className="container-main-table">
+            <header className="table-header-custom">
+                <div className="header-left">
+                    <h2>Gestion de Clientes <span className="badge-count">{task.length} clientes</span></h2>
+                    <p className="subtitle">Mantén el seguimiento de tus clientes y sus productos.</p>
+                </div>
+            </header>
 
-            {/* Encabezado global de la tabla */}
-            <div className="header-row">
-                <div>Asunto</div>
-                <div>Persona asignada</div>
-                <div>Fecha límite</div>
-                <div>Prioridad</div>
+            <div className='bt-task' >
+                <div className="btn-tarea">
+                    <CreateTask />
+                </div>
             </div>
 
-            <div className="add-task-button">
-                <TaskAltIcon sx={{fontSize: 16}}/>
-                <span className="add-task-text">Tareas</span>
+            <div className="table-card">
+                <div className="table-toolbar">
+                    <div className="toolbar-left">
+                        <button className="filter-tab active">Ver todos</button>
+                        <button className="filter-tab">Produccion</button>
+                        <button className="filter-tab">Certificacion</button>
+
+                    </div>
+
+                    <div className="toolbar-right">
+                        <span className="p-input-icon-left search-container">
+                            <i className="pi pi-search" />
+                            <InputText value={globalFilterValue}
+                                onChange={onGlobalFilterChange}
+                                placeholder="Buscar..."
+                                className="search-input"
+                            />
+
+                        </span>
+                    </div>
+                </div>
+
+                <DataTable
+                    value={task}
+                    paginator
+                    rows={10}
+                    className="custom-datatable"
+                    filters={filters}
+                    globalFilterFields={['co_rif', 'nb_cliente', 'co_rol', 'co_producto']}
+                    responsiveLayout="scroll"
+                >
+                    <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
+                    <Column field="nb_cliente" header="Cliente" body={(rowData) => (
+                        <div className="client-cell">
+                            <span className="client-name">{rowData.co_tarea}</span>
+                            <span className="client-sub">{rowData.tx_asunto}</span>
+                        </div>
+                    )} sortable></Column>
+                    <Column field="co_tarea" header="ID Tarea"></Column>
+                    <Column field="co_user_emisor" header="Creado por:"></Column>
+                    <Column field="fe_registro" header="Último registro"></Column>
+
+
+                    {/* COLUMNA DE ACCIONES MODIFICADA */}
+                    <Column body={(rowData: Customer) => (
+                        <div className="action-buttons">
+                            <button className="btn-secondary" style={{ marginRight: 4 }}>
+                                <EditSquareIcon sx={{ fontSize: 15, color: '#17306a' }} />
+                            </button>
+
+                            <button
+                                className="btn-secondary"
+                                onClick={() => openCustomerModal(rowData)}
+                            >
+                                <VisibilityIcon sx={{ fontSize: 15, color: '#17306a' }} />
+                            </button>
+                        </div>
+                    )} headerStyle={{ width: '8rem' }}></Column>
+                </DataTable>
             </div>
 
-            {/* Renderizado de los grupos de solicitudes (agrupados por stSolicitud) */}
-            {groupedTasks.map((group) => (
-                <React.Fragment key={group.name}>
+            {/* --- COMPONENTE DIALOG (MODAL) --- */}
+            <Dialog
+                header="Detalles de la tarea"
+                visible={displayModal}
+                style={{ width: '45vw', minWidth: '400px' }}
+                breakpoints={{ '960px': '75vw', '641px': '90vw' }}
+                onHide={() => setDisplayModal(false)}
+                draggable={false}
+                resizable={false}
+                maskClassName="custom-mask"
+                className="custom-customer-modal"
+            >
+                {selectedCustomer && (
+                    <div className="customer-info-grid">
+                        <div className="info-item full-width">
+                            <label>N# Solicitud</label>
+                            <span>{selectedCustomer.co_solicitud}</span>
+                        </div>
 
-                    {/* Renderizado de las solicitudes dentro del grupo */}
-                    {group.tasks.map((soli) => {
+                        <div className="info-item">
+                            <label>ID Tarea</label>
+                            <span>{selectedCustomer.co_tarea}</span>
+                        </div>
 
-                        // Determinar si la fecha de vencimiento es urgente
-                        const dueDate = soli.fe_vencimiento ? new Date(soli.fe_vencimiento) : null;
-                        const today = new Date();
-                        const isOverdue = dueDate && dueDate < today;
+                        <div className="info-item">
+                            <label>Estado</label>
+                            <span>{selectedCustomer.co_estado}</span>
+                        </div>
 
-                        // Clases condicionales
-                        const rowClass = `task-row-grid`;
-                        const dateClass = `date-text ${isOverdue ? 'urgent-date' : ''}`;
+                        <div className="info-item">
+                            <label>Creado por:</label>
+                            <span>{selectedCustomer.co_user_emisor}</span>
+                        </div>
 
-                        const assignedUser = soli.co_user_asignado;
-                        const assignedInitials = getInitials(assignedUser);
+                        <div className="info-item">
+                            <label>Fe. de Registro</label>
+                            <span className="badge-rol">{selectedCustomer.fe_registro}</span>
+                        </div>
 
-                        return (
-                            <div key={soli.co_tarea} className={rowClass}>
+                        <div className="info-item">
+                            <label>Area Asignada</label>
+                            <span>{selectedCustomer.co_area}</span>
+                        </div>
 
-                                {/* Columna Asunto (txAsunto) */}
-                                <div className="task-name-cell">
-                                    {soli.tx_asunto}
-                                </div>
+                        <div className="info-item">
+                            <label>Fe. vencimiento</label>
+                            <span className="badge-rol">{selectedCustomer.fe_vencimiento}</span>
+                        </div>
 
-                                {/* Columna Persona asignada (c_user_resolutor) */}
-                                <div>
-                                    {assignedUser ? (
-                                        <AssignedPersonIcon initials={assignedInitials} />
-                                    ) : (
-                                        <span className="person-placeholder" title="No Asignado">👤</span>
-                                    )}
-                                </div>
+                        <div className="info-item">
+                            <label>Personal Asigando</label>
+                            <span>{selectedCustomer.co_user_asignado}</span>
+                        </div>
 
-                                {/* Columna Fecha límite (feVencimiento) */}
-                                <div className={dateClass}>
-                                    {soli.fe_vencimiento ? soli.fe_vencimiento.split('T')[0] : <CalendarIcon />}
-                                </div>
 
-                                {/* Columna Prioridad (coPrioridad) */}
-                                <div>
-                                    <PriorityIcon priority={soli.co_estado} />
-                                    <span > {soli.co_estado}</span>
-                                </div>
+                        <div className="info-item">
+                            <label>Fe. Cierre</label>
+                            <span className="badge-rol">{selectedCustomer.fe_cierre}</span>
+                        </div>
 
-                            </div>
-                        );
-                    })}
-                </React.Fragment>
-            ))}
+                        <div className="info-item full-width">
+                        </div>
+
+                        <div className="info-item ">
+                            <label>Asunto</label>
+                            <span><strong>{selectedCustomer.tx_asunto}</strong></span>
+                        </div>
+
+
+                        <div className="info-item full-width" style={{ maxHeight: '250px', overflow: "auto" }}>
+                            <label>Descripcion</label>
+                            <span>{selectedCustomer.tx_description}</span>
+                        </div>
+                    </div>
+                )}
+            </Dialog>
         </div>
     );
-};
+}
 
-export default TaskList;
+export default TableTask;
