@@ -10,7 +10,6 @@ import '../../../../assets/css/table_customer.css'
 
 import EditSquareIcon from '@mui/icons-material/EditSquare';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { green } from "@mui/material/colors";
 
 interface Customer {
     co_cliente: string;

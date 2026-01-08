@@ -6,9 +6,9 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 
 interface Ambiente {
-    coambiente: string,
-    nbambiente: string,
-    feregistro: string
+    co_ambiente: string,
+    nb_ambiente: string,
+    fe_registro: string
 }
 
 function OptionAmbiente() {
@@ -18,7 +18,7 @@ function OptionAmbiente() {
 
     const [selectedAmbiente, setSelectedAmbiente] = useState<string | undefined>('');
 
-    const API_URL = "http://localhost:8080/basetomee/ambiente/listar";
+    const API_URL = "http://localhost:8081/ambiente";
 
     useEffect(() => {
         const fetchAmbientes = async () => {
@@ -70,8 +70,8 @@ function OptionAmbiente() {
 
                 {/* Mapeo de los datos para generar las opciones */}
                 {ambientes.map((ambiente) => (
-                    <option key={ambiente.coambiente} value={ambiente.coambiente}>
-                        {ambiente.nbambiente}
+                    <option key={ambiente.co_ambiente} value={ambiente.co_ambiente}>
+                        {ambiente.nb_ambiente}
                     </option>
                 ))}
             </select>

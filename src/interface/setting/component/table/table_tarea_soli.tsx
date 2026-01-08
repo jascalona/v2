@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { InputText } from 'primereact/inputtext';
 import { FilterMatchMode } from 'primereact/api';
-import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog'; // 1. Importar Dialog
 import axios from 'axios';
 import '../../../../assets/css/table_customer.css'

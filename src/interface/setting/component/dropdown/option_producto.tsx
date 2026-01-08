@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 interface Producto {
-    coproducto: string,
-    nbproducto: string,
-    stproducto: string
+    co_producto: number,
+    nb_producto: string,
+    tx_descripcion: string,
+    st_producto: string,
+    fe_registro: string
+
 }
 
 function OptionProducto() {
@@ -14,7 +17,7 @@ function OptionProducto() {
 
     const [selectedAmbiente, setSelectedAmbiente] = useState<string | undefined>('');
 
-    const API_URL = "http://localhost:8080/basetomee/producto/listar";
+    const API_URL = "http://localhost:8081/products";
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -66,8 +69,8 @@ function OptionProducto() {
 
                 {/* Mapeo de los datos para generar las opciones */}
                 {productos.map((producto) => (
-                    <option key={producto.coproducto} value={producto.coproducto}>
-                        {producto.nbproducto}
+                    <option key={producto.co_producto} value={producto.co_producto}>
+                        {producto.nb_producto}
                     </option>
                 ))}
             </select>

@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 interface Usuarios {
-    coUsuario: string,
-    cosubarea: string,
-    nbNombre: string,
-    nbApellido: string
+    co_usuario: string,
+    nb_nombre: string,
+    nb_apellido: string,
+    tx_email: string,
+    nu_celular: string,
+    co_subarea: number
 }
 
 function OptionUsuario() {
@@ -15,7 +17,7 @@ function OptionUsuario() {
 
     const [selectedAmbiente, setSelectedAmbiente] = useState<string | undefined>('');
 
-    const API_URL = "http://localhost:8080/basetomee/usuario/list";
+    const API_URL = "http://localhost:8081/users";
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -67,8 +69,8 @@ function OptionUsuario() {
 
                 {/* Mapeo de los datos para generar las opciones */}
                 {usuarios.map((usuario) => (
-                    <option key={usuario.coUsuario} value={usuario.coUsuario}>
-                        {usuario.nbNombre +  " " + usuario.nbApellido}
+                    <option key={usuario.co_usuario} value={usuario.co_usuario}>
+                        {usuario.nb_nombre +  " " + usuario.nb_apellido}
                     </option>
                 ))}
             </select>

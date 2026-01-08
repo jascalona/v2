@@ -6,9 +6,9 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 
 interface Estado {
-    coEstado: string,
-    nbEstado: string,
-    feRegistro: string
+    co_estado: number,
+    nb_estado: string,
+    fe_registro: string
 }
 
 function OptionEstado() {
@@ -18,7 +18,7 @@ function OptionEstado() {
 
     const [selectedEstado, setSelectedEstado] = useState<string | undefined>('');
 
-    const API_URL = "http://localhost:8080/basetomee/estado/list";
+    const API_URL = "http://localhost:8081/status";
 
     useEffect(() => {
         const fetchAmbientes = async () => {
@@ -70,8 +70,8 @@ function OptionEstado() {
 
                 {/* Mapeo de los datos para generar las opciones */}
                 {estado.map((estado) => (
-                    <option key={estado.coEstado} value={estado.nbEstado}>
-                        {estado.nbEstado}
+                    <option key={estado.co_estado} value={estado.co_estado}>
+                        {estado.nb_estado}
                     </option>
                 ))}
             </select>

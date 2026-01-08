@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 interface TPS {
-    coTps: string,
-    nbTps: string,
+    co_tpsolicitud: number,
+    nb_tpsolicitud: string,
     fe_registro: string
 }
 
@@ -14,7 +14,7 @@ function OptionTPS() {
 
     const [selectedAmbiente, setSelectedAmbiente] = useState<string | undefined>('');
 
-    const API_URL = "http://localhost:8080/basetomee/tpsolicitud/list";
+    const API_URL = "http://localhost:8081/tprequest";
 
     useEffect(() => {
         const fetchTPS = async () => {
@@ -66,8 +66,8 @@ function OptionTPS() {
 
                 {/* Mapeo de los datos para generar las opciones */}
                 {tpsolicitud.map((tps) => (
-                    <option key={tps.coTps} value={tps.coTps}>
-                        {tps.nbTps}
+                    <option key={tps.co_tpsolicitud} value={tps.co_tpsolicitud}>
+                        {tps.nb_tpsolicitud}
                     </option>
                 ))}
             </select>

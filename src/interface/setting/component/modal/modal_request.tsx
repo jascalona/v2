@@ -52,7 +52,7 @@ function ModalSolicitud() {
                     alignItems: 'center',
                     cursor: 'pointer',
                     boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
-                    zIndex: 1000, 
+                    zIndex: 1000,
                 }}
             >
                 <AddIcon style={{ fontSize: '30px' }} />
@@ -220,8 +220,10 @@ function ModalSolicitud() {
                                         <TimeDate label='Fe. Vencimiento' />
                                     </div>
 
-
-
+                                    <div className="title-label">
+                                        <h2>Detalles de la Solicitud</h2>
+                                        <p style={{ color: '#595959ff' }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, architecto.</p>
+                                    </div>
                                     <div className="content-formulario">
                                         {/*ESTADO-SOLI*/}
                                         <OptionAmbiente />

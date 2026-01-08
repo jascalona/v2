@@ -6,8 +6,10 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 
 interface SLA {
-    cosla: string,
-    nbsla: string,
+    co_sla: number,
+    nb_sla: string,
+    co_unidad_tiempo: string 
+    nu_cantidad: number
 }
 
 function OptionPrioridad() {
@@ -17,7 +19,7 @@ function OptionPrioridad() {
 
     const [selectedAmbiente, setSelectedAmbiente] = useState<string | undefined>('');
 
-    const API_URL = "http://localhost:8080/basetomee/SLA/listar";
+    const API_URL = "http://localhost:8081/sla";
 
     useEffect(() => {
         const fetchAmbientes = async () => {
@@ -69,8 +71,8 @@ function OptionPrioridad() {
 
                 {/* Mapeo de los datos para generar las opciones */}
                 {sla.map((prioridad) => (
-                    <option key={prioridad.cosla} value={prioridad.cosla}>
-                        {prioridad.nbsla}
+                    <option key={prioridad.co_sla} value={prioridad.co_sla}>
+                        {prioridad.nb_sla}
                     </option>
                 ))}
             </select>
