@@ -182,7 +182,7 @@ function TaskBySoli({ idSolicitud }: TaskBySoliProps) {
 
                         <div className="info-item ">
                             <label>Asunto</label>
-                            <span>{selectedCustomer.tx_asunto}</span>
+                            <span><strong>{selectedCustomer.tx_asunto}</strong></span>
                         </div>
 
 

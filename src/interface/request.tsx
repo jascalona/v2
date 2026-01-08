@@ -19,19 +19,17 @@ function UIRequest() {
         <>
 
             <div className="container-solicitudes">
-
                 <div className="container-request">
                     <CardRequest />
                     <CardRequest />
                     <CardRequest />
                 </div>
-
                 <div className="card-chart">
                     <PieActiveArc />
                 </div>
 
             </div>
-
+            
             <div className="container-solicitudes-ii">
                 <div className="card-chart">
                     <BarsProduct />
