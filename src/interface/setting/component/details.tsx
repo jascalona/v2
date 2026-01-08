@@ -147,6 +147,7 @@ function DetallesSolicitud() {
                         <div className="asociados">
                             <DetallesTarea co_solicitud={selectedSolicitud.co_solicitud}/>
                         </div>
+                        
                         <br />
                         <div className="asociados">
                             <DetallesEscalamiento />
