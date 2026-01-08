@@ -4,21 +4,34 @@ import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 import { FilterMatchMode } from 'primereact/api';
 import { Button } from 'primereact/button';
-import { Dialog } from 'primereact/dialog'; // 1. Importar Dialog
+import { Dialog } from 'primereact/dialog';
 import axios from 'axios';
 import '../../../../assets/css/table_customer.css'
 
 import EditSquareIcon from '@mui/icons-material/EditSquare';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { green } from "@mui/material/colors";
 
 interface Customer {
-    co_cliente: string,
-    co_rif: string,
-    nb_cliente: string,
-    co_rol: string,
-    fe_registro: string,
-    co_use_creador: string,
-    co_producto: string,
+    co_cliente: string;
+    co_rif: string;
+    nb_cliente: string;
+    co_rol: string;
+    fe_registro: string;
+    co_use_creador: string;
+    co_producto: string;
+}
+
+interface Contact {
+    co_contacto: number;
+    co_cliente: string;
+    co_rif: string;
+    nb_contacto: string;
+    nb_cargo: string;
+    nu_contacto: string;
+    tx_email: string;
+    fe_registro: string;
+    co_user_emisor: string;
 }
 
 const initialFilters = {
@@ -31,9 +44,10 @@ function TableCustomer() {
     const [filters, setFilters] = useState(initialFilters);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
 
-    // --- ESTADOS PARA EL MODAL ---
     const [displayModal, setDisplayModal] = useState(false);
     const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+    const [contactos, setContactos] = useState<Contact[]>([]);
+    const [cargandoContactos, setCargandoContactos] = useState(false);
 
     useEffect(() => {
         axios.get<Customer[]>('http://localhost:8081/customers')
@@ -42,15 +56,27 @@ function TableCustomer() {
                 setCargando(false);
             })
             .catch(error => {
-                console.error("Hubo un error al obtener los registros", error);
+                console.error("Error:", error);
                 setCargando(false);
             });
     }, []);
 
-    // --- FUNCIÓN PARA ABRIR MODAL ---
-    const openCustomerModal = (customer: Customer) => {
+    const openCustomerModal = async (customer: Customer) => {
         setSelectedCustomer(customer);
         setDisplayModal(true);
+        setContactos([]);
+        setCargandoContactos(true);
+
+        try {
+            const response = await axios.get<Contact[]>(`http://localhost:8081/customers/${customer.co_cliente}/contact`);
+            if (response.data) {
+                setContactos(response.data);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        } finally {
+            setCargandoContactos(false);
+        }
     };
 
     const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,14 +102,10 @@ function TableCustomer() {
                 </div>
             </header>
 
-
             <div className="table-card">
                 <div className="table-toolbar">
                     <div className="toolbar-left">
                         <button className="filter-tab active">Ver todos</button>
-                        <button className="filter-tab">Produccion</button>
-                        <button className="filter-tab">Certificacion</button>
-
                     </div>
 
                     <div className="toolbar-right">
@@ -94,7 +116,6 @@ function TableCustomer() {
                                 placeholder="Buscar..."
                                 className="search-input"
                             />
-
                         </span>
                     </div>
                 </div>
@@ -119,14 +140,11 @@ function TableCustomer() {
                     <Column field="co_producto" header="Producto"></Column>
                     <Column field="fe_registro" header="Último registro"></Column>
 
-
-                    {/* COLUMNA DE ACCIONES MODIFICADA */}
                     <Column body={(rowData: Customer) => (
                         <div className="action-buttons">
                             <button className="btn-secondary" style={{ marginRight: 4 }}>
                                 <EditSquareIcon sx={{ fontSize: 15, color: '#17306a' }} />
                             </button>
-
                             <button
                                 className="btn-secondary"
                                 onClick={() => openCustomerModal(rowData)}
@@ -138,17 +156,19 @@ function TableCustomer() {
                 </DataTable>
             </div>
 
-            {/* --- COMPONENTE DIALOG (MODAL) --- */}
             <Dialog
                 header="Detalles del Cliente"
                 visible={displayModal}
-                style={{ width: '45vw', minWidth: '400px' }}
+                style={{ width: '55vw', minWidth: '500px' }}
                 breakpoints={{ '960px': '75vw', '641px': '90vw' }}
-                onHide={() => setDisplayModal(false)}
+                onHide={() => {
+                    setDisplayModal(false);
+                    setSelectedCustomer(null);
+                }}
                 draggable={false}
                 resizable={false}
-                maskClassName="custom-mask"
                 className="custom-customer-modal"
+                blockScroll={true}
             >
                 {selectedCustomer && (
                     <div className="customer-info-grid">
@@ -177,9 +197,41 @@ function TableCustomer() {
                             <span>{selectedCustomer.fe_registro}</span>
                         </div>
 
-                        <div className="info-item ">
-                            <label>Datos de Contacto</label>
-                            <span>{selectedCustomer.nb_cliente}</span>
+                        <div className="info-item full-width" style={{ marginTop: '20px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
+                            <label style={{ color: '#17306a', fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '10px', display: 'block' }}>
+                                Datos de Contacto Asociados
+                            </label>
+
+                            {cargandoContactos ? (
+                                <div style={{ textAlign: 'center', padding: '20px' }}>
+                                    <i className="pi pi-spin pi-spinner" style={{ fontSize: '1.5rem', color: '#17306a' }}></i>
+                                    <p>Cargando información...</p>
+                                </div>
+                            ) : contactos.length > 0 ? (
+                                <DataTable
+                                    value={contactos}
+                                    className="custom-datatable"
+                                    responsiveLayout="scroll"
+                                    style={{color: '#767676ff'}}
+                                >
+                                    <Column field="nb_contacto" header="Nombre" body={(rowData: Contact) => (
+                                        <div className="client-cell">
+                                            <span className="client-name">{rowData.nb_contacto}</span>
+                                        </div>
+                                    )}></Column>
+                                    <Column field="nb_cargo" header="Cargo"></Column>
+                                    <Column field="nu_contacto" header="Movil"></Column>
+                                    <Column field="tx_email" header="Email"></Column>
+                                    <Column field="fe_registro" header="Fe. registro"></Column>
+
+                                </DataTable>
+                            ) : (
+                                <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '6px', textAlign: 'center' }}>
+                                    <span style={{ color: '#888', fontStyle: 'italic' }}>
+                                        Este cliente no posee contactos asociados.
+                                    </span>
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}
