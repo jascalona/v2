@@ -49,7 +49,7 @@ function TaskBySoli({ idSolicitud }: TaskBySoliProps) {
         if (!idSolicitud) return; //validar que no este vacio
         setCargando(true)
 
-        axios.get<TaskSoli[]>(`http://localhost:8081/request/${idSolicitud}/tareas`)
+        axios.get<TaskSoli[]>(`http://localhost:8081/request/${idSolicitud}/task`)
             .then(response => {
                 setTask(response.data);
                 setCargando(false);
