@@ -145,7 +145,7 @@ function DetallesSolicitud() {
                         <h4>Actividades vinculadas</h4>
 
                         <div className="asociados">
-                            <DetallesTarea />
+                            <DetallesTarea co_solicitud={selectedSolicitud.co_solicitud}/>
                         </div>
                         <br />
                         <div className="asociados">

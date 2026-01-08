@@ -6,12 +6,16 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../../../../assets/css/details.css'
 
 //Componentes
-import TaskList from '../table/tabla_tarea';
+import TaskBySoli from '../table/table_tarea_soli';
 
 
 //Icons
 
-function DetallesTarea() {
+interface idSolicitud{
+    co_solicitud: string
+}
+
+function DetallesTarea({co_solicitud}: idSolicitud) {
     return (
         <div>
             <Accordion defaultExpanded style={{ background: 'none', border: 'none', boxShadow: 'none' }}>
@@ -28,7 +32,9 @@ function DetallesTarea() {
                 </AccordionSummary>
                 <AccordionDetails style={{paddingTop: 30}}>
                     <Typography>
-                       <TaskList />
+
+                        {/*AQUI PASAMOS EL ID DE LA SOLICITUD*/}
+                       <TaskBySoli idSolicitud={co_solicitud}/>
                     </Typography>
                 </AccordionDetails>
             </Accordion>
