@@ -12,13 +12,16 @@ import OptionAmbiente from '../dropdown/option_ambiente';
 import OptionProducto from '../dropdown/option_producto';
 import OptionUsuario from '../dropdown/option_users';
 import OptionTPS from '../dropdown/option_tps';
-import OptionPrioridad from '../dropdown/option_sla';
+import OptionSla from '../dropdown/option_sla';
+import OptionPrioridad from '../dropdown/option_prioridad';
 import OptionEstado from '../dropdown/option_estado';
 import TimeDate from '../dropdown/option_date';
 import AccordionEvidencias from '../accordion/evidencias_solicitud';
 import OptionComponente from '../dropdown/option_componente';
 import OptionSubComponente from '../dropdown/option_subcomponente';
 import OptionCliente from '../dropdown/option_cliente';
+import OptionArea from '../dropdown/option_area';
+
 
 //Icons
 import AddIcon from '@mui/icons-material/Add';
@@ -41,29 +44,29 @@ function ModalSolicitud() {
     // objeto nombre de los campos
     const [formData, setFormData] = useState({
         co_solicitud: "",
-        fe_vencimiento: "2026-01-10",
-        fe_resolucion: "2026-01-10",
-        fe_cierre: "2026-01-10",
-        co_user_credor_soli: "V21016562",
-        co_user_resolutor: "V21016562",
+        fe_vencimiento: "",
+        fe_resolucion: "",
+        fe_cierre: "",
+        co_user_credor_soli: "",
+        co_user_resolutor: "",
         co_tip_solicitud: 0,
         nb_contacto: "",
         nu_celular_contacto: "",
         tx_asunto: "",
         tx_descripcion: "",
         tx_causa: "",
-        co_ambiente: 1,
-        co_producto: 1,
-        co_sla: 1,
-        co_user_cierre: "V21016562",
+        co_ambiente: 0,
+        co_producto: 0,
+        co_sla: 0,
+        co_user_cierre: "",
         tx_desc_resolucion: "",
         tx_nota: "",
-        co_estado: 1,
+        co_estado: 0,
         co_cliente: "",
-        co_prioridad: 1,
-        co_componente: 1,
-        co_subcomponente: 1,
-        co_area: 1
+        co_prioridad: 0,
+        co_componente: 0,
+        co_subcomponente: 0,
+        co_area: 0
     });
     // Maneja cambios en Inputs de texto
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -71,11 +74,20 @@ function ModalSolicitud() {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    // Maneja cambios en Dropdowns (Selects)
     const handleSelectChange = (name: string, value: any) => {
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
+        // campos de tipo entero
+        const numericFields = [
+            'co_tip_solicitud', 'co_ambiente', 'co_producto', 'co_sla',
+            'co_estado', 'co_prioridad', 'co_componente', 'co_subcomponente', 'co_area'
+        ];
 
+        // Si el campo esta en la lista y no es nulo/vacío, lo convertimos
+        const finalValue = numericFields.includes(name) && value !== ""
+            ? parseInt(value, 10)
+            : value;
+
+        setFormData(prev => ({ ...prev, [name]: finalValue }));
+    };
 
     // funcion para enviar a la bd
     const handleSubmit = async () => {
@@ -280,19 +292,17 @@ function ModalSolicitud() {
                                         <h2>Detalles de la Solicitud</h2>
                                         <p style={{ color: '#595959ff' }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, architecto.</p>
                                     </div>
-
                                     <div className="content-formulario">
                                         <OptionAmbiente onSelect={(val) => handleSelectChange('co_ambiente', val)} />
                                         <OptionTPS onSelect={(val) => handleSelectChange('co_tip_solicitud', val)} />
+                                        <OptionSla onSelect={(val) => handleSelectChange('co_sla', val)} />
                                         <OptionPrioridad onSelect={(val) => handleSelectChange('co_prioridad', val)} />
                                         <OptionEstado onSelect={(val) => handleSelectChange('co_estado', val)} />
                                     </div>
 
-
-
                                     <div className="content-formulario">
-                                        <OptionUsuario />
-                                        <OptionUsuario />
+                                        <OptionArea onSelect={(val) => handleSelectChange('co_area', val)} />
+                                        <OptionUsuario onSelect={(val) => handleSelectChange('co_user_credor_soli', val)} />
                                     </div>
 
                                     <div className='content-formulario'>

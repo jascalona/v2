@@ -2,27 +2,22 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 interface Usuarios {
-    co_usuario: string,
-    nb_nombre: string,
-    nb_apellido: string,
-    tx_email: string,
-    nu_celular: string,
-    co_subarea: number
+    co_area: string,
+    nb_area: string,
 }
 
 interface Props {
     onSelect: (value: any) => void;
 }
 
-
-function OptionUsuario({ onSelect }: Props) {
+function OptionArea({ onSelect }: Props) {
     const [usuarios, setUsurios] = useState<Usuarios[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     const [selectedUsuario, setSelectedUsuario] = useState<string | undefined>('');
 
-    const API_URL = "http://localhost:8081/users";
+    const API_URL = "http://localhost:8081/area";
 
     useEffect(() => {
         const fetchUsuarios = async () => {
@@ -56,25 +51,25 @@ function OptionUsuario({ onSelect }: Props) {
     return (
         <div className="select-container">
             <select
-                name="usuario"
-                id="usuario-select"
+                name="area"
+                id="area-select"
                 className="styled-select"
                 value={selectedUsuario}
                 onChange={handleChange}
             >
 
                 <option value="" disabled>
-                    Asignar Usuario
+                    Seleccionar Area
                 </option>
 
                 {/* Mapeo de los datos para generar las opciones */}
                 {usuarios.map((usuario) => (
-                    <option key={usuario.co_usuario} value={usuario.co_usuario}>
-                        {usuario.nb_nombre + " " + usuario.nb_apellido}
+                    <option key={usuario.co_area} value={usuario.co_area}>
+                        {usuario.nb_area}
                     </option>
                 ))}
             </select>
         </div>
     )
 }
-export default OptionUsuario
+export default OptionArea

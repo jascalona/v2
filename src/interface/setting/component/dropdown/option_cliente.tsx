@@ -73,7 +73,7 @@ function OptionCliente({ productoId, onSelect }: OptionClienteProps) {
 
                 {/* El operador ?. asegura que no falle si por alguna razón sigue siendo null */}
                 {clientes?.map((cliente) => (
-                    <option key={cliente.co_cliente} value={cliente.co_cliente}>
+                    <option key={cliente.co_cliente} value={cliente.co_rif}>
                         {cliente.nb_cliente}
                     </option>
                 ))}

@@ -6,8 +6,6 @@ interface OptionProductoProps {
     onProductoChange: (value: string) => void;
 }
 
-
-
 interface Producto {
     co_producto: number;
     nb_producto: string;
@@ -21,8 +19,8 @@ function OptionProducto({ onProductoChange }: OptionProductoProps) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // El valor seleccionado localmente
-    const [selectedAmbiente, setSelectedAmbiente] = useState<string>("");
+    // 1. Asegúrate de que el nombre del setter sea coherente (estaba como setSelectedAmbiente)
+    const [selectedProducto, setSelectedProducto] = useState<string>("");
 
     const API_URL = "http://localhost:8081/products";
 
@@ -33,7 +31,6 @@ function OptionProducto({ onProductoChange }: OptionProductoProps) {
                 setProductos(response.data);
                 setError(null);
             } catch (error) {
-                console.error("Error al obtener los registros: ", error);
                 setError("Error al cargar los productos");
             } finally {
                 setLoading(false);
@@ -41,12 +38,16 @@ function OptionProducto({ onProductoChange }: OptionProductoProps) {
         };
         fetchProductos();
     }, []);
-    
-    
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        onProductoChange(e.target.value);
-    };
 
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newValue = e.target.value;
+
+        // 2. ACTUALIZA EL ESTADO LOCAL para que el nombre se vea en pantalla
+        setSelectedProducto(newValue);
+
+        // 3. Notifica al ModalSolicitud para que lo guarde en el formData
+        onProductoChange(newValue);
+    };
 
     if (loading) return <p className="loading-message">Cargando productos...</p>;
     if (error) return <p className="error-message">{error}</p>;
@@ -57,11 +58,10 @@ function OptionProducto({ onProductoChange }: OptionProductoProps) {
                 name="producto"
                 id="producto-select"
                 className="styled-select"
-                value={selectedAmbiente}
+                value={selectedProducto} 
                 onChange={handleChange}
             >
-                {/* Opción por defecto vacía pero visible */}
-                <option value="">
+                <option value="" disabled>
                     Seleccione un Producto
                 </option>
 
@@ -74,5 +74,4 @@ function OptionProducto({ onProductoChange }: OptionProductoProps) {
         </div>
     );
 }
-
 export default OptionProducto;

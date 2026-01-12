@@ -1,31 +1,29 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-interface SLA {
-    co_sla: number,
-    nb_sla: string,
-    co_unidad_tiempo: string
-    nu_cantidad: number
+interface Prioridad {
+    co_prioridad: number,
+    nb_prioridad: string,
 }
 
 interface Props {
     onSelect: (value: any) => void;
 }
 
-function OptionSLA({ onSelect }: Props) {
-    const [sla, setSLA] = useState<SLA[]>([]);
+function OptionPrioridad({ onSelect }: Props) {
+    const [prioridad, setPrioridad] = useState<Prioridad[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const [selectedTPS, setSelectedTPS] = useState<string | undefined>('');
+    const [selectedPrioridad, setSelectedPrioridad] = useState<string | undefined>('');
 
-    const API_URL = "http://localhost:8081/sla";
+    const API_URL = "http://localhost:8081/priority";
 
     useEffect(() => {
         const fetchAmbientes = async () => {
             try {
-                const response = await axios.get<SLA[]>(API_URL)
-                setSLA(response.data);
+                const response = await axios.get<Prioridad[]>(API_URL)
+                setPrioridad(response.data);
 
                 setError(null);
             } catch (error) {
@@ -40,7 +38,7 @@ function OptionSLA({ onSelect }: Props) {
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const value = event.target.value;
-        setSelectedTPS(value);
+        setSelectedPrioridad(value);
 
         onSelect(value);
 
@@ -57,17 +55,17 @@ function OptionSLA({ onSelect }: Props) {
                 name="sla"
                 id="tps-select"
                 className="styled-select"
-                value={selectedTPS}
+                value={selectedPrioridad}
                 onChange={handleChange}
             >
                 <option value="" disabled>Seleccione SLA</option>
-                {sla.map((sla) => (
-                    <option key={sla.co_sla} value={sla.co_sla}>
-                        {sla.nb_sla}
+                {prioridad.map((prioridades) => (
+                    <option key={prioridades.co_prioridad} value={prioridades.co_prioridad}>
+                        {prioridades.nb_prioridad}
                     </option>
                 ))}
             </select>
         </div>
     )
 }
-export default OptionSLA
+export default OptionPrioridad
