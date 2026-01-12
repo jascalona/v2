@@ -23,7 +23,6 @@ import OptionCliente from '../dropdown/option_cliente';
 //Icons
 import AddIcon from '@mui/icons-material/Add';
 
-
 function ModalSolicitud() {
 
     // Estado para controlar la visibilidad del modal
@@ -33,6 +32,9 @@ function ModalSolicitud() {
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
     };
+
+
+    const [idProduct, setIdProduct] = useState<string>("");
 
     return (
         <>
@@ -63,6 +65,8 @@ function ModalSolicitud() {
 
             {/* Modal */}
             {isModalOpen && (
+
+
                 <div
                     style={{
                         position: 'fixed',
@@ -240,10 +244,12 @@ function ModalSolicitud() {
                                     </div>
 
                                     <div className='content-formulario'>
-                                        <OptionProducto />
-                                        <OptionComponente />
+
+                                        <OptionProducto onProductoChange={(id) => setIdProduct(id)} />
+                                        
+                                        <OptionCliente productoId={idProduct} />
+                                        <OptionComponente productoId={idProduct}/>
                                         <OptionSubComponente />
-                                        <OptionCliente />
                                     </div>
 
                                 </Grid>

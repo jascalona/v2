@@ -1,80 +1,82 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-interface Producto {
-    co_producto: number,
-    nb_producto: string,
-    tx_descripcion: string,
-    st_producto: string,
-    fe_registro: string
-
+interface OptionClienteProps {
+    productoId: string;
 }
 
-function OptionCliente() {
-    const [productos, setProductos] = useState<Producto[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+interface Cliente {
+    co_cliente: number;
+    co_rif: string;
+    nb_cliente: string;
+    co_rol: string;
+    fe_registro: string;
+}
 
-    const [selectedAmbiente, setSelectedAmbiente] = useState<string | undefined>('');
-
-    const API_URL = "http://localhost:8081/products";
+function OptionCliente({ productoId }: OptionClienteProps) {
+    const [clientes, setClientes] = useState<Cliente[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [selectedCliente, setSelectedCliente] = useState("");
 
     useEffect(() => {
-        const fetchProductos = async () => {
-            try {
-                const response = await axios.get<Producto[]>(API_URL)
-                setProductos(response.data);
+        const fetchClientes = async () => {
+            if (!productoId) {
+                setClientes([]);
+                return;
+            }
 
-                setError(null);
+            setLoading(true);
+            try {
+                const response = await axios.get<Cliente[]>(`http://localhost:8081/customers/${productoId}/product`);
+                
+                const data = response.data || [];
+                setClientes(data);
+                
             } catch (error) {
-                console.log("Error al obtener los registros: ", error);
-                setError("Error al cargar los datos de la API");
+                console.error("Error al cargar clientes:", error);
+                setClientes([]);
             } finally {
                 setLoading(false);
             }
         };
-        fetchProductos();
-    }, []);
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedAmbiente(event.target.value);
-        console.log("Ambiente seleccionado para formulario:", event.target.value);
-    };
+        fetchClientes();
+    }, [productoId]);
 
-    if (loading) {
-        return <p className="loading-message">Cargando...</p>
-    }
-
-    if (error) {
-        return <p className="error-message">{error}</p>
-    }
-
-    if (productos.length === 0) {
-        return <p className="no-records-message">No hay registros disponibles para mostrar</p>
-    }
+    // Lógica para determinar si el select debe estar bloqueado
+    // Se bloquea si: No hay producto, está cargando, o si la lista de clientes está vacía
+    const isInvalid = !productoId || loading || clientes.length === 0;
 
     return (
         <div className="select-container">
             <select
-                name="producto"
-                id="producto-select"
                 className="styled-select"
-                value={selectedAmbiente}
-                onChange={handleChange}
+                value={selectedCliente}
+                onChange={(e) => setSelectedCliente(e.target.value)}
+                disabled={isInvalid}
+                style={clientes.length === 0 && productoId && !loading ? { border: '1px solid #ffa726' } : {}}
             >
-
-                <option value="" disabled>
-                    Componente
+                <option value="">
+                    {loading ? "Cargando..." : 
+                     (!productoId) ? "Seleccione un producto primero" :
+                     (clientes.length === 0) ? "No hay clientes asociados" : 
+                     "Seleccione Cliente"}
                 </option>
 
-                {/* Mapeo de los datos para generar las opciones */}
-                {productos.map((producto) => (
-                    <option key={producto.co_producto} value={producto.co_producto}>
-                        {producto.nb_producto}
+                {/* El operador ?. asegura que no falle si por alguna razón sigue siendo null */}
+                {clientes?.map((cliente) => (
+                    <option key={cliente.co_cliente} value={cliente.co_cliente}>
+                        {cliente.nb_cliente}
                     </option>
                 ))}
             </select>
+            
+            {productoId && !loading && clientes.length === 0 && (
+                <span style={{ fontSize: '10px', color: '#ffa726', marginTop: '4px', display: 'block' }}>
+                    * Este producto no posee clientes registrados.
+                </span>
+            )}
         </div>
-    )
+    );
 }
-export default OptionCliente
+export default OptionCliente;

@@ -1,80 +1,82 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-interface Producto {
-    co_producto: number,
-    nb_producto: string,
-    tx_descripcion: string,
-    st_producto: string,
-    fe_registro: string
-
+interface OptionComponenteProps {
+    productoId: string
 }
 
-function OptionComponente() {
-    const [productos, setProductos] = useState<Producto[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+interface Componente {
+    co_componente: number,
+    nb_componente: string,
+}
 
-    const [selectedAmbiente, setSelectedAmbiente] = useState<string | undefined>('');
-
-    const API_URL = "http://localhost:8081/products";
+function OptionComponente({ productoId }: OptionComponenteProps) {
+    const [componente, setComponente] = useState<Componente[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [selectedComponente, setSelectedComponente] = useState("");
 
     useEffect(() => {
-        const fetchProductos = async () => {
-            try {
-                const response = await axios.get<Producto[]>(API_URL)
-                setProductos(response.data);
+        const fetchComponente = async () => {
+            if (!productoId) {
+                setComponente([]);
+                return;
+            }
 
-                setError(null);
+            setLoading(true);
+            try {
+                const response = await axios.get<Componente[]>(`http://localhost:8081/components/${productoId}/product`);
+
+                const data = response.data || [];
+                setComponente(data);
+
             } catch (error) {
-                console.log("Error al obtener los registros: ", error);
-                setError("Error al cargar los datos de la API");
+                console.error("Error al cargar componentes:", error);
+                setComponente([]);
             } finally {
                 setLoading(false);
             }
         };
-        fetchProductos();
-    }, []);
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedAmbiente(event.target.value);
-        console.log("Ambiente seleccionado para formulario:", event.target.value);
-    };
+        fetchComponente();
+    }, [productoId]);
 
-    if (loading) {
-        return <p className="loading-message">Cargando...</p>
-    }
+    // Lógica para determinar si el select debe estar bloqueado
+    // Se bloquea si: No hay producto, está cargando, o si la lista de clientes está vacía
+    const isInvalid = !productoId || loading || componente.length === 0;
 
-    if (error) {
-        return <p className="error-message">{error}</p>
-    }
 
-    if (productos.length === 0) {
-        return <p className="no-records-message">No hay registros disponibles para mostrar</p>
-    }
 
     return (
         <div className="select-container">
             <select
-                name="producto"
-                id="producto-select"
                 className="styled-select"
-                value={selectedAmbiente}
-                onChange={handleChange}
+                value={selectedComponente}
+                onChange={(e) => setSelectedComponente(e.target.value)}
+                disabled={isInvalid}
+                style={componente.length === 0 && productoId && !loading ? { border: '1px solid #ffa726' } : {}}
             >
-
-                <option value="" disabled>
-                    Componente
+                <option value="">
+                    {loading ? "Cargando..." :
+                        (!productoId) ? "Seleccione un producto primero" :
+                            (componente.length === 0) ? "No hay componentes asociados" :
+                                "Seleccione Cliente"}
                 </option>
 
-                {/* Mapeo de los datos para generar las opciones */}
-                {productos.map((producto) => (
-                    <option key={producto.co_producto} value={producto.co_producto}>
-                        {producto.nb_producto}
+                {/* El operador ?. asegura que no falle si por alguna razón sigue siendo null */}
+                {componente?.map((componentes) => (
+                    <option key={componentes.co_componente} value={componentes.co_componente}>
+                        {componentes.nb_componente}
                     </option>
                 ))}
             </select>
+
+            {productoId && !loading && componente.length === 0 && (
+                <span style={{ fontSize: '10px', color: '#ffa726', marginTop: '4px', display: 'block' }}>
+                    * Este producto no posee componentes registrados.
+                </span>
+            )}
         </div>
-    )
+    );
+
 }
 export default OptionComponente

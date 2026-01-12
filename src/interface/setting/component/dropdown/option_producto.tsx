@@ -1,34 +1,38 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-interface Producto {
-    co_producto: number,
-    nb_producto: string,
-    tx_descripcion: string,
-    st_producto: string,
-    fe_registro: string
-
+// Definimos la interfaz para las props que recibe el componente
+interface OptionProductoProps {
+    onProductoChange: (id: string) => void;
 }
 
-function OptionProducto() {
+interface Producto {
+    co_producto: number;
+    nb_producto: string;
+    tx_descripcion: string;
+    st_producto: string;
+    fe_registro: string;
+}
+
+function OptionProducto({ onProductoChange }: OptionProductoProps) {
     const [productos, setProductos] = useState<Producto[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    const [selectedAmbiente, setSelectedAmbiente] = useState<string | undefined>('');
+    
+    // El valor seleccionado localmente
+    const [selectedAmbiente, setSelectedAmbiente] = useState<string>("");
 
     const API_URL = "http://localhost:8081/products";
 
     useEffect(() => {
         const fetchProductos = async () => {
             try {
-                const response = await axios.get<Producto[]>(API_URL)
+                const response = await axios.get<Producto[]>(API_URL);
                 setProductos(response.data);
-
                 setError(null);
             } catch (error) {
-                console.log("Error al obtener los registros: ", error);
-                setError("Error al cargar los datos de la API");
+                console.error("Error al obtener los registros: ", error);
+                setError("Error al cargar los productos");
             } finally {
                 setLoading(false);
             }
@@ -37,21 +41,17 @@ function OptionProducto() {
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedAmbiente(event.target.value);
-        console.log("Ambiente seleccionado para formulario:", event.target.value);
+        const value = event.target.value;
+        setSelectedAmbiente(value);
+        
+        // Ejecutamos la función que viene del padre para pasarle el ID
+        onProductoChange(value);
+        
+        console.log("Producto seleccionado (ID):", value);
     };
 
-    if (loading) {
-        return <p className="loading-message">Cargando...</p>
-    }
-
-    if (error) {
-        return <p className="error-message">{error}</p>
-    }
-
-    if (productos.length === 0) {
-        return <p className="no-records-message">No hay registros disponibles para mostrar</p>
-    }
+    if (loading) return <p className="loading-message">Cargando productos...</p>;
+    if (error) return <p className="error-message">{error}</p>;
 
     return (
         <div className="select-container">
@@ -62,12 +62,11 @@ function OptionProducto() {
                 value={selectedAmbiente}
                 onChange={handleChange}
             >
-
-                <option value="" disabled>
-                    Producto
+                {/* Opción por defecto vacía pero visible */}
+                <option value="">
+                    Seleccione un Producto
                 </option>
 
-                {/* Mapeo de los datos para generar las opciones */}
                 {productos.map((producto) => (
                     <option key={producto.co_producto} value={producto.co_producto}>
                         {producto.nb_producto}
@@ -75,6 +74,7 @@ function OptionProducto() {
                 ))}
             </select>
         </div>
-    )
+    );
 }
-export default OptionProducto
+
+export default OptionProducto;
