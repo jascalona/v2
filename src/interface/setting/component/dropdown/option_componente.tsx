@@ -1,27 +1,29 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-
-interface Ambiente {
-    co_ambiente: string,
-    nb_ambiente: string,
+interface Producto {
+    co_producto: number,
+    nb_producto: string,
+    tx_descripcion: string,
+    st_producto: string,
     fe_registro: string
+
 }
 
-function OptionAmbiente() {
-    const [ambientes, setAmbientes] = useState<Ambiente[]>([]);
+function OptionComponente() {
+    const [productos, setProductos] = useState<Producto[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     const [selectedAmbiente, setSelectedAmbiente] = useState<string | undefined>('');
 
-    const API_URL = "http://localhost:8081/ambiente";
+    const API_URL = "http://localhost:8081/products";
 
     useEffect(() => {
-        const fetchAmbientes = async () => {
+        const fetchProductos = async () => {
             try {
-                const response = await axios.get<Ambiente[]>(API_URL)
-                setAmbientes(response.data);
+                const response = await axios.get<Producto[]>(API_URL)
+                setProductos(response.data);
 
                 setError(null);
             } catch (error) {
@@ -31,7 +33,7 @@ function OptionAmbiente() {
                 setLoading(false);
             }
         };
-        fetchAmbientes();
+        fetchProductos();
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -47,32 +49,32 @@ function OptionAmbiente() {
         return <p className="error-message">{error}</p>
     }
 
-    if (ambientes.length === 0) {
+    if (productos.length === 0) {
         return <p className="no-records-message">No hay registros disponibles para mostrar</p>
     }
 
     return (
         <div className="select-container">
             <select
-                name="ambiente"
-                id="ambiente-select"
+                name="producto"
+                id="producto-select"
                 className="styled-select"
                 value={selectedAmbiente}
                 onChange={handleChange}
             >
 
                 <option value="" disabled>
-                    Ambiente
+                    Componente
                 </option>
 
                 {/* Mapeo de los datos para generar las opciones */}
-                {ambientes.map((ambiente) => (
-                    <option key={ambiente.co_ambiente} value={ambiente.co_ambiente}>
-                        {ambiente.nb_ambiente}
+                {productos.map((producto) => (
+                    <option key={producto.co_producto} value={producto.co_producto}>
+                        {producto.nb_producto}
                     </option>
                 ))}
             </select>
         </div>
     )
 }
-export default OptionAmbiente
+export default OptionComponente

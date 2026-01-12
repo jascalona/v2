@@ -16,7 +16,9 @@ import OptionPrioridad from '../dropdown/option_sla';
 import OptionEstado from '../dropdown/option_estado';
 import TimeDate from '../dropdown/option_date';
 import AccordionEvidencias from '../accordion/evidencias_solicitud';
-
+import OptionComponente from '../dropdown/option_componente';
+import OptionSubComponente from '../dropdown/option_subcomponente';
+import OptionCliente from '../dropdown/option_cliente';
 
 //Icons
 import AddIcon from '@mui/icons-material/Add';
@@ -216,7 +218,6 @@ function ModalSolicitud() {
                                     </div>
 
                                     <div className="content-formulario">
-                                        <TimeDate label='Fe. Registro' />
                                         <TimeDate label='Fe. Vencimiento' />
                                     </div>
 
@@ -227,11 +228,22 @@ function ModalSolicitud() {
                                     <div className="content-formulario">
                                         {/*ESTADO-SOLI*/}
                                         <OptionAmbiente />
-                                        <OptionProducto />
-                                        <OptionUsuario />
                                         <OptionTPS />
                                         <OptionPrioridad />
                                         <OptionEstado />
+
+                                    </div>
+
+                                    <div className="content-formulario">
+                                        <OptionUsuario />
+                                        <OptionUsuario />
+                                    </div>
+
+                                    <div className='content-formulario'>
+                                        <OptionProducto />
+                                        <OptionComponente />
+                                        <OptionSubComponente />
+                                        <OptionCliente />
                                     </div>
 
                                 </Grid>
