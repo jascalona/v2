@@ -60,7 +60,7 @@ function OptionCliente({ productoId }: OptionClienteProps) {
                     {loading ? "Cargando..." : 
                      (!productoId) ? "Seleccione un producto primero" :
                      (clientes.length === 0) ? "No hay clientes asociados" : 
-                     "Seleccione Cliente"}
+                     "Seleccione un Cliente"}
                 </option>
 
                 {/* El operador ?. asegura que no falle si por alguna razón sigue siendo null */}

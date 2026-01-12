@@ -59,7 +59,7 @@ function OptionComponente({ productoId }: OptionComponenteProps) {
                     {loading ? "Cargando..." :
                         (!productoId) ? "Seleccione un producto primero" :
                             (componente.length === 0) ? "No hay componentes asociados" :
-                                "Seleccione Cliente"}
+                                "Seleccione un Componente"}
                 </option>
 
                 {/* El operador ?. asegura que no falle si por alguna razón sigue siendo null */}
