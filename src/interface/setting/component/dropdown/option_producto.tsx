@@ -3,8 +3,10 @@ import axios from "axios";
 
 // Definimos la interfaz para las props que recibe el componente
 interface OptionProductoProps {
-    onProductoChange: (id: string) => void;
+    onProductoChange: (value: string) => void;
 }
+
+
 
 interface Producto {
     co_producto: number;
@@ -18,7 +20,7 @@ function OptionProducto({ onProductoChange }: OptionProductoProps) {
     const [productos, setProductos] = useState<Producto[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    
+
     // El valor seleccionado localmente
     const [selectedAmbiente, setSelectedAmbiente] = useState<string>("");
 
@@ -39,16 +41,12 @@ function OptionProducto({ onProductoChange }: OptionProductoProps) {
         };
         fetchProductos();
     }, []);
-
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value;
-        setSelectedAmbiente(value);
-        
-        // Ejecutamos la función que viene del padre para pasarle el ID
-        onProductoChange(value);
-        
-        console.log("Producto seleccionado (ID):", value);
+    
+    
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        onProductoChange(e.target.value);
     };
+
 
     if (loading) return <p className="loading-message">Cargando productos...</p>;
     if (error) return <p className="error-message">{error}</p>;

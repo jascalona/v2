@@ -1,80 +1,92 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-interface Producto {
-    co_producto: number,
-    nb_producto: string,
-    tx_descripcion: string,
-    st_producto: string,
-    fe_registro: string
-
+interface OptionSubComponenteProps {
+    componenteId: string;
 }
 
-function OptionSubComponente() {
-    const [productos, setProductos] = useState<Producto[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+interface SubComponente {
+    co_subcomponente: number,
+    nb_subcomponente: string,
+}
 
-    const [selectedAmbiente, setSelectedAmbiente] = useState<string | undefined>('');
+interface OptionSubComponenteProps {
+    componenteId: string;
+    onSelect: (value: string) => void;
+}
 
-    const API_URL = "http://localhost:8081/products";
+function OptionSubComponente({ componenteId, onSelect }: OptionSubComponenteProps) {
+    const [subComponentes, setSubComponentes] = useState<SubComponente[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [selectedSubcomponente, setSelectedSubcomponente] = useState("");
 
     useEffect(() => {
-        const fetchProductos = async () => {
-            try {
-                const response = await axios.get<Producto[]>(API_URL)
-                setProductos(response.data);
+        const fetchSubComponentes = async () => {
+            if (!componenteId) {
+                setSubComponentes([]);
+                return;
+            }
 
-                setError(null);
+            setLoading(true);
+            try {
+                const response = await axios.get<SubComponente[]>(`http://localhost:8081/subcomponents/${componenteId}/components`);
+
+                const data = response.data || [];
+                setSubComponentes(data);
+
             } catch (error) {
-                console.log("Error al obtener los registros: ", error);
-                setError("Error al cargar los datos de la API");
+                console.error("Error al cargar Sub-componentes:", error);
+                setSubComponentes([]);
             } finally {
                 setLoading(false);
             }
         };
-        fetchProductos();
-    }, []);
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedAmbiente(event.target.value);
-        console.log("Ambiente seleccionado para formulario:", event.target.value);
+        fetchSubComponentes();
+    }, [componenteId]);
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value;
+        setSelectedSubcomponente(value);
+        onSelect(value);
     };
 
-    if (loading) {
-        return <p className="loading-message">Cargando...</p>
-    }
+    const isInvalid = !componenteId || loading || subComponentes.length === 0;
 
-    if (error) {
-        return <p className="error-message">{error}</p>
-    }
-
-    if (productos.length === 0) {
-        return <p className="no-records-message">No hay registros disponibles para mostrar</p>
-    }
 
     return (
-        <div className="select-container">
-            <select
-                name="producto"
-                id="producto-select"
-                className="styled-select"
-                value={selectedAmbiente}
-                onChange={handleChange}
-            >
-
-                <option value="" disabled>
-                    Sub-Componente
-                </option>
-
-                {/* Mapeo de los datos para generar las opciones */}
-                {productos.map((producto) => (
-                    <option key={producto.co_producto} value={producto.co_producto}>
-                        {producto.nb_producto}
+        <>
+            <div className="select-container">
+                <select
+                    className="styled-select"
+                    value={selectedSubcomponente}
+                    onChange={handleChange}
+                    disabled={isInvalid}
+                    style={subComponentes.length === 0 && componenteId && !loading ? { border: '1px solid #ffa726' } : {}}
+                >
+                    <option value="">
+                        {loading ? "Cargando..." :
+                            (!componenteId) ? "Seleccione un producto primero" :
+                                (subComponentes.length === 0) ? "No hay clientes asociados" :
+                                    "Seleccione un Cliente"}
                     </option>
-                ))}
-            </select>
-        </div>
+
+                    {/* El operador ?. asegura que no falle si por alguna razón sigue siendo null */}
+                    {subComponentes?.map((subcomponente) => (
+                        <option key={subcomponente.co_subcomponente} value={subcomponente.co_subcomponente}>
+                            {subcomponente.nb_subcomponente}
+                        </option>
+                    ))}
+                </select>
+
+                {componenteId && !loading && subComponentes.length === 0 && (
+                    <span style={{ fontSize: '10px', color: '#ffa726', marginTop: '4px', display: 'block' }}>
+                        * Este Componente no posee Sub-Componentes registrados.
+                    </span>
+                )}
+            </div>
+        </>
     )
 }
 export default OptionSubComponente

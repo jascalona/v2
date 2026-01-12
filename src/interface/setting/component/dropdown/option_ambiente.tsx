@@ -8,25 +8,26 @@ interface Ambiente {
     fe_registro: string
 }
 
-function OptionAmbiente() {
+interface Props {
+    onSelect: (value: any) => void;
+}
+
+function OptionAmbiente({ onSelect }: Props) {
     const [ambientes, setAmbientes] = useState<Ambiente[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    const [selectedAmbiente, setSelectedAmbiente] = useState<string | undefined>('');
+    const [selectedAmbiente, setSelectedAmbiente] = useState<string>(''); 
 
     const API_URL = "http://localhost:8081/ambiente";
 
     useEffect(() => {
         const fetchAmbientes = async () => {
             try {
-                const response = await axios.get<Ambiente[]>(API_URL)
+                const response = await axios.get<Ambiente[]>(API_URL);
                 setAmbientes(response.data);
-
                 setError(null);
             } catch (error) {
-                console.log("Error al obtener los registros: ", error);
-                setError("Error al cargar los datos de la API");
+                setError("Error al cargar datos");
             } finally {
                 setLoading(false);
             }
@@ -35,21 +36,15 @@ function OptionAmbiente() {
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedAmbiente(event.target.value);
-        console.log("Ambiente seleccionado para formulario:", event.target.value);
+        const value = event.target.value;
+        setSelectedAmbiente(value);
+
+        // Envía el valor seleccionado al componente Padre (ModalSolicitud)
+        onSelect(value);
     };
 
-    if (loading) {
-        return <p className="loading-message">Cargando...</p>
-    }
-
-    if (error) {
-        return <p className="error-message">{error}</p>
-    }
-
-    if (ambientes.length === 0) {
-        return <p className="no-records-message">No hay registros disponibles para mostrar</p>
-    }
+    if (loading) return <p>Cargando...</p>;
+    if (error) return <p>{error}</p>;
 
     return (
         <div className="select-container">
@@ -60,12 +55,7 @@ function OptionAmbiente() {
                 value={selectedAmbiente}
                 onChange={handleChange}
             >
-
-                <option value="" disabled>
-                    Ambiente
-                </option>
-
-                {/* Mapeo de los datos para generar las opciones */}
+                <option value="" disabled>Seleccione Ambiente</option>
                 {ambientes.map((ambiente) => (
                     <option key={ambiente.co_ambiente} value={ambiente.co_ambiente}>
                         {ambiente.nb_ambiente}
@@ -73,6 +63,7 @@ function OptionAmbiente() {
                 ))}
             </select>
         </div>
-    )
+    );
 }
+
 export default OptionAmbiente

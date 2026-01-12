@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-interface OptionClienteProps {
-    productoId: string;
-}
-
 interface Cliente {
     co_cliente: number;
     co_rif: string;
@@ -13,7 +9,12 @@ interface Cliente {
     fe_registro: string;
 }
 
-function OptionCliente({ productoId }: OptionClienteProps) {
+interface OptionClienteProps {
+    productoId: string;
+    onSelect: (value: string) => void;
+}
+
+function OptionCliente({ productoId, onSelect }: OptionClienteProps) {
     const [clientes, setClientes] = useState<Cliente[]>([]);
     const [loading, setLoading] = useState(false);
     const [selectedCliente, setSelectedCliente] = useState("");
@@ -28,10 +29,10 @@ function OptionCliente({ productoId }: OptionClienteProps) {
             setLoading(true);
             try {
                 const response = await axios.get<Cliente[]>(`http://localhost:8081/customers/${productoId}/product`);
-                
+
                 const data = response.data || [];
                 setClientes(data);
-                
+
             } catch (error) {
                 console.error("Error al cargar clientes:", error);
                 setClientes([]);
@@ -43,24 +44,31 @@ function OptionCliente({ productoId }: OptionClienteProps) {
         fetchClientes();
     }, [productoId]);
 
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value;
+        setSelectedCliente(value);
+        onSelect(value); // <--- Notificamos al modal principal
+    };
+
     // Lógica para determinar si el select debe estar bloqueado
     // Se bloquea si: No hay producto, está cargando, o si la lista de clientes está vacía
     const isInvalid = !productoId || loading || clientes.length === 0;
 
     return (
+
         <div className="select-container">
             <select
                 className="styled-select"
                 value={selectedCliente}
-                onChange={(e) => setSelectedCliente(e.target.value)}
+                onChange={handleChange} 
                 disabled={isInvalid}
                 style={clientes.length === 0 && productoId && !loading ? { border: '1px solid #ffa726' } : {}}
             >
                 <option value="">
-                    {loading ? "Cargando..." : 
-                     (!productoId) ? "Seleccione un producto primero" :
-                     (clientes.length === 0) ? "No hay clientes asociados" : 
-                     "Seleccione un Cliente"}
+                    {loading ? "Cargando..." :
+                        (!productoId) ? "Seleccione un producto primero" :
+                            (clientes.length === 0) ? "No hay clientes asociados" :
+                                "Seleccione un Cliente"}
                 </option>
 
                 {/* El operador ?. asegura que no falle si por alguna razón sigue siendo null */}
@@ -70,7 +78,7 @@ function OptionCliente({ productoId }: OptionClienteProps) {
                     </option>
                 ))}
             </select>
-            
+
             {productoId && !loading && clientes.length === 0 && (
                 <span style={{ fontSize: '10px', color: '#ffa726', marginTop: '4px', display: 'block' }}>
                     * Este producto no posee clientes registrados.
@@ -79,4 +87,5 @@ function OptionCliente({ productoId }: OptionClienteProps) {
         </div>
     );
 }
+
 export default OptionCliente;

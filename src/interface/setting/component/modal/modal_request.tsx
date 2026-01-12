@@ -33,12 +33,73 @@ function ModalSolicitud() {
         setIsModalOpen(!isModalOpen);
     };
 
-
+    // recibe los IDs y se los envias a los componentes necesarios
     const [idProduct, setIdProduct] = useState<string>("");
+    const [idComponente, setIdComponente] = useState<string>("");
+
+
+    // objeto nombre de los campos
+    const [formData, setFormData] = useState({
+        co_solicitud: "",
+        fe_vencimiento: "2026-01-10",
+        fe_resolucion: "2026-01-10",
+        fe_cierre: "2026-01-10",
+        co_user_credor_soli: "V21016562",
+        co_user_resolutor: "V21016562",
+        co_tip_solicitud: 0,
+        nb_contacto: "",
+        nu_celular_contacto: "",
+        tx_asunto: "",
+        tx_descripcion: "",
+        tx_causa: "",
+        co_ambiente: 1,
+        co_producto: 1,
+        co_sla: 1,
+        co_user_cierre: "V21016562",
+        tx_desc_resolucion: "",
+        tx_nota: "",
+        co_estado: 1,
+        co_cliente: "",
+        co_prioridad: 1,
+        co_componente: 1,
+        co_subcomponente: 1,
+        co_area: 1
+    });
+    // Maneja cambios en Inputs de texto
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    // Maneja cambios en Dropdowns (Selects)
+    const handleSelectChange = (name: string, value: any) => {
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+
+    // funcion para enviar a la bd
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch('http://localhost:8081/request', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                alert("Solicitud Creada exitosamente!");
+                toggleModal();
+            } else {
+                alert("Error al guardar la solicitud");
+            }
+        } catch (error) {
+            console.error("Error de conexión:", error);
+        }
+    };
+
 
     return (
         <>
-
             {/* Botón flotante*/}
             <div
                 onClick={toggleModal}
@@ -111,39 +172,35 @@ function ModalSolicitud() {
 
                                 <Grid alignItems="center">
                                     <div className="persona-contacto">
-
                                         <TextField
                                             fullWidth
-                                            label="Cliente Directo"
-                                            placeholder="Por ejemplo, Bancaribe"
+                                            name="co_solicitud"
+                                            value={formData.co_solicitud}
+                                            onChange={handleChange}
+                                            label="N# Solicitud"
+                                            placeholder="Por ejemplo, Fallo en los microservicios"
                                             variant="outlined"
                                             size="small"
-                                            sx={{
-                                                '& .MuiOutlinedInput-root': {
-                                                    borderRadius: '5px',
-                                                    marginBottom: '15px'
-                                                },
-                                            }}
+                                            sx={{ mb: 2 }}
                                         />
 
                                         <TextField
                                             fullWidth
-                                            label="Comercio"
-                                            placeholder="Por ejemplo, Seguros FRP"
-                                            variant="outlined"
+                                            name="tx_causa"
+                                            value={formData.tx_causa}
+                                            onChange={handleChange}
+                                            label="Causa de la intervención"
                                             size="small"
-                                            sx={{
-                                                '& .MuiOutlinedInput-root': {
-                                                    borderRadius: '5px',
-                                                    marginBottom: '15px'
-                                                },
-                                            }}
+                                            sx={{ mb: 2 }}
                                         />
                                     </div>
 
 
                                     <TextField
                                         fullWidth
+                                        name="tx_asunto"
+                                        value={formData.tx_asunto}
+                                        onChange={handleChange}
                                         label="Asunto"
                                         placeholder="Por ejemplo, Revision de logs microservicios"
                                         variant="outlined"
@@ -156,24 +213,12 @@ function ModalSolicitud() {
                                         }}
                                     />
 
-                                    <TextField
-                                        fullWidth
-                                        label="Causa de la intervención"
-                                        placeholder="Por ejemplo, Fallo en los microservicios"
-                                        variant="outlined"
-                                        size="small"
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                borderRadius: '5px',
-                                                marginBottom: '15px'
-                                            },
-                                        }}
-                                    />
-
-
                                     <TextField style={{ marginTop: 5 }}
                                         fullWidth
                                         label="Descripción  de la Solicitud"
+                                        name="tx_descripcion"
+                                        value={formData.tx_descripcion}
+                                        onChange={handleChange}
                                         placeholder="Por ejemplo, El error fue detectado en la base de datos..."
                                         variant="outlined"
                                         size="small"
@@ -195,7 +240,10 @@ function ModalSolicitud() {
                                         <TextField
                                             fullWidth
                                             label="Persona de Contacto"
-                                            placeholder="Por ejemplo, 1"
+                                            name="nb_contacto"
+                                            value={formData.nb_contacto}
+                                            onChange={handleChange}
+                                            placeholder="Por ejemplo, Jose Escalona"
                                             variant="outlined"
                                             size="small"
                                             sx={{
@@ -209,7 +257,10 @@ function ModalSolicitud() {
                                         <TextField
                                             fullWidth
                                             label="Contacto"
-                                            placeholder="Por ejemplo, 1"
+                                            name="nu_celular_contacto"
+                                            value={formData.nu_celular_contacto}
+                                            onChange={handleChange}
+                                            placeholder="Por ejemplo, 04121254478"
                                             variant="outlined"
                                             size="small"
                                             sx={{
@@ -229,14 +280,15 @@ function ModalSolicitud() {
                                         <h2>Detalles de la Solicitud</h2>
                                         <p style={{ color: '#595959ff' }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, architecto.</p>
                                     </div>
-                                    <div className="content-formulario">
-                                        {/*ESTADO-SOLI*/}
-                                        <OptionAmbiente />
-                                        <OptionTPS />
-                                        <OptionPrioridad />
-                                        <OptionEstado />
 
+                                    <div className="content-formulario">
+                                        <OptionAmbiente onSelect={(val) => handleSelectChange('co_ambiente', val)} />
+                                        <OptionTPS onSelect={(val) => handleSelectChange('co_tip_solicitud', val)} />
+                                        <OptionPrioridad onSelect={(val) => handleSelectChange('co_prioridad', val)} />
+                                        <OptionEstado onSelect={(val) => handleSelectChange('co_estado', val)} />
                                     </div>
+
+
 
                                     <div className="content-formulario">
                                         <OptionUsuario />
@@ -244,12 +296,29 @@ function ModalSolicitud() {
                                     </div>
 
                                     <div className='content-formulario'>
+                                        <OptionProducto onProductoChange={(id) => {
+                                            setIdProduct(id);
+                                            handleSelectChange('co_producto', id);
+                                        }} />
 
-                                        <OptionProducto onProductoChange={(id) => setIdProduct(id)} />
-                                        
-                                        <OptionCliente productoId={idProduct} />
-                                        <OptionComponente productoId={idProduct}/>
-                                        <OptionSubComponente />
+                                        <OptionCliente
+                                            productoId={idProduct}
+                                            onSelect={(val) => handleSelectChange('co_cliente', val)}
+                                        />
+
+                                        <OptionComponente
+                                            productoId={idProduct}
+                                            onComponenteChange={(id) => {
+                                                setIdComponente(id);
+                                                handleSelectChange('co_componente', id);
+                                            }}
+                                        />
+
+                                        <OptionSubComponente
+                                            componenteId={idComponente}
+                                            onSelect={(val) => handleSelectChange('co_subcomponente', val)}
+
+                                        />
                                     </div>
 
                                 </Grid>
@@ -285,14 +354,12 @@ function ModalSolicitud() {
 
                                 <Button
                                     variant="contained"
+                                    onClick={handleSubmit} // Agregamos el evento click
                                     sx={{
                                         textTransform: 'none',
                                         backgroundColor: 'rgb(38, 66, 124)',
-                                        '&:hover': {
-                                            backgroundColor: 'rgba(27, 49, 93, 1)',
-                                        }
+                                        '&:hover': { backgroundColor: 'rgba(27, 49, 93, 1)' }
                                     }}
-
                                 >
                                     Crear
                                 </Button>

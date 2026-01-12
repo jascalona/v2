@@ -1,18 +1,25 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+
+
 interface TPS {
     co_tpsolicitud: number,
     nb_tpsolicitud: string,
     fe_registro: string
 }
 
-function OptionTPS() {
+interface Props {
+    onSelect: (value: any) => void;
+}
+
+
+function OptionTPS({ onSelect }: Props) {
     const [tpsolicitud, setTPS] = useState<TPS[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const [selectedAmbiente, setSelectedAmbiente] = useState<string | undefined>('');
+    const [selectedTPS, setSelectedTPS] = useState<string | undefined>('');
 
     const API_URL = "http://localhost:8081/tprequest";
 
@@ -34,40 +41,30 @@ function OptionTPS() {
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedAmbiente(event.target.value);
-        console.log("Ambiente seleccionado para formulario:", event.target.value);
+        const value = event.target.value;
+        setSelectedTPS(value);
+
+        onSelect(value);
+
     };
 
-    if (loading) {
-        return <p className="loading-message">Cargando...</p>
-    }
+    if (loading) return <p>Cargando...</p>;
+    if (error) return <p>{error}</p>;
 
-    if (error) {
-        return <p className="error-message">{error}</p>
-    }
-
-    if (tpsolicitud.length === 0) {
-        return <p className="no-records-message">No hay registros</p>
-    }
 
     return (
         <div className="select-container">
             <select
-                name="producto"
-                id="producto-select"
+                name="tpsolicitud"
+                id="ambiente-select"
                 className="styled-select"
-                value={selectedAmbiente}
+                value={selectedTPS}
                 onChange={handleChange}
             >
-
-                <option value="" disabled>
-                    Tipo
-                </option>
-
-                {/* Mapeo de los datos para generar las opciones */}
-                {tpsolicitud.map((tps) => (
-                    <option key={tps.co_tpsolicitud} value={tps.co_tpsolicitud}>
-                        {tps.nb_tpsolicitud}
+                <option value="" disabled>Seleccione Tipo de solicitud</option>
+                {tpsolicitud.map((tpsolicituds) => (
+                    <option key={tpsolicituds.co_tpsolicitud} value={tpsolicituds.co_tpsolicitud}>
+                        {tpsolicituds.nb_tpsolicitud}
                     </option>
                 ))}
             </select>

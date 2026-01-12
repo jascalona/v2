@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-//Icon
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
-
 
 interface Estado {
     co_estado: number,
@@ -11,7 +8,12 @@ interface Estado {
     fe_registro: string
 }
 
-function OptionEstado() {
+interface Props {
+    onSelect: (value: any) => void;
+}
+
+
+function OptionEstado({ onSelect }: Props) {
     const [estado, setEstado] = useState<Estado[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -38,21 +40,15 @@ function OptionEstado() {
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedEstado(event.target.value);
-        console.log("Prioridad seleccionado para formulario:", event.target.value);
+        const value = event.target.value;
+        setSelectedEstado(value);
+
+        // Envía el valor seleccionado al componente Padre (ModalSolicitud)
+        onSelect(value);
     };
 
-    if (loading) {
-        return <p className="loading-message">Cargando...</p>
-    }
-
-    if (error) {
-        return <p className="error-message">{error}</p>
-    }
-
-    if (estado.length === 0) {
-        return <p className="no-records-message">No hay registros disponibles para mostrar</p>
-    }
+    if (loading) return <p>Cargando...</p>;
+    if (error) return <p>{error}</p>;
 
     return (
         <div className="select-container">
@@ -64,14 +60,10 @@ function OptionEstado() {
                 onChange={handleChange}
             >
 
-                <option value="" disabled>
-                    Estado
-                </option>
-
-                {/* Mapeo de los datos para generar las opciones */}
-                {estado.map((estado) => (
-                    <option key={estado.co_estado} value={estado.co_estado}>
-                        {estado.nb_estado}
+             <option value="" disabled>Seleccione el Estado</option>
+                {estado.map((estados) => (
+                    <option key={estados.co_estado} value={estados.co_estado}>
+                        {estados.nb_estado}
                     </option>
                 ))}
             </select>
