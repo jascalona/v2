@@ -11,69 +11,81 @@ interface Usuarios {
 }
 
 interface Props {
+    areaId: string;
     onSelect: (value: any) => void;
 }
 
 
-function OptionUsuario({ onSelect }: Props) {
+function OptionUsuario({ onSelect, areaId }: Props) {
     const [usuarios, setUsurios] = useState<Usuarios[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [selectedUsuario, setSelectedUsuario] = useState("");
 
-    const [selectedUsuario, setSelectedUsuario] = useState<string | undefined>('');
-
-    const API_URL = "http://localhost:8081/users";
 
     useEffect(() => {
-        const fetchUsuarios = async () => {
-            try {
-                const response = await axios.get<Usuarios[]>(API_URL)
-                setUsurios(response.data);
+        const fetchClientes = async () => {
+            if (!areaId) {
+                setUsurios([]);
+                return;
+            }
 
-                setError(null);
+            setLoading(true);
+            try {
+                const response = await axios.get<Usuarios[]>(`http://localhost:8081/users/${areaId}/area`);
+
+                const data = response.data || [];
+                setUsurios(data);
+
             } catch (error) {
-                console.log("Error al obtener los registros: ", error);
-                setError("Error al cargar los datos de la API");
+                console.error("Error al cargar usuarios:", error);
+                setUsurios([]);
             } finally {
                 setLoading(false);
             }
         };
-        fetchUsuarios();
-    }, []);
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value;
+        fetchClientes();
+    }, [areaId]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value;
         setSelectedUsuario(value);
-
-        // Envía el valor seleccionado al componente Padre (ModalSolicitud)
-        onSelect(value);
+        onSelect(value); // <--- Notificamos al modal principal
     };
 
-    if (loading) return <p>Cargando...</p>;
-    if (error) return <p>{error}</p>;
+    const isInvalid = !areaId || loading || usuarios.length === 0;
 
 
     return (
+     
         <div className="select-container">
             <select
-                name="usuario"
-                id="usuario-select"
                 className="styled-select"
                 value={selectedUsuario}
-                onChange={handleChange}
+                onChange={handleChange} 
+                disabled={isInvalid}
+                style={usuarios.length === 0 && areaId && !loading ? { border: '1px solid #ffa726' } : {}}
             >
-
-                <option value="" disabled>
-                    Asignar Usuario
+                <option value="">
+                    {loading ? "Cargando..." :
+                        (!areaId) ? "Seleccione el area primero" :
+                            (usuarios.length === 0) ? "No hay usuarios asociados" :
+                                "Seleccione un Usuario"}
                 </option>
 
-                {/* Mapeo de los datos para generar las opciones */}
-                {usuarios.map((usuario) => (
+                {/* El operador ?. asegura que no falle si por alguna razón sigue siendo null */}
+                {usuarios?.map((usuario) => (
                     <option key={usuario.co_usuario} value={usuario.co_usuario}>
-                        {usuario.nb_nombre + " " + usuario.nb_apellido}
+                        {usuario.nb_nombre +  " " + usuario.nb_apellido}
                     </option>
                 ))}
             </select>
+
+            {areaId && !loading && usuarios.length === 0 && (
+                <span style={{ fontSize: '10px', color: '#ffa726', marginTop: '4px', display: 'block' }}>
+                    * Este producto no posee clientes registrados.
+                </span>
+            )}
         </div>
     )
 }

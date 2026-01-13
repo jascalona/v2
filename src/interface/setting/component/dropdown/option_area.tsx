@@ -1,30 +1,30 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-interface Usuarios {
+interface Area {
     co_area: string,
     nb_area: string,
 }
 
-interface Props {
-    onSelect: (value: any) => void;
+interface OptionAreaProps {
+    onAreaChange: (value: string) => void;
 }
 
-function OptionArea({ onSelect }: Props) {
-    const [usuarios, setUsurios] = useState<Usuarios[]>([]);
+
+function OptionArea({ onAreaChange }: OptionAreaProps) {
+    const [areas, setArea] = useState<Area[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const [selectedUsuario, setSelectedUsuario] = useState<string | undefined>('');
+    const [selectedArea, setSelectedArea] = useState<string | undefined>('');
 
     const API_URL = "http://localhost:8081/area";
 
     useEffect(() => {
-        const fetchUsuarios = async () => {
+        const fetchArea = async () => {
             try {
-                const response = await axios.get<Usuarios[]>(API_URL)
-                setUsurios(response.data);
-
+                const response = await axios.get<Area[]>(API_URL)
+                setArea(response.data);
                 setError(null);
             } catch (error) {
                 console.log("Error al obtener los registros: ", error);
@@ -33,15 +33,17 @@ function OptionArea({ onSelect }: Props) {
                 setLoading(false);
             }
         };
-        fetchUsuarios();
+        fetchArea();
     }, []);
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value;
-        setSelectedUsuario(value);
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newValue = e.target.value;
 
-        // Envía el valor seleccionado al componente Padre (ModalSolicitud)
-        onSelect(value);
+        // ACTUALIZA EL ESTADO LOCAL para que el nombre se vea en pantalla
+        setSelectedArea(newValue);
+
+        // Notifica al ModalSolicitud para que lo guarde en el formData
+        onAreaChange(newValue);
     };
 
     if (loading) return <p>Cargando...</p>;
@@ -52,20 +54,18 @@ function OptionArea({ onSelect }: Props) {
         <div className="select-container">
             <select
                 name="area"
-                id="area-select"
+                id="producto-select"
                 className="styled-select"
-                value={selectedUsuario}
+                value={selectedArea} 
                 onChange={handleChange}
             >
-
                 <option value="" disabled>
-                    Seleccionar Area
+                    Seleccione un Area
                 </option>
 
-                {/* Mapeo de los datos para generar las opciones */}
-                {usuarios.map((usuario) => (
-                    <option key={usuario.co_area} value={usuario.co_area}>
-                        {usuario.nb_area}
+                {areas.map((area) => (
+                    <option key={area.co_area} value={area.co_area}>
+                        {area.nb_area}
                     </option>
                 ))}
             </select>

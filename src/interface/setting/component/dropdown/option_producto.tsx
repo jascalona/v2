@@ -42,10 +42,10 @@ function OptionProducto({ onProductoChange }: OptionProductoProps) {
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newValue = e.target.value;
 
-        // 2. ACTUALIZA EL ESTADO LOCAL para que el nombre se vea en pantalla
+        // ACTUALIZA EL ESTADO LOCAL para que el nombre se vea en pantalla
         setSelectedProducto(newValue);
 
-        // 3. Notifica al ModalSolicitud para que lo guarde en el formData
+        // Notifica al ModalSolicitud para que lo guarde en el formData
         onProductoChange(newValue);
     };
 

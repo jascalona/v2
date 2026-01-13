@@ -38,6 +38,7 @@ function ModalSolicitud() {
 
     // recibe los IDs y se los envias a los componentes necesarios
     const [idProduct, setIdProduct] = useState<string>("");
+    const [idArea, setIdArea] = useState<string>("")
     const [idComponente, setIdComponente] = useState<string>("");
 
 
@@ -301,8 +302,17 @@ function ModalSolicitud() {
                                     </div>
 
                                     <div className="content-formulario">
-                                        <OptionArea onSelect={(val) => handleSelectChange('co_area', val)} />
-                                        <OptionUsuario onSelect={(val) => handleSelectChange('co_user_credor_soli', val)} />
+                                        <OptionArea
+                                            onAreaChange={(id) => {
+                                                setIdArea(id);
+                                                handleSelectChange('co_area', id);
+                                            }} />
+
+
+                                        <OptionUsuario
+                                            areaId={idArea}
+                                            onSelect={(val) => handleSelectChange('co_user_credor_soli', val)}
+                                        />
                                     </div>
 
                                     <div className='content-formulario'>
