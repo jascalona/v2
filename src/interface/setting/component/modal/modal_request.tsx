@@ -1,13 +1,25 @@
-
-import '../../../../assets/css/scroll.css';
 import { useState } from 'react';
+// Material UI Components - IMPORTANTE: Usamos Grid2
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import {
+    TextField,
+    Button,
+    Box,
+    Typography,
+    Modal,
+    Fade,
+    Backdrop,
+    IconButton,
+    Fab,
+    Paper
+} from '@mui/material';
 
-//Data para los Dropdown
+// Icons
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+
+// Dropdowns (Mantén tus rutas originales)
 import OptionAmbiente from '../dropdown/option_ambiente';
 import OptionProducto from '../dropdown/option_producto';
 import OptionUsuario from '../dropdown/option_users';
@@ -22,75 +34,63 @@ import OptionSubComponente from '../dropdown/option_subcomponente';
 import OptionCliente from '../dropdown/option_cliente';
 import OptionArea from '../dropdown/option_area';
 
+const modalContainerStyle = {
+    position: 'absolute' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: { xs: '95%', sm: '85%', md: '70%', lg: '60%' },
+    maxWidth: '950px',
+    maxHeight: '90vh',
+    bgcolor: 'background.paper',
+    borderRadius: '20px',
+    boxShadow: '0 20px 50px rgba(0,0,0,0.15)',
+    display: 'flex',
+    flexDirection: 'column',
+    outline: 'none',
+    overflow: 'hidden'
+};
 
-//Icons
-import AddIcon from '@mui/icons-material/Add';
+const inputStyle = {
+    '& .MuiOutlinedInput-root': {
+        borderRadius: '12px',
+        backgroundColor: 'white',
+        '& fieldset': { borderColor: '#e2e8f0' },
+        '&:hover fieldset': { borderColor: '#cbd5e0' },
+        '&.Mui-focused fieldset': { borderColor: '#26427c' },
+    },
+    '& .MuiInputLabel-root': { color: '#718096', fontSize: '0.9rem' },
+};
 
 function ModalSolicitud() {
-
-    // Estado para controlar la visibilidad del modal
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    // Función para alternar el estado del modal
-    const toggleModal = () => {
-        setIsModalOpen(!isModalOpen);
-    };
-
-    // recibe los IDs y se los envias a los componentes necesarios
     const [idProduct, setIdProduct] = useState<string>("");
-    const [idArea, setIdArea] = useState<string>("")
+    const [idArea, setIdArea] = useState<string>("");
     const [idComponente, setIdComponente] = useState<string>("");
 
-
-    // objeto nombre de los campos
     const [formData, setFormData] = useState({
-        co_solicitud: "",
-        fe_vencimiento: "",
-        fe_resolucion: "",
-        fe_cierre: "",
-        co_user_credor_soli: "",
-        co_user_resolutor: "",
-        co_tip_solicitud: 0,
-        nb_contacto: "",
-        nu_celular_contacto: "",
-        tx_asunto: "",
-        tx_descripcion: "",
-        tx_causa: "",
-        co_ambiente: 0,
-        co_producto: 0,
-        co_sla: 0,
-        co_user_cierre: "",
-        tx_desc_resolucion: "",
-        tx_nota: "",
-        co_estado: 0,
-        co_cliente: "",
-        co_prioridad: 0,
-        co_componente: 0,
-        co_subcomponente: 0,
-        co_area: 0
+        co_solicitud: "", fe_vencimiento: "", fe_resolucion: "", fe_cierre: "",
+        co_user_credor_soli: "", co_user_resolutor: "", co_tip_solicitud: 0,
+        nb_contacto: "", nu_celular_contacto: "", tx_asunto: "",
+        tx_descripcion: "", tx_causa: "", co_ambiente: 0, co_producto: 0,
+        co_sla: 0, co_user_cierre: "", tx_desc_resolucion: "", tx_nota: "",
+        co_estado: 0, co_cliente: "", co_prioridad: 0, co_componente: 0,
+        co_subcomponente: 0, co_area: 0
     });
-    // Maneja cambios en Inputs de texto
+
+    const toggleModal = () => setIsModalOpen(!isModalOpen);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSelectChange = (name: string, value: any) => {
-        // campos de tipo entero
-        const numericFields = [
-            'co_tip_solicitud', 'co_ambiente', 'co_producto', 'co_sla',
-            'co_estado', 'co_prioridad', 'co_componente', 'co_subcomponente', 'co_area'
-        ];
-
-        // Si el campo esta en la lista y no es nulo/vacío, lo convertimos
-        const finalValue = numericFields.includes(name) && value !== ""
-            ? parseInt(value, 10)
-            : value;
-
+        const numericFields = ['co_tip_solicitud', 'co_ambiente', 'co_producto', 'co_sla', 'co_estado', 'co_prioridad', 'co_componente', 'co_subcomponente', 'co_area'];
+        const finalValue = numericFields.includes(name) && value !== "" ? parseInt(value, 10) : value;
         setFormData(prev => ({ ...prev, [name]: finalValue }));
     };
 
-    // funcion para enviar a la bd
     const handleSubmit = async () => {
         try {
             const response = await fetch('http://localhost:8081/request', {
@@ -98,298 +98,118 @@ function ModalSolicitud() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
             });
-
             if (response.ok) {
                 alert("Solicitud Creada exitosamente!");
                 toggleModal();
-            } else {
-                alert("Error al guardar la solicitud");
             }
-        } catch (error) {
-            console.error("Error de conexión:", error);
-        }
+        } catch (error) { console.error("Error:", error); }
     };
-
 
     return (
         <>
-            {/* Botón flotante*/}
-            <div
-                onClick={toggleModal}
-                style={{
-                    position: 'fixed',
-                    bottom: '20px',
-                    right: '20px',
-                    backgroundColor: 'rgb(38, 66, 124)',
-                    color: 'white',
-                    borderRadius: '50%',
-                    width: '56px',
-                    height: '56px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
-                    zIndex: 1000,
-                }}
-            >
-                <AddIcon style={{ fontSize: '30px' }} />
-            </div>
+            <Fab onClick={toggleModal} sx={{ position: 'fixed', bottom: 30, right: 30, bgcolor: '#26427c', color: 'white', '&:hover': { bgcolor: '#1b315d' }, zIndex: 1000 }}>
+                <AddIcon />
+            </Fab>
 
+            <Modal open={isModalOpen} onClose={toggleModal} closeAfterTransition slots={{ backdrop: Backdrop }} slotProps={{ backdrop: { timeout: 500, sx: { backgroundColor: 'rgba(15, 23, 42, 0.7)' } } }}>
+                <Fade in={isModalOpen}>
+                    <Box sx={modalContainerStyle}>
 
-            {/* Modal */}
-            {isModalOpen && (
-
-
-                <div
-                    style={{
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        zIndex: 1001,
-                    }}
-                    onClick={toggleModal}
-                >
-                    <div
-                        style={{
-                            backgroundColor: 'white',
-                            padding: '30px',
-                            borderRadius: '8px',
-                            boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
-                            width: '100%',
-                            maxWidth: '50%',
-                            maxHeight: '750px',
-                            overflow: 'auto'
-                        }}
-                        onClick={(e) => e.stopPropagation()}
-                        className='contenedor-con-scroll'
-                    >
-                        <div className="container-formulario">
-                            <Box sx={{ p: 3, pb: 1, borderBottom: '1px solid #eee' }}>
-                                <Typography id="invite-collaborator-title" variant="h5" component="h2" sx={{ fontWeight: 'bold' }}>
-                                    Nueva Solicitud
-                                </Typography>
-                                <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, architecto.
-                                </Typography>
+                        {/* Header elegante */}
+                        <Box sx={{ p: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #edf2f7' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                <Box sx={{ p: 1, bgcolor: '#f0f4ff', borderRadius: '10px', display: 'flex' }}>
+                                    <AssignmentIcon sx={{ color: '#26427c' }} />
+                                </Box>
+                                <Typography variant="h6" sx={{ fontWeight: 700, color: '#1a202c', fontSize: '1.1rem' }}>Crear Ticket de Solicitud</Typography>
                             </Box>
+                            <IconButton onClick={toggleModal} size="small" sx={{ color: '#a0aec0' }}><CloseIcon /></IconButton>
+                        </Box>
 
-                            {/* Contenido principal con campos de entrada */}
-                            <Box sx={{ p: 3, pt: 2 }}>
+                        {/* Contenedor con Scroll */}
+                        <Box className="contenedor-con-scroll" sx={{ p: 4, overflowY: 'auto', flexGrow: 1, bgcolor: '#f8fafc' }}>
+                            <Grid container spacing={2.5}>
 
-                                <Grid alignItems="center">
-                                    <div className="persona-contacto">
-                                        <TextField
-                                            fullWidth
-                                            name="co_solicitud"
-                                            value={formData.co_solicitud}
-                                            onChange={handleChange}
-                                            label="N# Solicitud"
-                                            placeholder="Por ejemplo, Fallo en los microservicios"
-                                            variant="outlined"
-                                            size="small"
-                                            sx={{ mb: 2 }}
-                                        />
-
-                                        <TextField
-                                            fullWidth
-                                            name="tx_causa"
-                                            value={formData.tx_causa}
-                                            onChange={handleChange}
-                                            label="Causa de la intervención"
-                                            size="small"
-                                            sx={{ mb: 2 }}
-                                        />
-                                    </div>
-
-
-                                    <TextField
-                                        fullWidth
-                                        name="tx_asunto"
-                                        value={formData.tx_asunto}
-                                        onChange={handleChange}
-                                        label="Asunto"
-                                        placeholder="Por ejemplo, Revision de logs microservicios"
-                                        variant="outlined"
-                                        size="small"
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                borderRadius: '5px',
-                                                marginBottom: '15px'
-                                            },
-                                        }}
-                                    />
-
-                                    <TextField style={{ marginTop: 5 }}
-                                        fullWidth
-                                        label="Descripción  de la Solicitud"
-                                        name="tx_descripcion"
-                                        value={formData.tx_descripcion}
-                                        onChange={handleChange}
-                                        placeholder="Por ejemplo, El error fue detectado en la base de datos..."
-                                        variant="outlined"
-                                        size="small"
-                                        multiline
-                                        minRows={4}
-                                        maxRows={4}
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                borderRadius: '5px',
-                                                '& textarea': {
-                                                    resize: 'none',
-                                                },
-                                            },
-                                        }}
-                                    />
-
-                                    <div className="persona-contacto">
-
-                                        <TextField
-                                            fullWidth
-                                            label="Persona de Contacto"
-                                            name="nb_contacto"
-                                            value={formData.nb_contacto}
-                                            onChange={handleChange}
-                                            placeholder="Por ejemplo, Jose Escalona"
-                                            variant="outlined"
-                                            size="small"
-                                            sx={{
-                                                '& .MuiOutlinedInput-root': {
-                                                    borderRadius: '5px',
-                                                    marginBottom: '15px'
-                                                },
-                                            }}
-                                        />
-
-                                        <TextField
-                                            fullWidth
-                                            label="Contacto"
-                                            name="nu_celular_contacto"
-                                            value={formData.nu_celular_contacto}
-                                            onChange={handleChange}
-                                            placeholder="Por ejemplo, 04121254478"
-                                            variant="outlined"
-                                            size="small"
-                                            sx={{
-                                                '& .MuiOutlinedInput-root': {
-                                                    borderRadius: '5px',
-                                                    marginBottom: '15px'
-                                                },
-                                            }}
-                                        />
-                                    </div>
-
-                                    <div className="content-formulario">
-                                        <TimeDate label='Fe. Vencimiento' />
-                                    </div>
-
-                                    <div className="title-label">
-                                        <h2>Detalles de la Solicitud</h2>
-                                        <p style={{ color: '#595959ff' }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, architecto.</p>
-                                    </div>
-                                    <div className="content-formulario">
-                                        <OptionAmbiente onSelect={(val) => handleSelectChange('co_ambiente', val)} />
-                                        <OptionTPS onSelect={(val) => handleSelectChange('co_tip_solicitud', val)} />
-                                        <OptionSla onSelect={(val) => handleSelectChange('co_sla', val)} />
-                                        <OptionPrioridad onSelect={(val) => handleSelectChange('co_prioridad', val)} />
-                                        <OptionEstado onSelect={(val) => handleSelectChange('co_estado', val)} />
-                                    </div>
-
-                                    <div className="content-formulario">
-                                        <OptionArea
-                                            onAreaChange={(id) => {
-                                                setIdArea(id);
-                                                handleSelectChange('co_area', id);
-                                            }} />
-
-
-                                        <OptionUsuario
-                                            areaId={idArea}
-                                            onSelect={(val) => handleSelectChange('co_user_credor_soli', val)}
-                                        />
-                                    </div>
-
-                                    <div className='content-formulario'>
-                                        <OptionProducto onProductoChange={(id) => {
-                                            setIdProduct(id);
-                                            handleSelectChange('co_producto', id);
-                                        }} />
-
-                                        <OptionCliente
-                                            productoId={idProduct}
-                                            onSelect={(val) => handleSelectChange('co_cliente', val)}
-                                        />
-
-                                        <OptionComponente
-                                            productoId={idProduct}
-                                            onComponenteChange={(id) => {
-                                                setIdComponente(id);
-                                                handleSelectChange('co_componente', id);
-                                            }}
-                                        />
-
-                                        <OptionSubComponente
-                                            componenteId={idComponente}
-                                            onSelect={(val) => handleSelectChange('co_subcomponente', val)}
-
-                                        />
-                                    </div>
-
+                                {/* SECCIÓN 1: DATOS BÁSICOS */}
+                                <Grid size={{ xs: 12 }} sx={{ mb: 1 }}>
+                                    <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Información General</Typography>
                                 </Grid>
 
-                                {/* Enlace para añadir más */}
-                                <AccordionEvidencias />
+                                <Grid size={{ xs: 12, md: 4 }}>
+                                    <TextField fullWidth name="co_solicitud" label="N# Solicitud" variant="outlined" sx={inputStyle} value={formData.co_solicitud} onChange={handleChange} />
+                                </Grid>
+                                <Grid size={{ xs: 12, md: 8 }}>
+                                    <TextField fullWidth name="tx_asunto" label="Asunto o Resumen" variant="outlined" sx={inputStyle} value={formData.tx_asunto} onChange={handleChange} />
+                                </Grid>
 
-                            </Box>
+                                <Grid size={{ xs: 12 }}>
+                                    <TextField fullWidth multiline rows={2} name="tx_descripcion" label="Descripción Detallada" sx={inputStyle} value={formData.tx_descripcion} onChange={handleChange} />
+                                </Grid>
 
-                            {/* Pie de página con botones de acción */}
-                            <Box
-                                sx={{
-                                    p: 2,
-                                    pt: 1,
-                                    display: 'flex',
-                                    justifyContent: 'flex-end',
-                                    gap: 1,
-                                    borderTop: '1px solid #eee'
-                                }}
-                            >
+                                {/* SECCIÓN 2: DETALLES TÉCNICOS */}
+                                <Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
+                                    <Paper elevation={0} sx={{ p: 3, borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                                        <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', mb: 3, textTransform: 'uppercase' }}>
+                                            Clasificación y Tiempos
+                                        </Typography>
 
-                                <Button
-                                    onClick={toggleModal}
-                                    variant="outlined"
-                                    sx={{
-                                        textTransform: 'none',
-                                        borderColor: 'rgba(0, 0, 0, 0.23)',
-                                        color: '#333'
-                                    }}
-                                >
-                                    Cancelar
-                                </Button>
+                                        <Grid container spacing={2.5}>
+                                            <Grid size={{ xs: 12 }}>
+                                                <Box sx={{ mb: 1 }}>
+                                                    <TimeDate label='Fecha de Vencimiento de la Solicitud' />
+                                                </Box>
+                                            </Grid>
 
-                                <Button
-                                    variant="contained"
-                                    onClick={handleSubmit} // Agregamos el evento click
-                                    sx={{
-                                        textTransform: 'none',
-                                        backgroundColor: 'rgb(38, 66, 124)',
-                                        '&:hover': { backgroundColor: 'rgba(27, 49, 93, 1)' }
-                                    }}
-                                >
-                                    Crear
-                                </Button>
-                            </Box>
-                        </div>
-                    </div>
-                </div>
-            )}
+                                            {/* RESTO DE COMPONENTES EN GRID DE 3 COLUMNAS ABAJO */}
+                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionAmbiente onSelect={(v) => handleSelectChange('co_ambiente', v)} /></Grid>
+                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionTPS onSelect={(v) => handleSelectChange('co_tip_solicitud', v)} /></Grid>
+                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionSla onSelect={(v) => handleSelectChange('co_sla', v)} /></Grid>
+                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionPrioridad onSelect={(v) => handleSelectChange('co_prioridad', v)} /></Grid>
+                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionEstado onSelect={(v) => handleSelectChange('co_estado', v)} /></Grid>
+                                        </Grid>
+                                    </Paper>
+                                </Grid>
+                                {/* SECCIÓN 3: ORIGEN Y PRODUCTO */}
+                                <Grid size={{ xs: 12 }} sx={{ mt: 2, mb: 1 }}>
+                                    <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', textTransform: 'uppercase' }}>Asignación de Negocio</Typography>
+                                </Grid>
+
+                                <Grid size={{ xs: 12, md: 6 }}>
+                                    <OptionArea onAreaChange={(id) => { setIdArea(id); handleSelectChange('co_area', id); }} />
+                                </Grid>
+                                <Grid size={{ xs: 12, md: 6 }}>
+                                    <OptionUsuario areaId={idArea} onSelect={(v) => handleSelectChange('co_user_credor_soli', v)} />
+                                </Grid>
+
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                                    <OptionProducto onProductoChange={(id) => { setIdProduct(id); handleSelectChange('co_producto', id); }} />
+                                </Grid>
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                                    <OptionCliente productoId={idProduct} onSelect={(v) => handleSelectChange('co_cliente', v)} />
+                                </Grid>
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                                    <OptionComponente productoId={idProduct} onComponenteChange={(id) => { setIdComponente(id); handleSelectChange('co_componente', id); }} />
+                                </Grid>
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                                    <OptionSubComponente componenteId={idComponente} onSelect={(v) => handleSelectChange('co_subcomponente', v)} />
+                                </Grid>
+
+                                <Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
+                                    <AccordionEvidencias />
+                                </Grid>
+                            </Grid>
+                        </Box>
+
+                        {/* Footer */}
+                        <Box sx={{ p: 2.5, display: 'flex', justifyContent: 'flex-end', gap: 2, bgcolor: 'white', borderTop: '1px solid #edf2f7' }}>
+                            <Button onClick={toggleModal} variant="outlined" sx={{ borderRadius: '10px', textTransform: 'none', color: '#64748b', borderColor: '#e2e8f0', px: 3 }}>Cancelar</Button>
+                            <Button onClick={handleSubmit} variant="contained" sx={{ bgcolor: '#26427c', borderRadius: '10px', textTransform: 'none', px: 5, fontWeight: 600, '&:hover': { bgcolor: '#1b315d' } }}>Crear Ticket</Button>
+                        </Box>
+                    </Box>
+                </Fade>
+            </Modal>
         </>
-    )
+    );
 }
 
-export default ModalSolicitud
+export default ModalSolicitud;

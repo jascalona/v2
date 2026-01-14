@@ -1,7 +1,19 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import {
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    Box,
+    CircularProgress,
+    Typography,
+    type SelectChangeEvent
+} from '@mui/material';
+// Importamos los estilos centralizados
+import { commonSelectStyle, commonMenuProps } from "./selectStyle";
 
-// Definimos la interfaz para las props que recibe el componente
+// Definimos la interfaz para las props
 interface OptionProductoProps {
     onProductoChange: (value: string) => void;
 }
@@ -18,8 +30,6 @@ function OptionProducto({ onProductoChange }: OptionProductoProps) {
     const [productos, setProductos] = useState<Producto[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    // 1. Asegúrate de que el nombre del setter sea coherente (estaba como setSelectedAmbiente)
     const [selectedProducto, setSelectedProducto] = useState<string>("");
 
     const API_URL = "http://localhost:8081/products";
@@ -31,6 +41,7 @@ function OptionProducto({ onProductoChange }: OptionProductoProps) {
                 setProductos(response.data);
                 setError(null);
             } catch (error) {
+                console.error("Error al cargar productos:", error);
                 setError("Error al cargar los productos");
             } finally {
                 setLoading(false);
@@ -39,39 +50,48 @@ function OptionProducto({ onProductoChange }: OptionProductoProps) {
         fetchProductos();
     }, []);
 
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const newValue = e.target.value;
-
-        // ACTUALIZA EL ESTADO LOCAL para que el nombre se vea en pantalla
+    const handleChange = (event: SelectChangeEvent) => {
+        const newValue = event.target.value as string;
         setSelectedProducto(newValue);
-
-        // Notifica al ModalSolicitud para que lo guarde en el formData
         onProductoChange(newValue);
     };
 
-    if (loading) return <p className="loading-message">Cargando productos...</p>;
-    if (error) return <p className="error-message">{error}</p>;
+    if (loading) return (
+        <Box sx={{ display: 'flex', alignItems: 'center', height: '45px', gap: 1.5, px: 1 }}>
+            <CircularProgress size={16} sx={{ color: '#26427c' }} />
+            <Typography variant="caption" sx={{ color: '#94a3b8' }}>Cargando productos...</Typography>
+        </Box>
+    );
+
+    if (error) return (
+        <Typography sx={{ color: '#d32f2f', fontSize: '0.75rem', p: 1 }}>
+            ⚠️ {error}
+        </Typography>
+    );
 
     return (
-        <div className="select-container">
-            <select
-                name="producto"
+        <FormControl fullWidth sx={commonSelectStyle} size="small">
+            <InputLabel id="producto-select-label">Producto</InputLabel>
+            <Select
+                labelId="producto-select-label"
                 id="producto-select"
-                className="styled-select"
-                value={selectedProducto} 
+                value={selectedProducto}
+                label="Producto"
                 onChange={handleChange}
+                MenuProps={commonMenuProps}
             >
-                <option value="" disabled>
-                    Seleccione un Producto
-                </option>
+                <MenuItem value="" disabled>
+                    <em>Seleccione un Producto</em>
+                </MenuItem>
 
                 {productos.map((producto) => (
-                    <option key={producto.co_producto} value={producto.co_producto}>
+                    <MenuItem key={producto.co_producto} value={producto.co_producto.toString()}>
                         {producto.nb_producto}
-                    </option>
+                    </MenuItem>
                 ))}
-            </select>
-        </div>
+            </Select>
+        </FormControl>
     );
 }
+
 export default OptionProducto;

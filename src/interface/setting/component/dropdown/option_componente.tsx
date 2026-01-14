@@ -1,5 +1,17 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import {
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    Box,
+    CircularProgress,
+    Typography,
+    type SelectChangeEvent
+} from '@mui/material';
+// Importamos los estilos centralizados
+import { commonSelectStyle, commonMenuProps } from "./selectStyle";
 
 interface OptionComponenteProps {
     productoId: string;
@@ -16,13 +28,12 @@ function OptionComponente({ productoId, onComponenteChange }: OptionComponentePr
     const [loading, setLoading] = useState(false);
     const [selectedComponente, setSelectedComponente] = useState("");
 
-    // Efecto que reacciona al cambio de Producto
     useEffect(() => {
         const fetchComponente = async () => {
             if (!productoId) {
                 setComponentes([]);
-                setSelectedComponente(""); // Resetear selección local
-                onComponenteChange("");    // Resetear en el padre
+                setSelectedComponente("");
+                onComponenteChange("");
                 return;
             }
 
@@ -39,45 +50,73 @@ function OptionComponente({ productoId, onComponenteChange }: OptionComponentePr
         };
 
         fetchComponente();
-    }, [productoId]); // Solo depende de productoId
+    }, [productoId, onComponenteChange]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const id = e.target.value;
+    const handleChange = (event: SelectChangeEvent) => {
+        const id = event.target.value as string;
         setSelectedComponente(id);
-        onComponenteChange(id); // <--- Aquí pasamos el ID al padre para el SubComponente
+        onComponenteChange(id);
+    };
+
+    // Etiqueta dinámica según el estado de la dependencia
+    const getLabelText = () => {
+        if (!productoId) return "Seleccione un producto primero";
+        if (loading) return "Cargando componentes...";
+        if (componentes.length === 0) return "Sin componentes asociados";
+        return "Seleccione un Componente";
     };
 
     const isInvalid = !productoId || loading || componentes.length === 0;
 
     return (
-        <div className="select-container">
-            <select
-                className="styled-select"
-                value={selectedComponente}
-                onChange={handleChange}
+        <Box>
+            <FormControl 
+                fullWidth 
+                sx={{
+                    ...commonSelectStyle,
+                    // Borde naranja preventivo si el producto no tiene componentes
+                    '& .MuiOutlinedInput-root fieldset': (componentes.length === 0 && productoId && !loading) 
+                        ? { borderColor: '#ffa726 !important' } 
+                        : {}
+                }} 
+                size="small"
                 disabled={isInvalid}
-                style={componentes.length === 0 && productoId && !loading ? { border: '1px solid #ffa726' } : {}}
             >
-                <option value="">
-                    {loading ? "Cargando..." :
-                        (!productoId) ? "Seleccione un producto primero" :
-                            (componentes.length === 0) ? "No hay componentes asociados" :
-                                "Seleccione un Componente"}
-                </option>
+                <InputLabel id="componente-select-label">{getLabelText()}</InputLabel>
+                <Select
+                    labelId="componente-select-label"
+                    id="componente-select"
+                    value={selectedComponente}
+                    label={getLabelText()}
+                    onChange={handleChange}
+                    MenuProps={commonMenuProps}
+                >
+                    <MenuItem value="" disabled>
+                        <em>{getLabelText()}</em>
+                    </MenuItem>
 
-                {componentes.map((item) => (
-                    <option key={item.co_componente} value={item.co_componente}>
-                        {item.nb_componente}
-                    </option>
-                ))}
-            </select>
+                    {componentes.map((item) => (
+                        <MenuItem key={item.co_componente} value={item.co_componente.toString()}>
+                            {item.nb_componente}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
 
+            {/* Aviso visual para componentes vacíos */}
             {productoId && !loading && componentes.length === 0 && (
-                <span style={{ fontSize: '10px', color: '#ffa726', marginTop: '4px', display: 'block' }}>
+                <Typography 
+                    sx={{ 
+                        fontSize: '11px', 
+                        color: '#ffa726', 
+                        mt: 0.5, 
+                        fontWeight: 500 
+                    }}
+                >
                     * Este producto no posee componentes registrados.
-                </span>
+                </Typography>
             )}
-        </div>
+        </Box>
     );
 }
 

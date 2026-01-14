@@ -1,5 +1,17 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import {
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    Box,
+    CircularProgress,
+    Typography,
+    type SelectChangeEvent
+} from '@mui/material';
+// Importamos los estilos centralizados
+import { commonSelectStyle, commonMenuProps } from "./selectStyle";
 
 interface Cliente {
     co_cliente: number;
@@ -23,16 +35,15 @@ function OptionCliente({ productoId, onSelect }: OptionClienteProps) {
         const fetchClientes = async () => {
             if (!productoId) {
                 setClientes([]);
+                setSelectedCliente(""); // Limpiamos la selección si el producto cambia a vacío
                 return;
             }
 
             setLoading(true);
             try {
                 const response = await axios.get<Cliente[]>(`http://localhost:8081/customers/${productoId}/product`);
-
                 const data = response.data || [];
                 setClientes(data);
-
             } catch (error) {
                 console.error("Error al cargar clientes:", error);
                 setClientes([]);
@@ -44,47 +55,72 @@ function OptionCliente({ productoId, onSelect }: OptionClienteProps) {
         fetchClientes();
     }, [productoId]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = e.target.value;
+    const handleChange = (event: SelectChangeEvent) => {
+        const value = event.target.value as string;
         setSelectedCliente(value);
-        onSelect(value); // <--- Notificamos al modal principal
+        onSelect(value);
     };
 
-    // Lógica para determinar si el select debe estar bloqueado
-    // Se bloquea si: No hay producto, está cargando, o si la lista de clientes está vacía
+    // Texto dinámico para el Label según el estado
+    const getLabelText = () => {
+        if (!productoId) return "Seleccione un producto primero";
+        if (loading) return "Cargando clientes...";
+        if (clientes.length === 0) return "No hay clientes asociados";
+        return "Seleccione un Cliente";
+    };
+
     const isInvalid = !productoId || loading || clientes.length === 0;
 
     return (
-
-        <div className="select-container">
-            <select
-                className="styled-select"
-                value={selectedCliente}
-                onChange={handleChange} 
+        <Box>
+            <FormControl 
+                fullWidth 
+                sx={{
+                    ...commonSelectStyle,
+                    // Aplicamos el borde naranja si hay producto pero no hay clientes asociados
+                    '& .MuiOutlinedInput-root fieldset': (clientes.length === 0 && productoId && !loading) 
+                        ? { borderColor: '#ffa726 !important' } 
+                        : {}
+                }} 
+                size="small"
                 disabled={isInvalid}
-                style={clientes.length === 0 && productoId && !loading ? { border: '1px solid #ffa726' } : {}}
             >
-                <option value="">
-                    {loading ? "Cargando..." :
-                        (!productoId) ? "Seleccione un producto primero" :
-                            (clientes.length === 0) ? "No hay clientes asociados" :
-                                "Seleccione un Cliente"}
-                </option>
+                <InputLabel id="cliente-select-label">{getLabelText()}</InputLabel>
+                <Select
+                    labelId="cliente-select-label"
+                    id="cliente-select"
+                    value={selectedCliente}
+                    label={getLabelText()}
+                    onChange={handleChange}
+                    MenuProps={commonMenuProps}
+                >
+                    <MenuItem value="" disabled>
+                        <em>{getLabelText()}</em>
+                    </MenuItem>
 
-                {/* El operador ?. asegura que no falle si por alguna razón sigue siendo null */}
-                {clientes?.map((cliente) => (
-                    <option key={cliente.co_cliente} value={cliente.co_rif}>
-                        {cliente.nb_cliente}
-                    </option>
-                ))}
-            </select>
+                    {clientes?.map((cliente) => (
+                        <MenuItem key={cliente.co_cliente} value={cliente.co_rif}>
+                            {cliente.nb_cliente}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
 
+            {/* Mensaje de aviso inferior */}
             {productoId && !loading && clientes.length === 0 && (
-                <span style={{ fontSize: '10px', color: '#ffa726', marginTop: '4px', display: 'block' }}>
+                <Typography 
+                    sx={{ 
+                        fontSize: '11px', 
+                        color: '#ffa726', 
+                        mt: 0.5, 
+                        fontWeight: 500,
+                        display: 'block'
+                    }}
+                >
                     * Este producto no posee clientes registrados.
-                </span>
+                </Typography>
             )}
-        </div>
+        </Box>
     );
 }
 

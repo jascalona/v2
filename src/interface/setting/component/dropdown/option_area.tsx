@@ -1,34 +1,43 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import {
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    Box,
+    CircularProgress,
+    Typography,
+    type SelectChangeEvent
+} from '@mui/material';
+import { commonSelectStyle, commonMenuProps } from "./selectStyle";
+
 
 interface Area {
-    co_area: string,
-    nb_area: string,
+    co_area: string;
+    nb_area: string;
 }
 
 interface OptionAreaProps {
     onAreaChange: (value: string) => void;
 }
 
-
 function OptionArea({ onAreaChange }: OptionAreaProps) {
     const [areas, setArea] = useState<Area[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    const [selectedArea, setSelectedArea] = useState<string | undefined>('');
+    const [selectedArea, setSelectedArea] = useState<string>('');
 
     const API_URL = "http://localhost:8081/area";
 
     useEffect(() => {
         const fetchArea = async () => {
             try {
-                const response = await axios.get<Area[]>(API_URL)
+                const response = await axios.get<Area[]>(API_URL);
                 setArea(response.data);
                 setError(null);
             } catch (error) {
-                console.log("Error al obtener los registros: ", error);
-                setError("Error al cargar los datos de la API");
+                setError("Error al cargar las áreas");
             } finally {
                 setLoading(false);
             }
@@ -36,40 +45,53 @@ function OptionArea({ onAreaChange }: OptionAreaProps) {
         fetchArea();
     }, []);
 
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const newValue = e.target.value;
-
-        // ACTUALIZA EL ESTADO LOCAL para que el nombre se vea en pantalla
+    // Corregido: Usar SelectChangeEvent de MUI
+    const handleChange = (event: SelectChangeEvent) => {
+        const newValue = event.target.value as string;
         setSelectedArea(newValue);
-
-        // Notifica al ModalSolicitud para que lo guarde en el formData
         onAreaChange(newValue);
     };
 
-    if (loading) return <p>Cargando...</p>;
-    if (error) return <p>{error}</p>;
+    if (loading) {
+        return (
+            <Box sx={{ display: 'flex', alignItems: 'center', height: '45px', gap: 1.5, px: 1 }}>
+                <CircularProgress size={18} sx={{ color: '#26427c' }} />
+                <Typography sx={{ fontSize: '0.8rem', color: '#94a3b8' }}>Cargando...</Typography>
+            </Box>
+        );
+    }
 
+    if (error) {
+        return (
+            <Typography sx={{ fontSize: '0.75rem', color: '#d32f2f', p: 1 }}>
+                ⚠️ {error}
+            </Typography>
+        );
+    }
 
     return (
-        <div className="select-container">
-            <select
-                name="area"
-                id="producto-select"
-                className="styled-select"
-                value={selectedArea} 
+        <FormControl fullWidth sx={commonSelectStyle} size="small">
+            <InputLabel id="area-select-label">Área</InputLabel>
+            <Select
+                labelId="area-select-label"
+                id="area-select"
+                value={selectedArea}
+                label="Área"
                 onChange={handleChange}
+                MenuProps={commonMenuProps} // <-- Estilo de menú centralizado
             >
-                <option value="" disabled>
-                    Seleccione un Area
-                </option>
+                <MenuItem value="" disabled>
+                    <em>Seleccione un área</em>
+                </MenuItem>
 
                 {areas.map((area) => (
-                    <option key={area.co_area} value={area.co_area}>
+                    <MenuItem key={area.co_area} value={area.co_area}>
                         {area.nb_area}
-                    </option>
+                    </MenuItem>
                 ))}
-            </select>
-        </div>
-    )
+            </Select>
+        </FormControl>
+    );
 }
-export default OptionArea
+
+export default OptionArea;

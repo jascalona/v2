@@ -1,11 +1,21 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import { 
+    FormControl, 
+    InputLabel, 
+    Select, 
+    MenuItem, 
+    Box, 
+    CircularProgress,
+    Typography,
+    type SelectChangeEvent 
+} from '@mui/material';
+import { commonSelectStyle, commonMenuProps } from "./selectStyle";
 
 interface Ambiente {
-    co_ambiente: string,
-    nb_ambiente: string,
-    fe_registro: string
+    co_ambiente: string;
+    nb_ambiente: string;
+    fe_registro: string;
 }
 
 interface Props {
@@ -27,7 +37,7 @@ function OptionAmbiente({ onSelect }: Props) {
                 setAmbientes(response.data);
                 setError(null);
             } catch (error) {
-                setError("Error al cargar datos");
+                setError("No se pudieron cargar los ambientes");
             } finally {
                 setLoading(false);
             }
@@ -35,35 +45,52 @@ function OptionAmbiente({ onSelect }: Props) {
         fetchAmbientes();
     }, []);
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value;
+    const handleChange = (event: SelectChangeEvent) => {
+        const value = event.target.value as string;
         setSelectedAmbiente(value);
-
-        // Envía el valor seleccionado al componente Padre (ModalSolicitud)
         onSelect(value);
     };
 
-    if (loading) return <p>Cargando...</p>;
-    if (error) return <p>{error}</p>;
+    if (loading) {
+        return (
+            <Box sx={{ display: 'flex', alignItems: 'center', height: '45px', gap: 1.5, px: 1 }}>
+                <CircularProgress size={18} sx={{ color: '#26427c' }} />
+                <Typography sx={{ fontSize: '0.8rem', color: '#94a3b8' }}>Cargando...</Typography>
+            </Box>
+        );
+    }
+
+    if (error) {
+        return (
+            <Typography sx={{ fontSize: '0.75rem', color: '#d32f2f', p: 1 }}>
+                ⚠️ {error}
+            </Typography>
+        );
+    }
 
     return (
-        <div className="select-container">
-            <select
-                name="ambiente"
+        <FormControl fullWidth sx={commonSelectStyle} size="small">
+            <InputLabel id="ambiente-select-label">Ambiente</InputLabel>
+            <Select
+                labelId="ambiente-select-label"
                 id="ambiente-select"
-                className="styled-select"
                 value={selectedAmbiente}
+                label="Ambiente"
                 onChange={handleChange}
+                MenuProps={commonMenuProps} // <-- Estilo de menú centralizado
             >
-                <option value="" disabled>Seleccione Ambiente</option>
+                <MenuItem value="" disabled>
+                    <em>Seleccione un ambiente</em>
+                </MenuItem>
+                
                 {ambientes.map((ambiente) => (
-                    <option key={ambiente.co_ambiente} value={ambiente.co_ambiente}>
+                    <MenuItem key={ambiente.co_ambiente} value={ambiente.co_ambiente}>
                         {ambiente.nb_ambiente}
-                    </option>
+                    </MenuItem>
                 ))}
-            </select>
-        </div>
+            </Select>
+        </FormControl>
     );
 }
 
-export default OptionAmbiente
+export default OptionAmbiente;

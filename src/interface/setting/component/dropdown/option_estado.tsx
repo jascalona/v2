@@ -1,73 +1,36 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { FormControl, InputLabel, Select, MenuItem, Box, CircularProgress, type SelectChangeEvent, Typography } from '@mui/material';
+import { commonSelectStyle, commonMenuProps } from "./selectStyle"; 
 
-
-interface Estado {
-    co_estado: number,
-    nb_estado: string,
-    fe_registro: string
-}
-
-interface Props {
-    onSelect: (value: any) => void;
-}
-
-
-function OptionEstado({ onSelect }: Props) {
-    const [estado, setEstado] = useState<Estado[]>([]);
+function OptionEstado({ onSelect }: { onSelect: (v: any) => void }) {
+    const [estados, setEstados] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    const [selectedEstado, setSelectedEstado] = useState<string | undefined>('');
-
-    const API_URL = "http://localhost:8081/status";
+    const [selected, setSelected] = useState('');
 
     useEffect(() => {
-        const fetchAmbientes = async () => {
-            try {
-                const response = await axios.get<Estado[]>(API_URL)
-                setEstado(response.data);
-
-                setError(null);
-            } catch (error) {
-                console.log("Error al obtener los registros: ", error);
-                setError("Error al cargar los datos de la API");
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchAmbientes();
+        axios.get("http://localhost:8081/status")
+            .then(res => setEstados(res.data))
+            .finally(() => setLoading(false));
     }, []);
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value;
-        setSelectedEstado(value);
-
-        // Envía el valor seleccionado al componente Padre (ModalSolicitud)
-        onSelect(value);
-    };
-
-    if (loading) return <p>Cargando...</p>;
-    if (error) return <p>{error}</p>;
-
     return (
-        <div className="select-container">
-            <select
-                name="ambiente"
-                id="ambiente-select"
-                className="styled-select"
-                value={selectedEstado}
-                onChange={handleChange}
+        <FormControl fullWidth sx={commonSelectStyle} size="small">
+            <InputLabel>Estado</InputLabel>
+            <Select
+                value={selected}
+                label="Estado"
+                onChange={(e) => { setSelected(e.target.value); onSelect(e.target.value); }}
+                MenuProps={commonMenuProps}
             >
-
-             <option value="" disabled>Seleccione el Estado</option>
-                {estado.map((estados) => (
-                    <option key={estados.co_estado} value={estados.co_estado}>
-                        {estados.nb_estado}
-                    </option>
+                <MenuItem value="" disabled><em>Seleccione el Estado</em></MenuItem>
+                {estados.map((est) => (
+                    <MenuItem key={est.co_estado} value={est.co_estado.toString()}>
+                        {est.nb_estado}
+                    </MenuItem>
                 ))}
-            </select>
-        </div>
-    )
+            </Select>
+        </FormControl>
+    );
 }
 export default OptionEstado
