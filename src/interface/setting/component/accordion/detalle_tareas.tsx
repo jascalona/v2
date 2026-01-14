@@ -4,18 +4,20 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../../../../assets/css/details.css'
+import { Button } from '@mui/material';
 
 //Componentes
 import TaskBySoli from '../table/table_tarea_soli';
 import NotekBySoli from '../table/table_nota_soli';
+import ModalTarea from '../modal/modal_task';
 
 //Icons
 
-interface idSolicitud{
+interface idSolicitud {
     co_solicitud: string
 }
 
-function DetallesTarea({co_solicitud}: idSolicitud) {
+function DetallesTarea({ co_solicitud }: idSolicitud) {
     return (
         <div>
             <Accordion defaultExpanded style={{ background: 'none', border: 'none', boxShadow: 'none' }}>
@@ -30,16 +32,18 @@ function DetallesTarea({co_solicitud}: idSolicitud) {
                     <Typography component="span">
                         <span style={{ fontSize: 20 }}>+ </span> Tareas asociadas</Typography>
                 </AccordionSummary>
-                <AccordionDetails style={{paddingTop: 30}}>
+                <AccordionDetails style={{ paddingTop: 30 }}>
                     <Typography>
 
+                            <ModalTarea />
+
                         {/*AQUI PASAMOS EL ID DE LA SOLICITUD*/}
-                       <TaskBySoli idSolicitud={co_solicitud}/>
+                        <TaskBySoli idSolicitud={co_solicitud} />
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-        
-              <Accordion defaultExpanded style={{ background: 'none', border: 'none', boxShadow: 'none' }}>
+
+            <Accordion defaultExpanded style={{ background: 'none', border: 'none', boxShadow: 'none' }}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1-content"
@@ -53,7 +57,7 @@ function DetallesTarea({co_solicitud}: idSolicitud) {
                 </AccordionSummary>
                 <AccordionDetails style={{ paddingTop: 30 }}>
                     <Typography>
-                        <NotekBySoli idSolicitud={co_solicitud}/>
+                        <NotekBySoli idSolicitud={co_solicitud} />
                     </Typography>
                 </AccordionDetails>
             </Accordion>

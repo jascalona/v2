@@ -63,7 +63,7 @@ function OptionCliente({ productoId, onSelect }: OptionClienteProps) {
 
     // Texto dinámico para el Label según el estado
     const getLabelText = () => {
-        if (!productoId) return "Seleccione un producto primero";
+        if (!productoId) return "Seleccione un producto";
         if (loading) return "Cargando clientes...";
         if (clientes.length === 0) return "No hay clientes asociados";
         return "Seleccione un Cliente";

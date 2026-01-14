@@ -60,7 +60,7 @@ function OptionComponente({ productoId, onComponenteChange }: OptionComponentePr
 
     // Etiqueta dinámica según el estado de la dependencia
     const getLabelText = () => {
-        if (!productoId) return "Seleccione un producto primero";
+        if (!productoId) return "Seleccione un producto";
         if (loading) return "Cargando componentes...";
         if (componentes.length === 0) return "Sin componentes asociados";
         return "Seleccione un Componente";

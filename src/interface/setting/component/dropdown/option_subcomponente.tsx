@@ -62,7 +62,7 @@ function OptionSubComponente({ componenteId, onSelect }: OptionSubComponenteProp
 
     // Texto dinámico para el Label
     const getLabelText = () => {
-        if (!componenteId) return "Seleccione un componente primero";
+        if (!componenteId) return "Seleccione un componente";
         if (loading) return "Cargando sub-componentes...";
         if (subComponentes.length === 0) return "Sin sub-componentes asociados";
         return "Seleccione un Sub-Componente";

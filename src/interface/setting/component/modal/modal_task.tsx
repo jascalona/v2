@@ -1,127 +1,229 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
-import SettingsIcon from '@mui/icons-material/Settings';
+import { useState } from 'react';
+// Material UI Components - IMPORTANTE: Usamos Grid2
+import Grid from '@mui/material/Grid';
+import {
+    TextField,
+    Button,
+    Box,
+    Typography,
+    Modal,
+    Fade,
+    Backdrop,
+    IconButton,
+    Fab,
+    Paper
+} from '@mui/material';
 
-const modalStyle = {
-    position: 'absolute' as 'absolute',
+// Icons
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+
+// Dropdowns (Mantén tus rutas originales)
+import OptionAmbiente from '../dropdown/option_ambiente';
+import OptionProducto from '../dropdown/option_producto';
+import OptionUsuario from '../dropdown/option_users';
+import OptionTPS from '../dropdown/option_tps';
+import OptionSla from '../dropdown/option_sla';
+import OptionPrioridad from '../dropdown/option_prioridad';
+import OptionEstado from '../dropdown/option_estado';
+import TimeDate from '../dropdown/option_date';
+import AccordionEvidencias from '../accordion/evidencias_solicitud';
+import OptionComponente from '../dropdown/option_componente';
+import OptionSubComponente from '../dropdown/option_subcomponente';
+import OptionCliente from '../dropdown/option_cliente';
+import OptionArea from '../dropdown/option_area';
+
+const modalContainerStyle = {
+    position: 'absolute' as const,
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 600,
-    maxWidth: '90%',
+    width: { xs: '95%', sm: '85%', md: '70%', lg: '60%' },
+    maxWidth: '950px',
+    maxHeight: '90vh',
     bgcolor: 'background.paper',
-    borderRadius: 2,
-    boxShadow: 24,
-    p: 4,
+    borderRadius: '20px',
+    boxShadow: '0 20px 50px rgba(0,0,0,0.15)',
+    display: 'flex',
+    flexDirection: 'column',
+    outline: 'none',
+    overflow: 'hidden'
 };
 
-function CreateTask() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+const inputStyle = {
+    '& .MuiOutlinedInput-root': {
+        borderRadius: '12px',
+        backgroundColor: 'white',
+        '& fieldset': { borderColor: '#e2e8f0' },
+        '&:hover fieldset': { borderColor: '#cbd5e0' },
+        '&.Mui-focused fieldset': { borderColor: '#26427c' },
+    },
+    '& .MuiInputLabel-root': { color: '#718096', fontSize: '0.9rem' },
+};
+
+function ModalTarea() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [idProduct, setIdProduct] = useState<string>("");
+    const [idArea, setIdArea] = useState<string>("");
+    const [idComponente, setIdComponente] = useState<string>("");
+
+    const [formData, setFormData] = useState({
+        co_solicitud: "", fe_vencimiento: "", fe_resolucion: "", fe_cierre: "",
+        co_user_credor_soli: "", co_user_resolutor: "", co_tip_solicitud: 0,
+        nb_contacto: "", nu_celular_contacto: "", tx_asunto: "",
+        tx_descripcion: "", tx_causa: "", co_ambiente: 0, co_producto: 0,
+        co_sla: 0, co_user_cierre: "", tx_desc_resolucion: "", tx_nota: "",
+        co_estado: 0, co_cliente: "", co_prioridad: 0, co_componente: 0,
+        co_subcomponente: 0, co_area: 0
+    });
+
+    const toggleModal = () => setIsModalOpen(!isModalOpen);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSelectChange = (name: string, value: any) => {
+        const numericFields = ['co_tip_solicitud', 'co_ambiente', 'co_producto', 'co_sla', 'co_estado', 'co_prioridad', 'co_componente', 'co_subcomponente', 'co_area'];
+        const finalValue = numericFields.includes(name) && value !== "" ? parseInt(value, 10) : value;
+        setFormData(prev => ({ ...prev, [name]: finalValue }));
+    };
+
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch('http://localhost:8081/request', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+            if (response.ok) {
+                alert("Solicitud Creada exitosamente!");
+                toggleModal();
+            }
+        } catch (error) { console.error("Error:", error); }
+    };
 
     return (
-        <div>
-            {/* Botón con Borde de Recorte (dashed) */}
+        <>
             <Button
-                onClick={handleOpen}
-                variant="outlined"
-                startIcon={<PlaylistAddIcon />}
+                variant="contained"
+                startIcon={<AddIcon />}
+                onClick={toggleModal}
                 sx={{
-                    border: '2px dashed #666666',
-                    color: '#666666',
-                    width: '100%',
-                    marginBottom: '10px',
-                    borderRadius: '8px',
-                    padding: '12px',
-                    '&:hover': {
-                        border: '2px dashed #999999',
-                        backgroundColor: 'rgba(102, 102, 102, 0.05)',
-                    }
+                    bgcolor: '#26427c',
+                    color: 'white',
+                    borderRadius: '10px',
+                    textTransform: 'none',
+                    px: 3,
+                    py: 1,
+                    marginBottom: 4,
+                    '&:hover': { bgcolor: '#1b315d' }
                 }}
             >
-                asignar tarea
+                Agregar Tarea
             </Button>
 
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="new-request-title"
-                aria-describedby="new-request-description"
-            >
-                <Box sx={modalStyle}>
-                    {/* Encabezado del Modal */}
-                    <Typography id="new-request-title" variant="h5" component="h2" gutterBottom style={{ color: '#1f1e1eff', fontWeight: 600 }}>
-                        Asignar Tarea
-                    </Typography>
-                    <Typography id="new-request-description" variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, architecto.
-                    </Typography>
+            <Modal open={isModalOpen} onClose={toggleModal} closeAfterTransition slots={{ backdrop: Backdrop }} slotProps={{ backdrop: { timeout: 500, sx: { backgroundColor: 'rgba(15, 23, 42, 0.7)' } } }}>
+                <Fade in={isModalOpen}>
+                    <Box sx={modalContainerStyle}>
 
-                    {/* Formulario */}
-                    <Stack spacing={3}>
-                        <TextField
-                            fullWidth
-                            label="CO. Área"
-                            variant="outlined"
-                            size="small"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Descripción de la Solicitud"
-                            variant="outlined"
-                            multiline
-                            rows={4}
-                        />
+                        {/* Header elegante */}
+                        <Box sx={{ p: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #edf2f7' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                <Box sx={{ p: 1, bgcolor: '#f0f4ff', borderRadius: '10px', display: 'flex' }}>
+                                    <AssignmentIcon sx={{ color: '#26427c' }} />
+                                </Box>
+                                <Typography variant="h6" sx={{ fontWeight: 700, color: '#1a202c', fontSize: '1.1rem' }}>Crear una Tarea</Typography>
+                            </Box>
+                            <IconButton onClick={toggleModal} size="small" sx={{ color: '#a0aec0' }}><CloseIcon /></IconButton>
+                        </Box>
 
-                        {/* Botones de Parámetros */}
-                        <Stack direction="row" spacing={1}>
-                            <Button variant="outlined" startIcon={<ProductionQuantityLimitsIcon />} size="small">
-                                Producto
-                            </Button>
-                            <Button variant="outlined" startIcon={<SettingsIcon />} size="small">
-                                Ambiente
-                            </Button>
-                        </Stack>
+                        {/* Contenedor con Scroll */}
+                        <Box className="contenedor-con-scroll" sx={{ p: 4, overflowY: 'auto', flexGrow: 1, bgcolor: '#f8fafc' }}>
+                            <Grid container spacing={2.5}>
 
-                        {/* Enlace Añadir más */}
-                        <Button variant="text" startIcon={<PlaylistAddIcon />} sx={{ justifyContent: 'flex-start', p: 0, textTransform: 'none' }}>
-                            Añadir más
-                        </Button>
-                    </Stack>
+                                {/* SECCIÓN 1: DATOS BÁSICOS */}
+                                <Grid size={{ xs: 12 }} sx={{ mb: 1 }}>
+                                    <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Información General</Typography>
+                                </Grid>
 
-                    {/* Footer con botones de acción */}
-                    <Stack direction="row" spacing={1} justifyContent="flex-end" sx={{ mt: 4, pt: 2, borderTop: '1px solid #eee' }}>
-                        <Button variant="outlined" onClick={handleClose} sx={{
-                            textTransform: 'none',
-                            borderColor: 'rgba(0, 0, 0, 0.23)',
-                            color: '#333'
-                        }}>
-                            Cancelar
-                        </Button>
-                        <Button variant="contained" onClick={handleClose}
-                            sx={{
-                                textTransform: 'none',
-                                backgroundColor: 'rgb(38, 66, 124)',
-                                '&:hover': {
-                                    backgroundColor: 'rgba(27, 49, 93, 1)',
-                                }
-                            }}
-                        >
-                            Crear
-                        </Button>
-                    </Stack>
-                </Box>
+                                <Grid size={{ xs: 12, md: 4 }}>
+                                    <TextField fullWidth name="co_solicitud" label="N# Solicitud" variant="outlined" sx={inputStyle} value={formData.co_solicitud} onChange={handleChange} />
+                                </Grid>
+                                <Grid size={{ xs: 12, md: 8 }}>
+                                    <TextField fullWidth name="tx_asunto" label="Asunto o Resumen" variant="outlined" sx={inputStyle} value={formData.tx_asunto} onChange={handleChange} />
+                                </Grid>
+
+                                <Grid size={{ xs: 12 }}>
+                                    <TextField fullWidth multiline rows={2} name="tx_descripcion" label="Descripción Detallada" sx={inputStyle} value={formData.tx_descripcion} onChange={handleChange} />
+                                </Grid>
+
+                                {/* SECCIÓN 2: DETALLES TÉCNICOS */}
+                                <Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
+                                    <Paper elevation={0} sx={{ p: 3, borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                                        <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', mb: 3, textTransform: 'uppercase' }}>
+                                            Clasificación y Tiempos
+                                        </Typography>
+
+                                        <Grid container spacing={2.5}>
+                                            <Grid size={{ xs: 12 }}>
+                                                <Box sx={{ mb: 1 }}>
+                                                    <TimeDate label='Fecha de Vencimiento de la Solicitud' />
+                                                </Box>
+                                            </Grid>
+
+                                            {/* RESTO DE COMPONENTES EN GRID DE 3 COLUMNAS ABAJO */}
+                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionAmbiente onSelect={(v) => handleSelectChange('co_ambiente', v)} /></Grid>
+                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionTPS onSelect={(v) => handleSelectChange('co_tip_solicitud', v)} /></Grid>
+                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionSla onSelect={(v) => handleSelectChange('co_sla', v)} /></Grid>
+                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionPrioridad onSelect={(v) => handleSelectChange('co_prioridad', v)} /></Grid>
+                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionEstado onSelect={(v) => handleSelectChange('co_estado', v)} /></Grid>
+                                        </Grid>
+                                    </Paper>
+                                </Grid>
+                                {/* SECCIÓN 3: ORIGEN Y PRODUCTO */}
+                                <Grid size={{ xs: 12 }} sx={{ mt: 2, mb: 1 }}>
+                                    <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', textTransform: 'uppercase' }}>Asignación de Negocio</Typography>
+                                </Grid>
+
+                                <Grid size={{ xs: 12, md: 6 }}>
+                                    <OptionArea onAreaChange={(id) => { setIdArea(id); handleSelectChange('co_area', id); }} />
+                                </Grid>
+                                <Grid size={{ xs: 12, md: 6 }}>
+                                    <OptionUsuario areaId={idArea} onSelect={(v) => handleSelectChange('co_user_credor_soli', v)} />
+                                </Grid>
+
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                                    <OptionProducto onProductoChange={(id) => { setIdProduct(id); handleSelectChange('co_producto', id); }} />
+                                </Grid>
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                                    <OptionCliente productoId={idProduct} onSelect={(v) => handleSelectChange('co_cliente', v)} />
+                                </Grid>
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                                    <OptionComponente productoId={idProduct} onComponenteChange={(id) => { setIdComponente(id); handleSelectChange('co_componente', id); }} />
+                                </Grid>
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                                    <OptionSubComponente componenteId={idComponente} onSelect={(v) => handleSelectChange('co_subcomponente', v)} />
+                                </Grid>
+
+                                <Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
+                                    <AccordionEvidencias />
+                                </Grid>
+                            </Grid>
+                        </Box>
+
+                        {/* Footer */}
+                        <Box sx={{ p: 2.5, display: 'flex', justifyContent: 'flex-end', gap: 2, bgcolor: 'white', borderTop: '1px solid #edf2f7' }}>
+                            <Button onClick={toggleModal} variant="outlined" sx={{ borderRadius: '10px', textTransform: 'none', color: '#64748b', borderColor: '#e2e8f0', px: 3 }}>Cancelar</Button>
+                            <Button onClick={handleSubmit} variant="contained" sx={{ bgcolor: '#26427c', borderRadius: '10px', textTransform: 'none', px: 5, fontWeight: 600, '&:hover': { bgcolor: '#1b315d' } }}>Crear Ticket</Button>
+                        </Box>
+                    </Box>
+                </Fade>
             </Modal>
-        </div>
+        </>
     );
 }
 
-export default CreateTask;
+export default ModalTarea;
