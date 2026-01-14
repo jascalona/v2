@@ -6,7 +6,6 @@ import { FilterMatchMode } from 'primereact/api';
 import { Button } from 'primereact/button';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import '../../../../assets/css/table.css'
 
 //Componentes
