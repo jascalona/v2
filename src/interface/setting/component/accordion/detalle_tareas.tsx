@@ -10,7 +10,7 @@ import { Button } from '@mui/material';
 import TaskBySoli from '../table/table_tarea_soli';
 import NotekBySoli from '../table/table_nota_soli';
 import ModalTarea from '../modal/modal_task';
-
+import ModalNota from '../modal/modal_nota';
 //Icons
 
 interface idSolicitud {
@@ -57,6 +57,8 @@ function DetallesTarea({ co_solicitud }: idSolicitud) {
                 </AccordionSummary>
                 <AccordionDetails style={{ paddingTop: 30 }}>
                     <Typography>
+                        <ModalNota />
+
                         <NotekBySoli idSolicitud={co_solicitud} />
                     </Typography>
                 </AccordionDetails>

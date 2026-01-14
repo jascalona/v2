@@ -62,17 +62,16 @@ const inputStyle = {
     '& .MuiInputLabel-root': { color: '#718096', fontSize: '0.9rem' },
 };
 
-function ModalTarea() {
+function ModalNota() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idProduct, setIdProduct] = useState<string>("");
     const [idArea, setIdArea] = useState<string>("");
     const [idComponente, setIdComponente] = useState<string>("");
 
     const [formData, setFormData] = useState({
-        co_solicitud: "", tx_asunto: "", tx_description: "", fe_vencimiento: "",
+        co_solicitud: "", co_tarea: 0, tx_asunto: "",
+        tx_description: "", fe_vencimiento: "",
         co_user_emisor: "", co_user_asignado: "",
-        nb_contacto: "", nu_celular_contacto: "", co_area: 0,
-        co_estado: 0, co_prioridad: 0, co_producto: 0
     });
 
     const toggleModal = () => setIsModalOpen(!isModalOpen);
@@ -83,14 +82,14 @@ function ModalTarea() {
     };
 
     const handleSelectChange = (name: string, value: any) => {
-        const numericFields = ['co_area', 'co_estado', 'co_prioridad', 'co_producto'];
+        const numericFields = ['co_tarea'];
         const finalValue = numericFields.includes(name) && value !== "" ? parseInt(value, 10) : value;
         setFormData(prev => ({ ...prev, [name]: finalValue }));
     };
 
     const handleSubmit = async () => {
         try {
-            const response = await fetch('http://localhost:8081/task', {
+            const response = await fetch('http://localhost:8081/notes', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
@@ -119,7 +118,7 @@ function ModalTarea() {
                     '&:hover': { bgcolor: '#1b315d' }
                 }}
             >
-                Agregar Tarea
+                Agregar Nota
             </Button>
 
             <Modal open={isModalOpen} onClose={toggleModal} closeAfterTransition slots={{ backdrop: Backdrop }} slotProps={{ backdrop: { timeout: 500, sx: { backgroundColor: 'rgba(15, 23, 42, 0.7)' } } }}>
@@ -132,7 +131,7 @@ function ModalTarea() {
                                 <Box sx={{ p: 1, bgcolor: '#f0f4ff', borderRadius: '10px', display: 'flex' }}>
                                     <AssignmentIcon sx={{ color: '#26427c' }} />
                                 </Box>
-                                <Typography variant="h6" sx={{ fontWeight: 700, color: '#1a202c', fontSize: '1.1rem' }}>Crear una Tarea</Typography>
+                                <Typography variant="h6" sx={{ fontWeight: 700, color: '#1a202c', fontSize: '1.1rem' }}>Crear una Nota</Typography>
                             </Box>
                             <IconButton onClick={toggleModal} size="small" sx={{ color: '#a0aec0' }}><CloseIcon /></IconButton>
                         </Box>
@@ -146,10 +145,15 @@ function ModalTarea() {
                                     <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Información General</Typography>
                                 </Grid>
 
-                                <Grid size={{ xs: 12, md: 4 }}>
+                                <Grid size={{ xs: 12, md: 6 }}>
                                     <TextField fullWidth name="co_solicitud" label="N# Solicitud" variant="outlined" sx={inputStyle} value={formData.co_solicitud} onChange={handleChange} />
                                 </Grid>
-                                <Grid size={{ xs: 12, md: 8 }}>
+
+                                <Grid size={{ xs: 12, md: 6 }}>
+                                    <TextField fullWidth name="co_solicitud" label="ID Tarea" variant="outlined" sx={inputStyle} value={formData.co_tarea} onChange={handleChange} />
+                                </Grid>
+
+                                <Grid size={{ xs: 12, md: 12 }}>
                                     <TextField fullWidth name="tx_asunto" label="Asunto o Resumen" variant="outlined" sx={inputStyle} value={formData.tx_asunto} onChange={handleChange} />
                                 </Grid>
 
@@ -167,32 +171,12 @@ function ModalTarea() {
                                                     <TimeDate label='Fecha de Vencimiento de la Tarea' />
                                                 </Box>
                                             </Grid>
-
-                                            {/* RESTO DE COMPONENTES EN GRID DE 3 COLUMNAS ABAJO */}
-                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionPrioridad onSelect={(v) => handleSelectChange('co_prioridad', v)} /></Grid>
-                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionEstado onSelect={(v) => handleSelectChange('co_estado', v)} /></Grid>
-
-
-                                            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                                                <OptionProducto onProductoChange={(id) => { setIdProduct(id); handleSelectChange('co_producto', id); }} />
-                                            </Grid>
-
                                         </Grid>
                                     </Paper>
                                 </Grid>
 
 
                                 {/* SECCIÓN 3: ORIGEN Y PRODUCTO */}
-                                <Grid size={{ xs: 12 }} sx={{ mt: 2, mb: 1 }}>
-                                    <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', textTransform: 'uppercase' }}>Asignación de Tarea</Typography>
-                                </Grid>
-
-                                <Grid size={{ xs: 12, md: 6 }}>
-                                    <OptionArea onAreaChange={(id) => { setIdArea(id); handleSelectChange('co_area', id); }} />
-                                </Grid>
-                                <Grid size={{ xs: 12, md: 6 }}>
-                                    <OptionUsuario areaId={idArea} onSelect={(v) => handleSelectChange('co_user_credor_soli', v)} />
-                                </Grid>
 
                                 {/*DESCRIPCION*/}
                                 <Grid size={{ xs: 12 }}>
@@ -214,7 +198,7 @@ function ModalTarea() {
                         {/* Footer */}
                         <Box sx={{ p: 2.5, display: 'flex', justifyContent: 'flex-end', gap: 2, bgcolor: 'white', borderTop: '1px solid #edf2f7' }}>
                             <Button onClick={toggleModal} variant="outlined" sx={{ borderRadius: '10px', textTransform: 'none', color: '#64748b', borderColor: '#e2e8f0', px: 3 }}>Cancelar</Button>
-                            <Button onClick={handleSubmit} variant="contained" sx={{ bgcolor: '#26427c', borderRadius: '10px', textTransform: 'none', px: 5, fontWeight: 600, '&:hover': { bgcolor: '#1b315d' } }}>Crear Tarea</Button>
+                            <Button onClick={handleSubmit} variant="contained" sx={{ bgcolor: '#26427c', borderRadius: '10px', textTransform: 'none', px: 5, fontWeight: 600, '&:hover': { bgcolor: '#1b315d' } }}>Crear Nota</Button>
                         </Box>
                     </Box>
                 </Fade>
@@ -223,4 +207,4 @@ function ModalTarea() {
     );
 }
 
-export default ModalTarea;
+export default ModalNota;
