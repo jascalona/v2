@@ -93,7 +93,6 @@ function NotekBySoli({ idSolicitud }: TaskBySoliProps) {
                     <Column field="fe_registro" body={(rowData) => rowData.fe_registro?.substring(0, 19)}
                         header="Fe. Registro"></Column>
 
-
                     {/* COLUMNA DE ACCIONES MODIFICADA */}
                     <Column body={(rowData: Notes) => (
                         <div className="action-buttons">
