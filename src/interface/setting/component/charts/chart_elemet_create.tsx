@@ -16,7 +16,7 @@ function RequestCreate() {
           fontSize: 40,
         },
         [`& .${gaugeClasses.valueArc}`]: {
-          fill: '#52b202',
+          fill: '#63D3F8',
         },
         [`& .${gaugeClasses.referenceArc}`]: {
           fill: theme.palette.text.disabled,

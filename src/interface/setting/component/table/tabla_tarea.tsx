@@ -14,7 +14,7 @@ import CreateTask from '../modal/modal_task';
 
 
 
-interface Customer {
+interface Tarea {
     co_tarea: string,
     tx_asunto: string,
     tx_description: string,
@@ -33,17 +33,16 @@ const initialFilters = {
 };
 
 function TableTask() {
-    const [task, setTask] = useState<Customer[]>([]);
+    const [task, setTask] = useState<Tarea[]>([]);
     const [cargando, setCargando] = useState(true);
     const [filters, setFilters] = useState(initialFilters);
-    const [globalFilterValue, setGlobalFilterValue] = useState('');
 
     // --- ESTADOS PARA EL MODAL ---
     const [displayModal, setDisplayModal] = useState(false);
-    const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+    const [selectedCustomer, setSelectedCustomer] = useState<Tarea | null>(null);
 
     useEffect(() => {
-        axios.get<Customer[]>('http://localhost:8081/task')
+        axios.get<Tarea[]>('http://localhost:8081/task')
             .then(response => {
                 setTask(response.data);
                 setCargando(false);
@@ -55,7 +54,7 @@ function TableTask() {
     }, []);
 
     // --- FUNCIÓN PARA ABRIR MODAL ---
-    const openCustomerModal = (customer: Customer) => {
+    const openCustomerModal = (customer: Tarea) => {
         setSelectedCustomer(customer);
         setDisplayModal(true);
     };
@@ -74,8 +73,8 @@ function TableTask() {
         <div className="container-main-table">
             <header className="table-header-custom">
                 <div className="header-left">
-                    <h2>Gestion de Clientes <span className="badge-count">{task.length} clientes</span></h2>
-                    <p className="subtitle">Mantén el seguimiento de tus clientes y sus productos.</p>
+                    <h2>Gestion de Tareas <span className="badge-count">{task.length} tasks</span></h2>
+                    <p className="subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, officiis.</p>
                 </div>
             </header>
 
@@ -87,24 +86,7 @@ function TableTask() {
 
             <div className="table-card">
                 <div className="table-toolbar">
-                    <div className="toolbar-left">
-                        <button className="filter-tab active">Ver todos</button>
-                        <button className="filter-tab">Produccion</button>
-                        <button className="filter-tab">Certificacion</button>
-
-                    </div>
-
-                    <div className="toolbar-right">
-                        <span className="p-input-icon-left search-container">
-                            <i className="pi pi-search" />
-                            <InputText value={globalFilterValue}
-                                onChange={onGlobalFilterChange}
-                                placeholder="Buscar..."
-                                className="search-input"
-                            />
-
-                        </span>
-                    </div>
+                    {/*CARGAR FILTROS*/}
                 </div>
 
                 <DataTable
@@ -129,7 +111,7 @@ function TableTask() {
 
 
                     {/* COLUMNA DE ACCIONES MODIFICADA */}
-                    <Column body={(rowData: Customer) => (
+                    <Column body={(rowData: Tarea) => (
                         <div className="action-buttons">
                             <button className="btn-secondary" style={{ marginRight: 4 }}>
                                 <EditSquareIcon sx={{ fontSize: 15, color: '#17306a' }} />

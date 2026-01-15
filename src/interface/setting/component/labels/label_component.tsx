@@ -56,7 +56,7 @@ function CardComponent() {
                     <div className="content-left" >
                         <h4 >{componente.nb_componente}</h4>
                         <p>Codigo del Producto: {componente.co_producto}</p>
-                        <small > {componente.fe_registro}</small>
+                        <small > {componente.fe_registro.substring(10)}</small>
                     </div>
 
                     <div className="content-rigth">
