@@ -1,6 +1,5 @@
-import { useState } from 'react';
-// Material UI Components - IMPORTANTE: Usamos Grid2
-import Grid from '@mui/material/Grid';
+import { useState, useEffect } from 'react';
+import Grid from '@mui/material/Grid'; 
 import {
     TextField,
     Button,
@@ -10,7 +9,6 @@ import {
     Fade,
     Backdrop,
     IconButton,
-    Fab,
     Paper
 } from '@mui/material';
 
@@ -19,19 +17,13 @@ import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
-// Dropdowns (Mantén tus rutas originales)
-import OptionAmbiente from '../dropdown/option_ambiente';
+// Dropdowns
 import OptionProducto from '../dropdown/option_producto';
 import OptionUsuario from '../dropdown/option_users';
-import OptionTPS from '../dropdown/option_tps';
-import OptionSla from '../dropdown/option_sla';
 import OptionPrioridad from '../dropdown/option_prioridad';
 import OptionEstado from '../dropdown/option_estado';
 import TimeDate from '../dropdown/option_date';
 import AccordionEvidencias from '../accordion/evidencias_solicitud';
-import OptionComponente from '../dropdown/option_componente';
-import OptionSubComponente from '../dropdown/option_subcomponente';
-import OptionCliente from '../dropdown/option_cliente';
 import OptionArea from '../dropdown/option_area';
 
 const modalContainerStyle = {
@@ -62,22 +54,39 @@ const inputStyle = {
     '& .MuiInputLabel-root': { color: '#718096', fontSize: '0.9rem' },
 };
 
-interface idSoli{
+interface idSoli {
     co_solicitud: string
 }
 
-function ModalTarea({co_solicitud}: idSoli) {
+function ModalTarea({ co_solicitud }: idSoli) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idProduct, setIdProduct] = useState<string>("");
     const [idArea, setIdArea] = useState<string>("");
-    const [idComponente, setIdComponente] = useState<string>("");
 
     const [formData, setFormData] = useState({
-        co_solicitud: "", tx_asunto: "", tx_description: "", fe_vencimiento: "",
-        co_user_emisor: "", co_user_asignado: "",
-        nb_contacto: "", nu_celular_contacto: "", co_area: 0,
-        co_estado: 0, co_prioridad: 0, co_producto: 0
+        co_solicitud: "", // Se llenará vía useEffect o manualmente
+        tx_asunto: "",
+        tx_description: "",
+        fe_vencimiento: "",
+        co_user_emisor: "",
+        co_user_asignado: "",
+        nb_contacto: "",
+        nu_celular_contacto: "",
+        co_area: 0,
+        co_estado: 0,
+        co_prioridad: 0,
+        co_producto: 0
     });
+
+    // CORRECCIÓN 1: Sincronizar la prop co_solicitud con el estado local
+    useEffect(() => {
+        if (co_solicitud) {
+            setFormData(prev => ({
+                ...prev,
+                co_solicitud: co_solicitud
+            }));
+        }
+    }, [co_solicitud]);
 
     const toggleModal = () => setIsModalOpen(!isModalOpen);
 
@@ -94,16 +103,29 @@ function ModalTarea({co_solicitud}: idSoli) {
 
     const handleSubmit = async () => {
         try {
+            // CORRECCIÓN 2: Asegurar que co_solicitud no vaya vacío al enviar
+            const dataToSubmit = {
+                ...formData,
+                co_solicitud: formData.co_solicitud || co_solicitud
+            };
+
             const response = await fetch('http://localhost:8081/task', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(dataToSubmit),
             });
+
             if (response.ok) {
                 alert("Solicitud Creada exitosamente!");
                 toggleModal();
+            } else {
+                const errorData = await response.json();
+                console.error("Error del servidor:", errorData);
+                alert("Error al crear la tarea. Revisa la consola.");
             }
-        } catch (error) { console.error("Error:", error); }
+        } catch (error) {
+            console.error("Error de red:", error);
+        }
     };
 
     return (
@@ -125,13 +147,17 @@ function ModalTarea({co_solicitud}: idSoli) {
             >
                 Agregar Tarea
             </Button>
-            
 
-            <Modal open={isModalOpen} onClose={toggleModal} closeAfterTransition slots={{ backdrop: Backdrop }} slotProps={{ backdrop: { timeout: 500, sx: { backgroundColor: 'rgba(15, 23, 42, 0.7)' } } }}>
+            <Modal
+                open={isModalOpen}
+                onClose={toggleModal}
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{ backdrop: { timeout: 500, sx: { backgroundColor: 'rgba(15, 23, 42, 0.7)' } } }}
+            >
                 <Fade in={isModalOpen}>
                     <Box sx={modalContainerStyle}>
-
-                        {/* Header elegante */}
+                        {/* Header */}
                         <Box sx={{ p: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #edf2f7' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                                 <Box sx={{ p: 1, bgcolor: '#f0f4ff', borderRadius: '10px', display: 'flex' }}>
@@ -142,64 +168,62 @@ function ModalTarea({co_solicitud}: idSoli) {
                             <IconButton onClick={toggleModal} size="small" sx={{ color: '#a0aec0' }}><CloseIcon /></IconButton>
                         </Box>
 
-                        {/* Contenedor con Scroll */}
+                        {/* Formulario */}
                         <Box className="contenedor-con-scroll" sx={{ p: 4, overflowY: 'auto', flexGrow: 1, bgcolor: '#f8fafc' }}>
                             <Grid container spacing={2.5}>
-
-                                {/* SECCIÓN 1: DATOS BÁSICOS */}
                                 <Grid size={{ xs: 12 }} sx={{ mb: 1 }}>
                                     <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Información General</Typography>
                                 </Grid>
 
                                 <Grid size={{ xs: 12, md: 4 }}>
-                                    <TextField fullWidth name="co_solicitud" label="N# Solicitud" variant="outlined" sx={inputStyle} value={co_solicitud} onChange={handleChange} />
+                                    <TextField
+                                        fullWidth
+                                        name="co_solicitud"
+                                        label="N# Solicitud"
+                                        variant="outlined"
+                                        sx={inputStyle}
+                                        value={formData.co_solicitud}
+                                        onChange={handleChange}
+                                    />
                                 </Grid>
                                 <Grid size={{ xs: 12, md: 8 }}>
                                     <TextField fullWidth name="tx_asunto" label="Asunto o Resumen" variant="outlined" sx={inputStyle} value={formData.tx_asunto} onChange={handleChange} />
                                 </Grid>
 
-
-                                {/* SECCIÓN 2: DETALLES TÉCNICOS */}
                                 <Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
                                     <Paper elevation={0} sx={{ p: 3, borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                                         <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', mb: 3, textTransform: 'uppercase' }}>
                                             Clasificación y Tiempos
                                         </Typography>
-
                                         <Grid container spacing={2.5}>
                                             <Grid size={{ xs: 12 }}>
                                                 <Box sx={{ mb: 1 }}>
                                                     <TimeDate label='Fecha de Vencimiento de la Tarea' />
                                                 </Box>
                                             </Grid>
-
-                                            {/* RESTO DE COMPONENTES EN GRID DE 3 COLUMNAS ABAJO */}
                                             <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionPrioridad onSelect={(v) => handleSelectChange('co_prioridad', v)} /></Grid>
                                             <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionEstado onSelect={(v) => handleSelectChange('co_estado', v)} /></Grid>
-
-
                                             <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                                                 <OptionProducto onProductoChange={(id) => { setIdProduct(id); handleSelectChange('co_producto', id); }} />
                                             </Grid>
-
                                         </Grid>
                                     </Paper>
                                 </Grid>
 
-
-                                {/* SECCIÓN 3: ORIGEN Y PRODUCTO */}
                                 <Grid size={{ xs: 12 }} sx={{ mt: 2, mb: 1 }}>
                                     <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', textTransform: 'uppercase' }}>Asignación de Tarea</Typography>
                                 </Grid>
 
-                                <Grid size={{ xs: 12, md: 6 }}>
+                                <Grid size={{ xs: 12, md: 4 }}>
                                     <OptionArea onAreaChange={(id) => { setIdArea(id); handleSelectChange('co_area', id); }} />
                                 </Grid>
-                                <Grid size={{ xs: 12, md: 6 }}>
-                                    <OptionUsuario areaId={idArea} onSelect={(v) => handleSelectChange('co_user_credor_soli', v)} />
+                                <Grid size={{ xs: 12, md: 4 }}>
+                                    <OptionUsuario areaId={idArea} onSelect={(v) => handleSelectChange('co_user_emisor', v)} />
+                                </Grid>
+                                <Grid size={{ xs: 12, md: 4 }}>
+                                    <OptionUsuario areaId={idArea} onSelect={(v) => handleSelectChange('co_user_asignado', v)} />
                                 </Grid>
 
-                                {/*DESCRIPCION*/}
                                 <Grid size={{ xs: 12 }}>
                                     <TextField fullWidth multiline rows={6} name="tx_description" label="Descripción Detallada" sx={inputStyle} value={formData.tx_description} onChange={handleChange} />
                                 </Grid>
@@ -208,13 +232,7 @@ function ModalTarea({co_solicitud}: idSoli) {
                                     <AccordionEvidencias />
                                 </Grid>
                             </Grid>
-
-
-
                         </Box>
-
-
-
 
                         {/* Footer */}
                         <Box sx={{ p: 2.5, display: 'flex', justifyContent: 'flex-end', gap: 2, bgcolor: 'white', borderTop: '1px solid #edf2f7' }}>

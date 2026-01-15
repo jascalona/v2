@@ -4,7 +4,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../../../../assets/css/details.css'
-import { Button } from '@mui/material';
 
 //Componentes
 import TaskBySoli from '../table/table_tarea_soli';
