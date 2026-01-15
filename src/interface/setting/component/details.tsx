@@ -156,7 +156,7 @@ function DetallesSolicitud() {
                 </div>
 
                 <div className="container-detalles">
-                    <DetailsSoli solicitud={selectedSolicitud} />
+                    <DetailsSoli  solicitud={selectedSolicitud} />
                 </div>
             </div>
 

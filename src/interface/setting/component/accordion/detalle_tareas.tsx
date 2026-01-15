@@ -35,7 +35,7 @@ function DetallesTarea({ co_solicitud }: idSolicitud) {
                 <AccordionDetails style={{ paddingTop: 30 }}>
                     <Typography>
 
-                            <ModalTarea />
+                            <ModalTarea co_solicitud={co_solicitud}/>
 
                         {/*AQUI PASAMOS EL ID DE LA SOLICITUD*/}
                         <TaskBySoli idSolicitud={co_solicitud} />

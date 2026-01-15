@@ -62,7 +62,11 @@ const inputStyle = {
     '& .MuiInputLabel-root': { color: '#718096', fontSize: '0.9rem' },
 };
 
-function ModalTarea() {
+interface idSoli{
+    co_solicitud: string
+}
+
+function ModalTarea({co_solicitud}: idSoli) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idProduct, setIdProduct] = useState<string>("");
     const [idArea, setIdArea] = useState<string>("");
@@ -121,6 +125,7 @@ function ModalTarea() {
             >
                 Agregar Tarea
             </Button>
+            
 
             <Modal open={isModalOpen} onClose={toggleModal} closeAfterTransition slots={{ backdrop: Backdrop }} slotProps={{ backdrop: { timeout: 500, sx: { backgroundColor: 'rgba(15, 23, 42, 0.7)' } } }}>
                 <Fade in={isModalOpen}>
@@ -147,7 +152,7 @@ function ModalTarea() {
                                 </Grid>
 
                                 <Grid size={{ xs: 12, md: 4 }}>
-                                    <TextField fullWidth name="co_solicitud" label="N# Solicitud" variant="outlined" sx={inputStyle} value={formData.co_solicitud} onChange={handleChange} />
+                                    <TextField fullWidth name="co_solicitud" label="N# Solicitud" variant="outlined" sx={inputStyle} value={co_solicitud} onChange={handleChange} />
                                 </Grid>
                                 <Grid size={{ xs: 12, md: 8 }}>
                                     <TextField fullWidth name="tx_asunto" label="Asunto o Resumen" variant="outlined" sx={inputStyle} value={formData.tx_asunto} onChange={handleChange} />
