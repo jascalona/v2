@@ -132,7 +132,7 @@ function NotekBySoli({ idSolicitud }: TaskBySoliProps) {
                         </div>
 
                         <div className="info-item">
-                            <label>ID Tarea</label>
+                            <label>ID Nota</label>
                             <span>{selectedCustomer.co_nota}</span>
                         </div>
 

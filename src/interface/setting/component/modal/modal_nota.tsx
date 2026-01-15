@@ -20,19 +20,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
 // Dropdowns (Mantén tus rutas originales)
-import OptionAmbiente from '../dropdown/option_ambiente';
-import OptionProducto from '../dropdown/option_producto';
-import OptionUsuario from '../dropdown/option_users';
-import OptionTPS from '../dropdown/option_tps';
-import OptionSla from '../dropdown/option_sla';
-import OptionPrioridad from '../dropdown/option_prioridad';
-import OptionEstado from '../dropdown/option_estado';
 import TimeDate from '../dropdown/option_date';
 import AccordionEvidencias from '../accordion/evidencias_solicitud';
-import OptionComponente from '../dropdown/option_componente';
-import OptionSubComponente from '../dropdown/option_subcomponente';
-import OptionCliente from '../dropdown/option_cliente';
-import OptionArea from '../dropdown/option_area';
 
 const modalContainerStyle = {
     position: 'absolute' as const,
@@ -64,14 +53,10 @@ const inputStyle = {
 
 function ModalNota() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [idProduct, setIdProduct] = useState<string>("");
-    const [idArea, setIdArea] = useState<string>("");
-    const [idComponente, setIdComponente] = useState<string>("");
 
     const [formData, setFormData] = useState({
-        co_solicitud: "", co_tarea: 0, tx_asunto: "",
-        tx_description: "", fe_vencimiento: "",
-        co_user_emisor: "", co_user_asignado: "",
+        co_solicitud: "", tx_asunto: "",
+        tx_descripcion: "", co_user_emisor: "",
     });
 
     const toggleModal = () => setIsModalOpen(!isModalOpen);
@@ -150,7 +135,7 @@ function ModalNota() {
                                 </Grid>
 
                                 <Grid size={{ xs: 12, md: 6 }}>
-                                    <TextField fullWidth name="co_solicitud" label="ID Tarea" variant="outlined" sx={inputStyle} value={formData.co_tarea} onChange={handleChange} />
+                                    <TextField fullWidth name="co_user_emisor" label="Creado por:" variant="outlined" sx={inputStyle} value={formData.co_user_emisor} onChange={handleChange} />
                                 </Grid>
 
                                 <Grid size={{ xs: 12, md: 12 }}>
@@ -180,20 +165,14 @@ function ModalNota() {
 
                                 {/*DESCRIPCION*/}
                                 <Grid size={{ xs: 12 }}>
-                                    <TextField fullWidth multiline rows={6} name="tx_description" label="Descripción Detallada" sx={inputStyle} value={formData.tx_description} onChange={handleChange} />
+                                    <TextField fullWidth multiline rows={6} name="tx_descripcion" label="Descripción Detallada" sx={inputStyle} value={formData.tx_descripcion} onChange={handleChange} />
                                 </Grid>
 
                                 <Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
                                     <AccordionEvidencias />
                                 </Grid>
                             </Grid>
-
-
-
                         </Box>
-
-
-
 
                         {/* Footer */}
                         <Box sx={{ p: 2.5, display: 'flex', justifyContent: 'flex-end', gap: 2, bgcolor: 'white', borderTop: '1px solid #edf2f7' }}>

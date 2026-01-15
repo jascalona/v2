@@ -57,7 +57,6 @@ function DetallesTarea({ co_solicitud }: idSolicitud) {
                 <AccordionDetails style={{ paddingTop: 30 }}>
                     <Typography>
                         <ModalNota />
-
                         <NotekBySoli idSolicitud={co_solicitud} />
                     </Typography>
                 </AccordionDetails>
