@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TabsActivities from './setting/component/tabs/tabs_activities'
+import TabsActivities from '../setting/component/tabs/tabs_activities'
 
 function Activities() {
     return (

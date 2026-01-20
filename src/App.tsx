@@ -4,16 +4,16 @@ import Layout from './interface/structure/layout';
 
 //Interface
 import MainInterface from './interface/structure/main_interface';
-import Home from './interface/home'
-import Inbox from './interface/inbox'
-import Activities from './interface/activities'
-import Project from './interface/product';
-import UIRequest from './interface/request';
-import TaskManager from './interface/taskmanager';
-import Customer from './interface/customers';
+import Home from './interface/pages/home'
+import Inbox from './interface/pages/inbox'
+import Activities from './interface/pages/activities'
+import Project from './interface/pages/product';
+import UIRequest from './interface/pages/request';
+import TaskManager from './interface/pages/taskmanager';
+import Customer from './interface/pages/customers';
 
 //Setting
-import Setting from './interface/setting';
+import Setting from './interface/pages/setting';
 import Members from './interface/setting/members';
 import General from './interface/setting/general';
 import ManagerProduct from './interface/setting/manager_product';
@@ -33,7 +33,7 @@ import Category from './interface/setting/master_core/category';
 import SubCategory from './interface/setting/master_core/sub_category';
 import Article from './interface/setting/master_core/article';
 import SLA from './interface/setting/master_core/sla';
-import Login from './interface/login';
+import Login from './interface/pages/login';
 import DetallesSolicitud from './interface/setting/component/details'
 
 function App() {

@@ -1,5 +1,5 @@
+import '../../assets/css/task.css';
 
-import './../assets/css/task.css';
 //Incons
 import EventRepeatIcon from '@mui/icons-material/EventRepeat';
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
@@ -9,11 +9,11 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import GppGoodIcon from '@mui/icons-material/GppGood';
 
 //Componentes
-import TabsTaskMnagaer from "./setting/component/tabs/tabs_task"
+import TabsTaskMnagaer from "../setting/component/tabs/tabs_task"
 
 
 //GRaficos
-import BarsProduct from './setting/component/charts/chart_product';
+import BarsProduct from '../setting/component/charts/chart_product';
 
 function TaskManager() {
     return (

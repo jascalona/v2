@@ -1,7 +1,7 @@
 import { useState } from "react";
-import TabsCustomers from "./setting/component/tabs/tabs_customer";
+import TabsCustomers from "../setting/component/tabs/tabs_customer";
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
-import '../assets/css/customer.css'
+import '../../assets/css/customer.css'
 
 
 function Customer() {
