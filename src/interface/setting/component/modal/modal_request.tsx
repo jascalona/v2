@@ -64,7 +64,6 @@ const inputStyle = {
 };
 
 function ModalSolicitud() {
-    // 1. Hook ejecutado correctamente dentro del componente
     const { user } = useAuth();
     
     const [isModalOpen, setIsModalOpen] = useState(false);

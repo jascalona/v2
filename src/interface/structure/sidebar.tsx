@@ -46,7 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     <div className={`sidebar ${isOpen ? 'is-open' : ''}`}>
       
       {/* Sección de Perfil del Usuario */}
-      <div className="sidebar-profile" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid #333' }}>
+      <div className="sidebar-profile" style={{ padding: '15px', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid #33333317' }}>
         <AccountCircleIcon style={{ fontSize: 40, color: '#aaa' }} />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{ fontSize: '14px', fontWeight: 'bold' }}>{userName}</span>
