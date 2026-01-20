@@ -1,6 +1,5 @@
-import { useState } from 'react';
-// Material UI Components - IMPORTANTE: Usamos Grid2
-import Grid from '@mui/material/Grid';
+import { useState, useEffect } from 'react';
+import Grid from '@mui/material/Grid'; 
 import {
     TextField,
     Button,
@@ -14,12 +13,14 @@ import {
     Paper
 } from '@mui/material';
 
+import { useAuth } from '../../../config/AuthContext';
+
 // Icons
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
-// Dropdowns (Mantén tus rutas originales)
+// Dropdowns
 import OptionAmbiente from '../dropdown/option_ambiente';
 import OptionProducto from '../dropdown/option_producto';
 import OptionUsuario from '../dropdown/option_users';
@@ -63,6 +64,9 @@ const inputStyle = {
 };
 
 function ModalSolicitud() {
+    // 1. Hook ejecutado correctamente dentro del componente
+    const { user } = useAuth();
+    
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idProduct, setIdProduct] = useState<string>("");
     const [idArea, setIdArea] = useState<string>("");
@@ -77,6 +81,16 @@ function ModalSolicitud() {
         co_estado: 0, co_cliente: "", co_prioridad: 0, co_componente: 0,
         co_subcomponente: 0, co_area: 0
     });
+
+    // 2. Efecto para asignar automáticamente el ID del creador al abrir el modal
+    useEffect(() => {
+        if (isModalOpen && user) {
+            setFormData(prev => ({
+                ...prev,
+                co_user_credor_soli: user.co_usuario // Guardamos el ID técnico (V123...)
+            }));
+        }
+    }, [isModalOpen, user]);
 
     const toggleModal = () => setIsModalOpen(!isModalOpen);
 
@@ -95,7 +109,10 @@ function ModalSolicitud() {
         try {
             const response = await fetch('http://localhost:8081/request', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user?.token}` // Es buena práctica enviar el token aquí
+                },
                 body: JSON.stringify(formData),
             });
             if (response.ok) {
@@ -159,8 +176,6 @@ function ModalSolicitud() {
                                                     <TimeDate label='Fecha de Vencimiento de la Solicitud' />
                                                 </Box>
                                             </Grid>
-
-                                            {/* RESTO DE COMPONENTES EN GRID DE 3 COLUMNAS ABAJO */}
                                             <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionAmbiente onSelect={(v) => handleSelectChange('co_ambiente', v)} /></Grid>
                                             <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionTPS onSelect={(v) => handleSelectChange('co_tip_solicitud', v)} /></Grid>
                                             <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionSla onSelect={(v) => handleSelectChange('co_sla', v)} /></Grid>
@@ -169,9 +184,25 @@ function ModalSolicitud() {
                                         </Grid>
                                     </Paper>
                                 </Grid>
+
                                 {/* SECCIÓN 3: ORIGEN Y PRODUCTO */}
                                 <Grid size={{ xs: 12 }} sx={{ mt: 2, mb: 1 }}>
                                     <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', textTransform: 'uppercase' }}>Asignación de Negocio</Typography>
+                                </Grid>
+
+                                <Grid size={{ xs: 12, md: 6 }}>
+                                    {/* 3. Ajuste Visual del creador */}
+                                    <TextField
+                                        fullWidth
+                                        label="Creado por:"
+                                        variant="outlined"
+                                        sx={inputStyle}
+                                        value={`${user?.co_usuario}`}
+                                        disabled 
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                    />
                                 </Grid>
 
                                 <Grid size={{ xs: 12, md: 6 }}>

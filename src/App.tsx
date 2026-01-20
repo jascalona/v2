@@ -19,6 +19,9 @@ import General from './interface/setting/general';
 import ManagerProduct from './interface/setting/manager_product';
 import MasterCore from './interface/setting/mastercore';
 
+// config router
+import ProtectedRoute from './interface/config/ProtectedRoute';
+
 
 //General
 import Empresa from './interface/setting/general/empresa';
@@ -36,55 +39,53 @@ import SLA from './interface/setting/master_core/sla';
 import Login from './interface/pages/login';
 import DetallesSolicitud from './interface/setting/component/details'
 
-function App() {
-  const [count, setCount] = useState(0)
 
+function App() {
   return (
     <>
       <Routes>
+        {/* RUTA PÚBLICA: Login */}
         <Route path='/' element={<Login />} />
 
-        <Route path='' element={<Layout />}>
+        {/* ENVOLTURA DE SEGURIDAD: Solo entran si hay Token */}
+        <Route element={<ProtectedRoute />}>
+          
+          {/* Aquí dentro van todas tus rutas protegidas con Layout */}
+          <Route path='' element={<Layout />}>
+            <Route path='home' element={<Home />} />
+            <Route path='init' element={<MainInterface />} />
+            <Route path='inbox' element={<Inbox />} />
+            <Route path='activities' element={<Activities />} />
+            <Route path='product' element={<Project />} />
+            <Route path='uirequest' element={<UIRequest />} />
+            <Route path='taskmanager' element={<TaskManager />} />
+            <Route path='detalles' element={<DetallesSolicitud />} />
+            <Route path='customer' element={<Customer />} />
 
-          <Route path='home' element={<Home />} />
-          <Route path='init' element={<MainInterface />} />
-          <Route path='inbox' element={<Inbox />} />
-          <Route path='activities' element={<Activities />} />
-          <Route path='product' element={<Project />} />
-          <Route path='uirequest' element={<UIRequest />} />
-          <Route path='taskmanager' element={<TaskManager />} />
-          <Route path='detalles' element={<DetallesSolicitud />} />
-          <Route path='customer' element={<Customer />} />
+            {/* Componentes de configuracion general */}
+            <Route path='setting' element={<Setting />}>
+              <Route path='general' element={<General />} >
+                <Route path='empresa' element={<Empresa />} />
+                <Route path='area' element={<Area />} />
+                <Route path='subarea' element={<Subarea />} />
+              </Route>
 
-          {/*RUTA PARA DIRECTORIO SETTING*/}
-          <Route path='setting' element={<Setting />}>
+              <Route path='mastercore' element={<MasterCore />} >
+                <Route path='product' element={<Product />} />
+                <Route path='componentes' element={<Componentes />} />
+                <Route path='category' element={<Category />} />
+                <Route path='subcategory' element={<SubCategory />} />
+                <Route path='article' element={<Article />} />
+                <Route path='sla' element={<SLA />} />
+              </Route>
 
-            <Route path='general' element={<General />} >
-              <Route path='empresa' element={<Empresa />} />
-              <Route path='area' element={<Area />} />
-              <Route path='subarea' element={<Subarea />} />
+              <Route path='members' element={<Members />} />
+              <Route path='managerproduct' element={<ManagerProduct />} />
             </Route>
-
-            {/*RUTAS PARA DIRECTORIO CORE MASTER*/}
-            <Route path='mastercore' element={<MasterCore />} >
-              <Route path='product' element={<Product />} />
-              <Route path='componentes' element={<Componentes />} />
-              <Route path='category' element={<Category />} />
-              <Route path='subcategory' element={<SubCategory />} />
-              <Route path='article' element={<Article />} />
-              <Route path='sla' element={<SLA />} />
-
-            </Route>
-
-            <Route path='members' element={<Members />} />
-            <Route path='managerproduct' element={<ManagerProduct />} />
-
           </Route>
 
-        </Route>
-
-
-      </Routes >
+        </Route> 
+      </Routes>
     </>
   )
 }
