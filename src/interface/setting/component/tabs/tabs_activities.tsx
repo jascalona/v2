@@ -16,12 +16,17 @@ import LineCharts from '../charts/chart_line';
 import '../../../../assets/css/indicators.css'
 
 
+// tablas
+import TaskActivities from '../../component/table/table_tarea_activi'
+import { useAuth } from '../../../config/AuthContext';
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
 }
+
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -52,6 +57,10 @@ function TabsActivities() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  // pasamos el id del usuario conectado
+  const {user} = useAuth();
+
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -249,9 +258,12 @@ function TabsActivities() {
 
         </div>
       </CustomTabPanel>
+
       <CustomTabPanel value={value} index={1}>
-        Asignado
+        aqui solicitudes!
+        <TaskActivities idUser={user?.co_usuario}/>
       </CustomTabPanel>
+
       <CustomTabPanel value={value} index={2}>
         Actividades
       </CustomTabPanel>
