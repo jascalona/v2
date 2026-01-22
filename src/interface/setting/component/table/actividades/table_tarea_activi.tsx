@@ -11,8 +11,6 @@ import EditSquareIcon from '@mui/icons-material/EditSquare';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FlagIcon from '@mui/icons-material/Flag';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import AddIcon from '@mui/icons-material/Add';
 
 interface Tarea {
     co_tarea: string,
