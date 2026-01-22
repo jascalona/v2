@@ -1,0 +1,130 @@
+.title-activiti{
+    color: rgba(48, 47, 47, 0.829);
+}
+
+/* Contenedor Principal */
+.modern-tasks-container {
+    padding: 20px;
+    background-color: #ffffff;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Reset de PrimeReact para que parezca ClickUp */
+.clickup-style-table.p-datatable .p-datatable-thead > tr > th {
+    background: transparent;
+    color: #888;
+    font-weight: 400;
+    font-size: 13px;
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.clickup-style-table.p-datatable .p-datatable-tbody > tr {
+    background: transparent;
+    color: #333;
+    transition: background 0.2s;
+}
+
+.clickup-style-table.p-datatable .p-datatable-tbody > tr > td {
+    border: none;
+    border-bottom: 1px solid #f9f9f9;
+    padding: 8px 12px;
+}
+
+.clickup-style-table.p-datatable .p-datatable-tbody > tr:hover {
+    background-color: #fbfbfb !important;
+}
+
+/* Cabeceras de Grupo (Status) */
+.group-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 0 5px 0;
+}
+
+.group-title {
+    padding: 4px 12px;
+    border-radius: 4px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.header-blue .group-title { background-color: #008eff; }
+.header-gray .group-title { background-color: #d3d3d3; color: #666; }
+
+.group-count {
+    color: #aaa;
+    font-size: 13px;
+}
+
+/* Celdas Específicas */
+.name-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-circle-icon {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #008eff;
+    border-radius: 50%;
+}
+
+.tag-bcv {
+    background: #e2e5ff;
+    color: #5c67ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+/* Avatares */
+.avatar-circle {
+    width: 28px;
+    height: 28px;
+    background: #222;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* Badges de Estado en la fila */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.status-in-progress { background: #008eff; color: white; }
+.status-pending { background: #eeeeee; color: #666; border: 1px solid #ddd; }
+
+.date-cell.overdue {
+    color: #f44336;
+}
+
+/* Botón inferior */
+.add-task-btn {
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.add-task-btn:hover { color: #333; }

@@ -1,6 +1,6 @@
 import TabsActivities from '../setting/component/tabs/tabs_activities'
 import { useAuth } from "../config/AuthContext";
-import '../../assets/css//activiades..css'
+import '../../assets/css//activiades.css'
 
 
 function Activities() {

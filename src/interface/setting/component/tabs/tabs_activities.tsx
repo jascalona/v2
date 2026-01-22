@@ -17,9 +17,9 @@ import '../../../../assets/css/indicators.css'
 
 
 // tablas
-import TaskActivities from '../../component/table/table_tarea_activi'
+import TaskActivities from '../table/actividades/table_tarea_activi'
 import { useAuth } from '../../../config/AuthContext';
-
+import RequestActivities from '../table/actividades/table_soli_activi'
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -59,7 +59,7 @@ function TabsActivities() {
   };
 
   // pasamos el id del usuario conectado
-  const {user} = useAuth();
+  const { user } = useAuth();
 
 
   return (
@@ -260,12 +260,12 @@ function TabsActivities() {
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
-        aqui solicitudes!
-        <TaskActivities idUser={user?.co_usuario}/>
+        <TaskActivities idUser={user?.co_usuario} />
+        <RequestActivities idUser={user?.co_usuario} />
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={2}>
-        Actividades
+        aAQUI ACTIVIDADES EN CURSO
       </CustomTabPanel>
     </Box>
   );
