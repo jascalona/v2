@@ -39,22 +39,30 @@ const StyledTextField = styled(TextField, {
 }));
 
 interface Solicitud {
-    co_cliente: string,
-    co_ambiente: string,
-    co_producto: string,
-    co_sla: string,
-    co_solicitud: string,
-    co_tip_solicitud: string,
-    co_user_cierre: string,
-    co_user_resolutor: string,
-    fe_registro: string,
-    fe_vencimiento: string,
-    co_estado: string,
-    tx_descripcion: string,
-    fe_resolucion: string,
-    tx_causa: string,
-    tx_desc_resolucion: string,
-    tx_nota: string,
+   co_solicitud: number;
+    co_solicitud_bcv: string;
+    fe_registro: string;
+    co_prioridad: string;
+    co_tp_solicitud: string;
+    co_sla: string;
+    fe_vencimiento: string;
+    co_ambiente: string;
+    co_estado: string;
+    co_producto: string;
+    co_componente: string;
+    co_subcomponente: string;
+    co_cliente: string;
+    nb_contacto: string;
+    nu_celular_contacto: string;
+    co_user_creador_soli: string;
+    co_user_asignado: string;
+    tx_asunto: string;
+    tx_descripcion: string;
+    tx_descripcion_resolucion: string;
+    tx_causa: string;
+    co_user_resolutor: string;
+    fe_cierre: string;
+    co_area: string;
 }
 
 // interfaz de Props: Recibe la solicitud completa
@@ -91,18 +99,18 @@ function DetailsSoli({ solicitud }: DetailsSoliProps) {
             // Sección "Detalles"
             setAmbienteValue(solicitud.co_ambiente || 'No definido');
             setProductoValue(solicitud.co_producto || 'No definido');
-            setTipoValue(solicitud.co_tip_solicitud || 'No definido');
+            setTipoValue(solicitud.co_tp_solicitud || 'No definido');
             setAsignadoValue(solicitud.co_user_resolutor || 'No asignado');
             setEstadoValue(solicitud.co_estado || 'Nuevo');
             setFechaRegistroValue(solicitud.fe_registro ? solicitud.fe_registro.split('T')[0] : 'N/A');
             setFechaVencimientoValue(solicitud.fe_vencimiento ? solicitud.fe_vencimiento.split('T')[0] : 'N/A');
             setClienteValue(solicitud.co_cliente || 'N/A');
             setEstadoSolucionValue(solicitud.co_estado || 'N/A');
-            setFechaSolucionValue(solicitud.fe_resolucion ? solicitud.fe_resolucion.split('T')[0] : 'N/A');
-            setResueltoPorValue(solicitud.co_user_cierre || 'N/A');
+            setFechaSolucionValue(solicitud.fe_cierre ? solicitud.fe_cierre.split('T')[0] : 'N/A');
+            setResueltoPorValue(solicitud.co_user_resolutor || 'N/A');
             setCausaValue(solicitud.tx_causa || 'Desconocida');
 
-            setObservacionesValue(solicitud.tx_desc_resolucion || 'Sin observaciones.');
+            setObservacionesValue(solicitud.co_user_resolutor || 'Sin observaciones.');
 
         } else {
             // Resetear o mantener N/A si no hay datos

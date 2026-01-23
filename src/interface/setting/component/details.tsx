@@ -16,26 +16,30 @@ import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 
 
 interface Solicitud {
-    co_solicitud: string,
-    fe_registro: string,
-    fe_vencimiento: string,
-    fe_resolucion: string,
-    fe_cierre: string,
-    co_user_credor_soli: string,
-    co_user_resolutor: string,
-    co_tip_solicitud: string,
-    nb_contacto: string,
-    nu_celular_contacto: string,
-    tx_asunto: string,
-    tx_descripcion: string,
-    tx_causa: string,
-    co_ambiente: string,
-    co_producto: string,
-    co_sla: string,
-    co_user_cierre: string,
-    tx_desc_resolucion: string,
-    co_estado: string,
-    co_cliente: string,
+   co_solicitud: number;
+    co_solicitud_bcv: string;
+    fe_registro: string;
+    co_prioridad: string;
+    co_tp_solicitud: string;
+    co_sla: string;
+    fe_vencimiento: string;
+    co_ambiente: string;
+    co_estado: string;
+    co_producto: string;
+    co_componente: string;
+    co_subcomponente: string;
+    co_cliente: string;
+    nb_contacto: string;
+    nu_celular_contacto: string;
+    co_user_creador_soli: string;
+    co_user_asignado: string;
+    tx_asunto: string;
+    tx_descripcion: string;
+    tx_descripcion_resolucion: string;
+    tx_causa: string;
+    co_user_resolutor: string;
+    fe_cierre: string;
+    co_area: string;
 }
 
 const StyledTextField = styled(TextField, {
