@@ -4,30 +4,37 @@ import { useNavigate } from 'react-router-dom';
 import '../../../../assets/css/table_task.css';
 
 // Iconos
-import FlagIcon from '@mui/icons-material/Flag';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-interface Solicitud {
-    co_solicitud: string;
-    fe_vencimiento?: string;
-    co_user_credor_soli?: string;
-    tx_asunto?: string;
-    co_estado?: any;
+interface Solicitud { co_solicitud: string,
+    co_solicitud_bcv: string,
+    fe_registro: string,
+    co_prioridad: number,
+    co_tp_solicitud: number,
+    co_sla: number,
+    fe_vencimiento: string,
+    co_ambiente: number,
+    co_estado: number,
+    co_producto: number,
+    co_componente: number,
+    co_subcomponente: number,
+    co_cliente: string,
+    nb_contacto: number,
+    nu_celular_contacto: string,
+    co_user_creador_soli: string,
+    co_user_asignado: string,
+    tx_asunto: string,
+    tx_descripcion: string
+    tx_descripcion_resolucion: string,
+    tx_causa: string,
+    co_user_resolutor: string,
+    fe_cierre: string,
+    co_area: number
 }
 
-const PriorityIcon: React.FC<{ priority?: any }> = ({ priority }) => {
-    const statusStr = String(priority || 'SIN ESTADO').toUpperCase();
-    const getPriorityColor = (p: string) => {
-        if (p.includes('ALTA') || p.includes('URGENTE') || p === '1') return '#ef4444';
-        if (p.includes('MEDIA') || p === '2') return '#f59e0b';
-        return '#64748b';
-    };
-    return <FlagIcon sx={{ fontSize: 16, color: getPriorityColor(statusStr) }} />;
-};
 
 const TaskListSoli: React.FC = () => {
     const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
@@ -56,7 +63,7 @@ const TaskListSoli: React.FC = () => {
             return (
                 String(soli.tx_asunto).toLowerCase().includes(search) ||
                 String(soli.co_solicitud).toLowerCase().includes(search) ||
-                String(soli.co_user_credor_soli).toLowerCase().includes(search)
+                String(soli.co_user_creador_soli).toLowerCase().includes(search)
             );
         });
     }, [solicitudes, searchTerm]);
@@ -73,10 +80,7 @@ const TaskListSoli: React.FC = () => {
         setCurrentPage(1); // Reset a pág 1 al buscar
     };
 
-    const clearSearch = () => {
-        setSearchTerm("");
-        setCurrentPage(1);
-    };
+
 
     const getInitials = (name?: string) => {
         if (!name) return '??';
@@ -146,16 +150,15 @@ const TaskListSoli: React.FC = () => {
                                 </div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                     <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#e0e0e0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 'bold' }}>
-                                        {getInitials(soli.co_user_credor_soli)}
+                                        {getInitials(soli.co_user_creador_soli)}
                                     </div>
-                                    <span style={{ fontSize: '14px' }}>{soli.co_user_credor_soli || 'N/A'}</span>
+                                    <span style={{ fontSize: '14px' }}>{soli.co_user_creador_soli || 'N/A'}</span>
                                 </div>
                                 <div style={{ color: '#666', fontSize: '14px' }}>
                                     <CalendarTodayIcon sx={{ fontSize: 14, mr: 0.5, verticalAlign: 'middle' }} />
                                     {soli.fe_vencimiento ? soli.fe_vencimiento.split('T')[0] : '---'}
                                 </div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px' }}>
-                                    <PriorityIcon priority={soli.co_estado} />
                                     <span>{String(soli.co_estado || 'Pendiente')}</span>
                                 </div>
                             </div>

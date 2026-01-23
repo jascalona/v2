@@ -12,27 +12,30 @@ import '../../../../assets/css/table.css'
 import NewMember from '../modal/modal_user';
 
 interface Solicitud {
-   co_solicitud: string,
+    co_solicitud: string,
+    co_solicitud_bcv: string,
     fe_registro: string,
+    co_prioridad: number,
+    co_tp_solicitud: number,
+    co_sla: number,
     fe_vencimiento: string,
-    fe_resolucion: string, 
-    fe_cierre: string,
-    co_user_credor_soli: string,
-    co_user_resolutor: string,
-    co_tip_solicitud: string,
-    nb_contacto: string,
-    nu_celular_contacto: string,
-    tx_asunto: string, 
-    tx_descripcion: string,
-    tx_causa: string, 
-    co_ambiente: string,
-    co_producto: string,
-    co_sla: string, 
-    co_user_cierre: string,
-    tx_desc_resolucion: string,
-    tx_nota: string, 
-    co_estado: string,
+    co_ambiente: number,
+    co_estado: number,
+    co_producto: number,
+    co_componente: number,
+    co_subcomponente: number,
     co_cliente: string,
+    nb_contacto: number,
+    nu_celular_contacto: string,
+    co_user_creador_soli: string,
+    co_user_asignado: string,
+    tx_asunto: string,
+    tx_descripcion: string
+    tx_descripcion_resolucion: string,
+    tx_causa: string,
+    co_user_resolutor: string,
+    fe_cierre: string,
+    co_area: number
 }
 
 //Definicion inical de filtros para el Datatable
@@ -72,22 +75,21 @@ function TableSolicitud() {
             "Co. Producto": solicitud.co_producto,
             "Co. SLA": solicitud.co_sla,
             "Co. Solicitud": solicitud.co_solicitud,
-            "Co. Tipo solicitud": solicitud.co_tip_solicitud,
-            "Co. User cierre": solicitud.co_user_cierre,
-            "Co. User creador soli": solicitud.co_user_credor_soli,
+            "Co. Tipo solicitud": solicitud.co_tp_solicitud,
+            "Co. User cierre": solicitud.co_user_resolutor,
+            "Co. User creador soli": solicitud.co_user_creador_soli,
             "Co. user resolutor": solicitud.co_user_resolutor,
             "Fe. cierre": solicitud.fe_cierre,
             "Fe. registro": solicitud.fe_registro,
-            "Fe. resolucion": solicitud.fe_resolucion,
+            "Fe. resolucion": solicitud.fe_cierre,
             "Fe. vencimiento": solicitud.fe_vencimiento,
             "Nb. contacto": solicitud.nb_contacto,
             "Nb. celular contacto": solicitud.nu_celular_contacto,
             "St. solicitud": solicitud.co_estado,
             "Tx. asunto solic": solicitud.tx_asunto,
             "Tx. causa soli": solicitud.tx_causa,
-            "Tx. descrip. solucion": solicitud.tx_desc_resolucion,
-            "Tx. descrip solic": solicitud.tx_desc_resolucion,
-            "Tx. nota": solicitud.tx_nota,
+            "Tx. descrip. solucion": solicitud.tx_descripcion_resolucion,
+            "Tx. descrip solic": solicitud.tx_descripcion,
         }));
 
         const worksheet = XLSX.utils.json_to_sheet(dataForExport);
@@ -138,7 +140,7 @@ function TableSolicitud() {
     return (
         <>
             {/* Input de Búsqueda Global (Fuera del DataTable) */}
-            <div className="table-empresa" style={{ width: '100%'}}>
+            <div className="table-empresa" style={{ width: '100%' }}>
                 <div className="options">
                     <div className="registros-count">
                         <p style={{ color: '#504e4eff', fontSize: '14px' }}>Registros <span><strong>{solicitud.length}</strong></span></p>
