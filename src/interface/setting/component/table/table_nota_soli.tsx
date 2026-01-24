@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { InputText } from 'primereact/inputtext';
 import { FilterMatchMode } from 'primereact/api';
-import { Button } from 'primereact/button';
-import { Dialog } from 'primereact/dialog'; // 1. Importar Dialog
+import { Dialog } from 'primereact/dialog'; 
 import axios from 'axios';
 import '../../../../assets/css/table_customer.css'
 
@@ -16,7 +14,7 @@ interface Notes {
     tx_asunto: string,
     tx_descripcion: string,
     fe_registro: string,
-    co_user_emisor: string,
+    co_user_creador_nota: string,
     co_solicitud: string,
 }
 
@@ -44,7 +42,7 @@ function NotekBySoli({ idSolicitud }: TaskBySoliProps) {
         if (!idSolicitud) return; //validar que no este vacio
         setCargando(true)
 
-        axios.get<Notes[]>(`http://localhost:8081/request/${idSolicitud}/notes`)
+        axios.get<Notes[]>(`http://localhost:8081/notes/${idSolicitud}/request`)
             .then(response => {
                 setNote(response.data);
                 setCargando(false);
@@ -137,7 +135,7 @@ function NotekBySoli({ idSolicitud }: TaskBySoliProps) {
 
                         <div className="info-item">
                             <label>Creado por:</label>
-                            <span>{selectedCustomer.co_user_emisor}</span>
+                            <span>{selectedCustomer.co_user_creador_nota}</span>
                         </div>
 
                         <div className="info-item">
