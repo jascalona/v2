@@ -20,6 +20,8 @@ import TaskActivities from '../table/actividades/table_tarea_activi'
 import { useAuth } from '../../../config/AuthContext';
 import RequestActivities from '../table/actividades/table_soli_activi'
 import CardResumenActidades from '../card/resumen_solicitud';
+import ResumTarea from '../card/resumen_tarea';
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -168,8 +170,10 @@ function TabsActivities() {
           </div>
 
           {/*COLUMNAS PARALELAS*/}
-          <CardResumenActidades />
-        
+          <div className="container-table-activities">
+            <CardResumenActidades />
+            <ResumTarea />
+          </div>
 
         </div>
       </CustomTabPanel>

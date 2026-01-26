@@ -31,6 +31,7 @@ interface Solicitud {
     co_area: number;
 }
 
+
 // pasamos el id del usuario conectado
 interface ResumUserProp {
     idUser?: string
@@ -49,7 +50,7 @@ const ResumSolicitud: React.FC<ResumUserProp> = ({ idUser }) => {
     useEffect(() => {
         // Si no hay ID, nos aseguramos de que no se quede cargando infinitamente
         if (!activeUserId) {
-           // setCargando(false);
+            // setCargando(false);
             return;
         }
 
@@ -58,7 +59,7 @@ const ResumSolicitud: React.FC<ResumUserProp> = ({ idUser }) => {
 
         let isMounted = true; // Para evitar fugas de memoria si el componente se desmonta
 
-        axios.get<Solicitud[]>(`http://localhost:8081/request/${activeUserId}/resactivities`)
+        axios.get<Solicitud[]>(`http://localhost:8081/request/${activeUserId}/resurequest`)
             .then(response => {
                 if (isMounted) {
                     setSolicitudes(Array.isArray(response.data) ? response.data : []);
@@ -75,6 +76,7 @@ const ResumSolicitud: React.FC<ResumUserProp> = ({ idUser }) => {
 
         return () => { isMounted = false; }; // Cleanup function
     }, [activeUserId]);
+    
 
     // Renderizado...
     if (cargando && solicitudes.length === 0) {
@@ -83,8 +85,7 @@ const ResumSolicitud: React.FC<ResumUserProp> = ({ idUser }) => {
 
     return (
         <div>
-            <h3>Actividades Recientes</h3>
-            <div className="container-table-activities">
+            <h3>Solicitudes Recientes</h3>
                 <div className="colum-i">
                     {solicitudes.length > 0 ? (
                         solicitudes.map((item) => (
@@ -112,7 +113,7 @@ const ResumSolicitud: React.FC<ResumUserProp> = ({ idUser }) => {
                     )}
                 </div>
             </div>
-        </div>
+    
     );
 }
 
