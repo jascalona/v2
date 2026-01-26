@@ -6,9 +6,8 @@ import '../../assets/css/login.css';
 
 function Login() {
     const navigate = useNavigate();
-    const { login } = useAuth(); // Extraemos la función login del contexto
-    
-    // Estados para el formulario
+    const { login } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -20,22 +19,16 @@ function Login() {
         setIsLoading(true);
 
         try {
-            // Petición a tu API en Go
             const response = await axios.post("http://localhost:8081/api/login", {
                 tx_email: email,
                 tx_password: password
             });
 
             if (response.status === 200) {
-                // response.data contiene: co_role, co_usuario, nb_apellido, nb_nombre, token, tx_email
-                // La función login del contexto guardará todo automáticamente
                 login(response.data);
-
-                // Redirigimos al home
                 navigate('/home');
             }
         } catch (err: any) {
-            // Manejamos el error 401 o errores de conexión
             const message = err.response?.data?.error || "Error de conexión con el servidor";
             setError(message);
         } finally {
@@ -43,60 +36,54 @@ function Login() {
         }
     };
 
+
     return (
-        <div className="container-login">
-            <div className="content-login">
-                <h3>Bienvenido</h3>
-                <small>Introduce tu email y contraseña para iniciar sesión</small>
+        <div className="login-page-wrapper">
+            <div className="container-login">
+                <div className="content-login">
+                    <h3>Hola de nuevo</h3>
+                    <small>Ingresa tus datos para continuar</small>
 
-                {/* Mostrar mensaje de error si existe */}
-                {error && (
-                    <div style={{ 
-                        backgroundColor: '#ffebee', 
-                        color: '#c62828', 
-                        padding: '10px', 
-                        borderRadius: '4px',
-                        marginTop: '15px',
-                        fontSize: '13px'
-                    }}>
-                        {error}
+                    {error && <div className="error-message">{error}</div>}
+
+                    <form onSubmit={handleLogin}>
+                        <div className="inputs">
+                            <input
+                                type="email"
+                                placeholder="Email profesional"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                            <input
+                                type="password"
+                                placeholder="Contraseña"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="btn-login">
+                            <button type="submit" disabled={isLoading}>
+                                {isLoading ? "Validando..." : "Acceder"}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div className="container-image">
+                    <div className="image-placeholder">
+                        <span>📦</span>
                     </div>
-                )}
-
-                <form onSubmit={handleLogin}>
-                    <div className="inputs">
-                        <input 
-                            type="email" 
-                            placeholder="Correo electrónico" 
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                        <input 
-                            type="password" 
-                            placeholder="Contraseña" 
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
+                    <div className="text-login">
+                        <h4>System Helpdesk</h4>
+                        <span>v1.0.2 • Helpdesk</span>
                     </div>
-
-                    <div className="btn-login">
-                        <button type="submit" disabled={isLoading}>
-                            {isLoading ? "Cargando..." : "Iniciar Sesión"}
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <div className="container-image">
-                <div className="image"></div>
-                <div className="text-login">
-                    <h4>Gestión de Proyectos e Inventario v1.0</h4>
                 </div>
             </div>
         </div>
     );
+
 }
 
 export default Login;

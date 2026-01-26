@@ -10,7 +10,6 @@ import BeenhereIcon from '@mui/icons-material/Beenhere';
 
 
 //COMPONENTES GRAFICOS
-import AvatarI from '../Avatar';
 import ChartPie from '../charts/chart_pie';
 import LineCharts from '../charts/chart_line';
 import '../../../../assets/css/indicators.css'
@@ -20,6 +19,7 @@ import '../../../../assets/css/indicators.css'
 import TaskActivities from '../table/actividades/table_tarea_activi'
 import { useAuth } from '../../../config/AuthContext';
 import RequestActivities from '../table/actividades/table_soli_activi'
+import CardResumenActidades from '../card/resumen_solicitud';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -167,94 +167,9 @@ function TabsActivities() {
             </div>
           </div>
 
-          <h3>Actividades Recientes</h3>
-          <div className="container-table-activities">
-
-            <div className="colum-i">
-              <div className="row-activities">
-                <div className='container-row'>
-                  <AvatarI />
-                  <div className="content-activities">
-                    <span>Te han Asignado <strong>Certificacion Bancrecer</strong></span><br />
-                    <span>Actividad: <strong>Desarrollo Test Case</strong></span>
-                  </div>
-                </div>
-                <div className="date">
-                  <small>Creado el: 18/11/2025</small>
-                </div>
-              </div>
-
-              <div className="row-activities">
-                <div className='container-row'>
-                  <AvatarI />
-                  <div className="content-activities">
-                    <span>Te han Asignado <strong>Certificacion Bancrecer</strong></span><br />
-                    <span>Actividad: <strong>Desarrollo Test Case</strong></span>
-                  </div>
-                </div>
-                <div className="date">
-                  <small>Creado el: 18/11/2025</small>
-                </div>
-              </div>
-
-              <div className="row-activities">
-                <div className='container-row'>
-                  <AvatarI />
-                  <div className="content-activities">
-                    <span>Te han Asignado <strong>Certificacion Bancrecer</strong></span><br />
-                    <span>Actividad: <strong>Desarrollo Test Case</strong></span>
-                  </div>
-                </div>
-                <div className="date">
-                  <small>Creado el: 18/11/2025</small>
-                </div>
-              </div>
-
-            </div>
-
-            <div className="colum-i">
-              <div className="row-activities">
-                <div className='container-row'>
-                  <AvatarI />
-                  <div className="content-activities">
-                    <span>Te han Asignado <strong>Certificacion Bancrecer</strong></span><br />
-                    <span>Actividad: <strong>Desarrollo Test Case</strong></span>
-                  </div>
-                </div>
-                <div className="date">
-                  <small>Creado el: 18/11/2025</small>
-                </div>
-              </div>
-
-              <div className="row-activities">
-                <div className='container-row'>
-                  <AvatarI />
-                  <div className="content-activities">
-                    <span>Te han Asignado <strong>Certificacion Bancrecer</strong></span><br />
-                    <span>Actividad: <strong>Desarrollo Test Case</strong></span>
-                  </div>
-                </div>
-                <div className="date">
-                  <small>Creado el: 18/11/2025</small>
-                </div>
-              </div>
-
-              <div className="row-activities">
-                <div className='container-row'>
-                  <AvatarI />
-                  <div className="content-activities">
-                    <span>Te han Asignado <strong>Certificacion Bancrecer</strong></span><br />
-                    <span>Actividad: <strong>Desarrollo Test Case</strong></span>
-                  </div>
-                </div>
-                <div className="date">
-                  <small>Creado el: 18/11/2025</small>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
+          {/*COLUMNAS PARALELAS*/}
+          <CardResumenActidades />
+        
 
         </div>
       </CustomTabPanel>

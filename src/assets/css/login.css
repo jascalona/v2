@@ -1,156 +1,133 @@
-body {
+:root {
+    --primary-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --accent-color: #3b82f6;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+}
+
+/* El contenedor que evita que se dañe el resto del sitio */
+.login-page-wrapper {
     margin: 0;
-    background-color: #ffff;
-    color: #fff;
+    font-family: 'Inter', sans-serif;
+    background: var(--primary-gradient);
     min-height: 100vh;
-}
-
-.container-login {
+    width: 100%;
     display: flex;
-    margin: 15px;
-    height: calc(100vh - 30px); /* Ajusta la altura dinámicamente */
-    border-radius: 20px;
-    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    /* Esto es vital para que no afecte el scroll de otras páginas */
+    position: relative; 
 }
 
-.content-login {
+.login-page-wrapper .container-login {
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    min-height: 550px;
+    background: var(--card-bg);
+    border-radius: 30px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    margin: 20px;
+}
+
+.login-page-wrapper .content-login {
     flex: 1;
+    padding: 40px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left; /* Alineado a la izquierda para un look moderno */
+}
+
+/* --- ESTILO DE LOS INPUTS CORREGIDO --- */
+.login-page-wrapper form {
+    width: 100%; /* El form ocupa todo el ancho del contenedor padre */
+}
+
+.login-page-wrapper .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%; /* Asegura que el grupo de inputs no se encoja */
+}
+
+.login-page-wrapper .inputs input {
+    width: 100%; /* Ocupa el 100% de su contenedor */
+    box-sizing: border-box; /* Importante: incluye el padding en el ancho total */
+    background: #f1f5f9;
+    border: 2px solid transparent;
+    padding: 16px 20px;
+    border-radius: 16px;
+    font-size: 1rem;
+    color: var(--text-main);
+    transition: all 0.3s ease;
+}
+
+.login-page-wrapper .inputs input:focus {
+    background: white;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    outline: none;
+}
+
+/* --- BOTÓN --- */
+.login-page-wrapper .btn-login button {
+    margin-top: 25px;
+    width: 100%;
+    padding: 16px;
+    background: #1e293b;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-page-wrapper .btn-login button:hover {
+    background: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+/* Sección Derecha */
+.login-page-wrapper .container-image {
+    flex: 0.8;
+    background: #f8fafc;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    text-align: center;
-    background-color: #FFFF;
+    padding: 40px;
+    border-left: 1px solid #e2e8f0;
 }
 
-.content-login h3 {
-    font-size: 2rem;
-    font-weight: 600;
-    color: rgb(78, 77, 77);
-    margin-bottom: 0;
-}
-
-.content-login small {
-    color: #777;
-    margin-top: 5px;
-    margin-bottom: 25px;
-}
-
-.inputs {
+.login-page-wrapper .image-placeholder {
+    width: 200px;
+    height: 200px;
+    background: var(--primary-gradient);
+    border-radius: 40px;
+    transform: rotate(-10deg);
     display: flex;
-    flex-direction: column;
-    width: 80%;
-    max-width: 350px;
-    margin-bottom: 20px;
-}
-
-.inputs input {
-    padding: 10px 12px;
-    margin-bottom: 15px;
-    border: 1px solid #f3f3f3f3;
-    border-radius: 8px;
-    font-size: 1rem;
-    outline: none;
-    border: solid 1px #09173945;
-    color: #091739;
-    transition: all .1s;
-    transition: .2s;
-}
-
-.inputs input:hover{
-    transform: translateX(-2px);
-}
-
-.btn-login button {
-    width: 100%; 
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px; 
-    color: white;
-    background-image: linear-gradient(to right, #130634, #091739);
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-}
-
-.btn-login button:hover {
-    transform: scale(1.02);
-}
-
-.container-image {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-items: center; /* Añadido para centrar el contenido */
-    text-align: center;
-    background-image: linear-gradient(to right, #130634, #17306a);
-    padding: 10px;
-    position: relative; /* Necesario para posicionar el fondo */
-    overflow: hidden;
-    margin-top: -80px;
+    margin-bottom: 30px;
 }
 
-/* Fondo de imagen */
-.container-image::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('../image/login.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 460px; 
-    z-index: 0; 
-    opacity: 0.8;
+.login-page-wrapper .image-placeholder span {
+    font-size: 3rem;
+    transform: rotate(10deg);
 }
 
-.container-image h4, .container-image span, .container-image img {
-    z-index: 1; 
-    position: relative;
-}
-
-.container-image img {
-    width: 120px;
-    margin-bottom: 20px;
-}
-
-.container-image h4 {
-    margin-top: 450px;
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 10px;
-    color: white;
-}
-
-.container-image span {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    max-width: 400px;
-    color: white;
-}
-
-@media (max-width: 768px) {
-    .container-login {
-        flex-direction: column;
-        margin: 10px;
-        border-radius: 0px;
-        height: auto;
-    }
-    
-
-    .content-login {
-        margin-top: 50%;
-    }
-
-    .container-image {
+/* Responsivo */
+@media (max-width: 850px) {
+    .login-page-wrapper .container-image {
         display: none;
     }
-
-    .container-image::after {
-        background-size: 80%; /* Aumenta el tamaño en móviles */
+    .login-page-wrapper .content-login {
+        padding: 40px;
     }
 }
