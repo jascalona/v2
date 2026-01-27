@@ -6,7 +6,6 @@ import {
     Select,
     MenuItem,
     Box,
-    CircularProgress,
     Typography,
     type SelectChangeEvent
 } from '@mui/material';
@@ -99,7 +98,7 @@ function OptionCliente({ productoId, onSelect }: OptionClienteProps) {
                     </MenuItem>
 
                     {clientes?.map((cliente) => (
-                        <MenuItem key={cliente.co_cliente} value={cliente.co_rif}>
+                        <MenuItem key={cliente.co_cliente} value={cliente.co_cliente}>
                             {cliente.nb_cliente}
                         </MenuItem>
                     ))}

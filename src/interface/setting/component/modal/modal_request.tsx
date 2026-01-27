@@ -72,12 +72,12 @@ function ModalSolicitud() {
     const [idComponente, setIdComponente] = useState<string>("");
 
     const [formData, setFormData] = useState({
-        co_solicitud: "", fe_vencimiento: "", fe_resolucion: "", fe_cierre: "",
+        co_solicitud_bcv: "", fe_vencimiento: "", fe_resolucion: "", fe_cierre: "",
         co_user_credor_soli: "", co_user_resolutor: "", co_tip_solicitud: 0,
         nb_contacto: "", nu_celular_contacto: "", tx_asunto: "",
         tx_descripcion: "", tx_causa: "", co_ambiente: 0, co_producto: 0,
         co_sla: 0, co_user_cierre: "", tx_desc_resolucion: "", tx_nota: "",
-        co_estado: 0, co_cliente: "", co_prioridad: 0, co_componente: 0,
+        co_estado: 0, co_cliente: 0, co_prioridad: 0, co_componente: 0,
         co_subcomponente: 0, co_area: 0
     });
 
@@ -99,7 +99,7 @@ function ModalSolicitud() {
     };
 
     const handleSelectChange = (name: string, value: any) => {
-        const numericFields = ['co_tip_solicitud', 'co_ambiente', 'co_producto', 'co_sla', 'co_estado', 'co_prioridad', 'co_componente', 'co_subcomponente', 'co_area'];
+        const numericFields = ['co_tip_solicitud', 'co_ambiente', 'co_producto', 'co_sla', 'co_estado', 'co_prioridad', 'co_componente', 'co_subcomponente', 'co_area', 'co_cliente'];
         const finalValue = numericFields.includes(name) && value !== "" ? parseInt(value, 10) : value;
         setFormData(prev => ({ ...prev, [name]: finalValue }));
     };
@@ -121,6 +121,8 @@ function ModalSolicitud() {
         } catch (error) { console.error("Error:", error); }
     };
 
+
+    
     return (
         <>
             <Fab onClick={toggleModal} sx={{ position: 'fixed', bottom: 30, right: 30, bgcolor: '#26427c', color: 'white', '&:hover': { bgcolor: '#1b315d' }, zIndex: 1000 }}>
@@ -152,7 +154,7 @@ function ModalSolicitud() {
                                 </Grid>
 
                                 <Grid size={{ xs: 12, md: 4 }}>
-                                    <TextField fullWidth name="co_solicitud" label="N# Solicitud" variant="outlined" sx={inputStyle} value={formData.co_solicitud} onChange={handleChange} />
+                                    <TextField fullWidth name="co_solicitud_bcv" label="N# Solicitud" variant="outlined" sx={inputStyle} value={formData.co_solicitud_bcv} onChange={handleChange} />
                                 </Grid>
                                 <Grid size={{ xs: 12, md: 8 }}>
                                     <TextField fullWidth name="tx_asunto" label="Asunto o Resumen" variant="outlined" sx={inputStyle} value={formData.tx_asunto} onChange={handleChange} />
