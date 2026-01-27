@@ -1,31 +1,36 @@
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import dayjs, { Dayjs } from 'dayjs';
 
-interface LabelProps {
+interface TimeDateProps {
     label: string;
+    value: string; // Recibe el valor del estado padre
+    onChange: (newValue: string) => void; // Función para actualizar el padre
 }
 
-function TimeDate({ label }: LabelProps) {
+function TimeDate({ label, value, onChange }: TimeDateProps) {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker 
+            <DateTimePicker 
                 label={label} 
-                sx={{ width: '100%' }} 
-                slotProps={{
-                    textField: {
-                        fullWidth: true,
-                        size: 'small',
-                        sx: {
-                            '& .MuiOutlinedInput-root': {
-                                borderRadius: '12px', // Consistencia con tus otros inputs
-                                backgroundColor: 'white',
-                                '& fieldset': { borderColor: '#e2e8f0' },
-                                '&:hover fieldset': { borderColor: '#cbd5e0' },
-                                '&.Mui-focused fieldset': { borderColor: '#26427c' },
-                            },
-                            '& .MuiInputLabel-root': { color: '#718096', fontSize: '0.9rem' },
-                        }
+                // Convierte el string del estado a objeto dayjs para mostrarlo
+                value={value ? dayjs(value) : null} 
+                onChange={(newValue: Dayjs | null) => {
+                    if (newValue) {
+                        // Formato exacto requerido: 2026-01-05 06:09:35.514679-08:00
+                        const formatted = newValue.format("YYYY-MM-DD HH:mm:ss.SSSSSSZ");
+                        onChange(formatted);
+                    } else {
+                        onChange("");
+                    }
+                }}
+                sx={{ 
+                    width: '100%',
+                    '& .MuiOutlinedInput-root': {
+                        borderRadius: '12px',
+                        backgroundColor: 'white',
+                        '& fieldset': { borderColor: '#e2e8f0' },
                     }
                 }}
             />

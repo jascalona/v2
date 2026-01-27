@@ -66,6 +66,7 @@ function OptionTPS({ onSelect }: Props) {
         </Typography>
     );
 
+
     return (
         <FormControl fullWidth sx={commonSelectStyle} size="small">
             <InputLabel id="tps-select-label">Tipo de Solicitud</InputLabel>
