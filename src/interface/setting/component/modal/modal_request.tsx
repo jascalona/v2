@@ -225,7 +225,6 @@ function ModalSolicitud() {
                                     <OptionArea onAreaChange={(id) => { setIdArea(id); handleSelectChange('co_area', id); }} />
                                 </Grid>
                                 <Grid size={{ xs: 12, md: 6 }}>
-                                    {/* Aquí asignamos al usuario que resolverá el ticket */}
                                     <OptionUsuario areaId={idArea} onSelect={(v) => handleSelectChange('co_user_asignado', v)} />
                                 </Grid>
                                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>
