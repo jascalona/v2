@@ -164,15 +164,6 @@ strong{
     padding: 13px 20px;
 }
 
-.container-row{
-    display: flex;
-    align-items: center;
-}
-
-
-.row-activities .content-activities{
-    margin-left: 20px;
-}
 
 @media (max-width: 1500px) {
     .container-table-activities{

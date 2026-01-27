@@ -1,0 +1,92 @@
+/*ESTILOS COMPONENTE TABLA RESUMEN*/
+
+/* Contenedor Principal */
+.resum-container {
+    padding: 1rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Tarjetas de Actividades */
+.row-activities-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9f9f9f3;
+    border: 1px solid #dadada;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.container-row {
+    display: flex;
+    align-items: center;
+}
+
+.row-activities-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: #d1d1d1;
+}
+
+.row-activities-card:active {
+    transform: scale(0.98);
+}
+
+/* Tipografía interna */
+.asunto-text {
+    display: block;
+    font-weight: 600;
+    color: #2d3436;
+    font-size: 0.95rem;
+}
+
+.descripcion-breve {
+    margin: 0;
+    color: #636e72;
+    font-size: 0.85rem;
+}
+
+.date-badge {
+    font-size: 0.75rem;
+    color: #b2bec3;
+    background: #f8f9fa;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* Estilo base del enlace */
+.nav-link-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+    margin-bottom: 25px;
+}
+
+/* Estilo para el icono */
+.nav-icon {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+/* Efecto al pasar el mouse (sin que parezca botón) */
+.nav-link-custom:hover {
+    color: #007bff;
+    /* Cambia a un color de énfasis */
+    text-decoration: underline;
+    /* Opcional: subraya solo al hacer hover */
+}
