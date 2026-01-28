@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../config/AuthContext";
 import '../../assets/css/login.css';
+import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
 
 function Login() {
     const navigate = useNavigate();
@@ -73,7 +74,7 @@ function Login() {
 
                 <div className="container-image">
                     <div className="image-placeholder">
-                        <span>📦</span>
+                        <span><PrivacyTipIcon sx={{color: '#a4a3a3', fontSize: 50}}/></span>
                     </div>
                     <div className="text-login">
                         <h4>System Helpdesk</h4>
