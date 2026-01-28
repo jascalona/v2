@@ -37,7 +37,7 @@ import SubCategory from './interface/setting/master_core/sub_category';
 import Article from './interface/setting/master_core/article';
 import SLA from './interface/setting/master_core/sla';
 import Login from './interface/pages/login';
-import DetallesSolicitud from './interface/setting/component/details'
+import DetallesSolicitud from './interface/pages/details';
 
 
 function App() {

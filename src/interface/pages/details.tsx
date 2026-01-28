@@ -6,9 +6,9 @@ import { styled } from '@mui/system';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 // Componentes
-import DetailsSoli from '../component/accordion/detalle_soli';
-import DetallesTarea from '../component/accordion/detalle_tareas';
-import DetallesEscalamiento from '../component/accordion/detalle_escalamiento';
+import DetailsSoli from '../setting/component/accordion/detalle_soli';
+import DetallesTarea from '../setting/component/accordion/detalle_tareas';
+import DetallesEscalamiento from '../setting/component/accordion/detalle_escalamiento';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import SaveIcon from '@mui/icons-material/Save';

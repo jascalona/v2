@@ -68,7 +68,7 @@ interface idSoli {
     const [formData, setFormData] = useState({
         co_solicitud: "",
         tx_asunto: "",
-        tx_description: "",
+        tx_descripcion: "",
         fe_vencimiento: "",
         co_user_creador_tarea: "",
         co_user_asignado: "",
@@ -233,7 +233,7 @@ interface idSoli {
                                 </Grid>
 
                                 <Grid size={{ xs: 12 }}>
-                                    <TextField fullWidth multiline rows={6} name="tx_description" label="Descripción Detallada" sx={inputStyle} value={formData.tx_description} onChange={handleChange} />
+                                    <TextField fullWidth multiline rows={6} name="tx_descripcion" label="Descripción Detallada" sx={inputStyle} value={formData.tx_descripcion} onChange={handleChange} />
                                 </Grid>
 
                                 <Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
