@@ -34,8 +34,7 @@ function DetallesTarea({ co_solicitud }: idSolicitud) {
                 <AccordionDetails style={{ paddingTop: 30 }}>
                     <Typography>
 
-                            <ModalTarea co_solicitud={co_solicitud}/>
-
+                        <ModalTarea co_solicitud={co_solicitud} />
                         {/*AQUI PASAMOS EL ID DE LA SOLICITUD*/}
                         <TaskBySoli idSolicitud={co_solicitud} />
                     </Typography>
@@ -56,7 +55,7 @@ function DetallesTarea({ co_solicitud }: idSolicitud) {
                 </AccordionSummary>
                 <AccordionDetails style={{ paddingTop: 30 }}>
                     <Typography>
-                        <ModalNota />
+                        <ModalNota co_solicitud={co_solicitud}  />
                         <NotekBySoli idSolicitud={co_solicitud} />
                     </Typography>
                 </AccordionDetails>

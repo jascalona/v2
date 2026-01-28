@@ -87,7 +87,7 @@ function NotekBySoli({ idSolicitud }: TaskBySoliProps) {
                             <span className="client-sub">{rowData.tx_asunto}</span>
                         </div>
                     )} sortable></Column>
-                    <Column field="co_user_emisor" header="Creado por:"></Column>
+                    <Column field="co_user_creador_nota" header="Creado por:"></Column>
                     <Column field="fe_registro" body={(rowData) => rowData.fe_registro?.substring(0, 19)}
                         header="Fe. Registro"></Column>
 

@@ -12,10 +12,10 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 interface TaskSoli {
     co_tarea: string,
     tx_asunto: string,
-    tx_description: string,
+    tx_descripcion: string,
     fe_registro: string,
     fe_vencimiento: string,
-    co_user_emisor: string,
+    co_user_creador_tarea: string,
     co_user_asignado: string,
     fe_cierre: string,
     co_solicitud: string,
@@ -146,7 +146,7 @@ function TaskBySoli({ idSolicitud }: TaskBySoliProps) {
 
                         <div className="info-item">
                             <label>Creado por:</label>
-                            <span>{selectedCustomer.co_user_emisor}</span>
+                            <span>{selectedCustomer.co_user_creador_tarea}</span>
                         </div>
 
                         <div className="info-item">
@@ -186,7 +186,7 @@ function TaskBySoli({ idSolicitud }: TaskBySoliProps) {
 
                         <div className="info-item full-width" style={{ maxHeight: '250px', overflow: "auto" }}>
                             <label>Descripcion</label>
-                            <span>{selectedCustomer.tx_description}</span>
+                            <span>{selectedCustomer.tx_descripcion}</span>
                         </div>
                     </div>
                 )}

@@ -58,11 +58,13 @@ const inputStyle = {
 
 interface idSoli {
     co_solicitud: string
-}function ModalTarea({ co_solicitud }: idSoli) {
+}
+
+function ModalTarea({ co_solicitud }: idSoli) {
     const { user } = useAuth();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [idProduct, setIdProduct] = useState<string>("");
+    //const [idProduct, setIdProduct] = useState<string>("");
     const [idArea, setIdArea] = useState<string>("");
 
     const [formData, setFormData] = useState({
@@ -80,7 +82,6 @@ interface idSoli {
         co_producto: 0
     });
 
-    // CORRECCIÓN: Un solo useEffect limpio para sincronizar props y auth
     useEffect(() => {
         if (isModalOpen) {
             setFormData(prev => ({
@@ -107,7 +108,6 @@ interface idSoli {
 
     const handleSubmit = async () => {
         try {
-            // Ya no necesitas 'dataToSubmit' porque el useEffect mantiene el formData actualizado
             const response = await fetch('http://localhost:8081/task', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
