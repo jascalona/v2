@@ -5,17 +5,12 @@ import Box from '@mui/material/Box';
 import '../../../../assets/css/task.css';
 
 //ICON
-import EventRepeatIcon from '@mui/icons-material/EventRepeat';
-import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import BeenhereIcon from '@mui/icons-material/Beenhere';
 
 
 //COMPONENTES GRAFICOS
 import TableTask from '../table/tabla_tarea';
 import CreateTask from '../modal/modal_task';
 
-import AvatarI from '../Avatar';
 import '../../../../assets/css/indicators.css'
 
 
@@ -76,12 +71,6 @@ function TabsTaskMnagaer() {
       <CustomTabPanel value={value} index={1}>
         <div className="container-resumen-activities">
           <h3>Gestion de Escalamientos</h3>
-
-          <div className='bt-task' >
-            <div className="btn-tarea">
-              <CreateTask />
-            </div>
-          </div>
 
           <div className="request-generate">
             hola mundo

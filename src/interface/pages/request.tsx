@@ -5,10 +5,7 @@ import CardRequest from "../setting/component/card/card_solicitud";
 import BarsProduct from "../setting/component/charts/chart_product";
 import PieActiveArc from "../setting/component/charts/chart_product_all";
 import RequestCreate from "../setting/component/charts/chart_elemet_create";
-import TableSolicitud from "../setting/component/table/table_solicitud";
 import ModalSolicitud from "../setting/component/modal/modal_request";
-import CreateTask from "../setting/component/modal/modal_task";
-import ListTask from "../setting/component/card/list_task";
 import TaskList from '../setting/component/table/table_soli'
 
 import '../../assets/css/dropdown.css'

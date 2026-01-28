@@ -183,11 +183,6 @@ function ModalNota({co_solicitud}: idSoli) {
                                 </Grid>
                             </Grid>
                         </Box>
-
-                        <Box sx={{ p: 2.5, display: 'flex', justifyContent: 'flex-end', gap: 2, bgcolor: 'white', borderTop: '1px solid #edf2f7' }}>
-                            <Button onClick={toggleModal} variant="outlined" sx={{ borderRadius: '10px', textTransform: 'none', color: '#64748b', borderColor: '#e2e8f0', px: 3 }}>Cancelar</Button>
-                            <Button onClick={handleSubmit} variant="contained" sx={{ bgcolor: '#26427c', borderRadius: '10px', textTransform: 'none', px: 5, fontWeight: 600, '&:hover': { bgcolor: '#1b315d' } }}>Crear Nota</Button>
-                        </Box>
                     </Box>
                 </Fade>
             </Modal>

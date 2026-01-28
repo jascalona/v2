@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { InputText } from 'primereact/inputtext';
-import { FilterMatchMode } from 'primereact/api';
-import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog'; // 1. Importar Dialog
 import axios from 'axios';
 import '../../../../assets/css/table_customer.css'
@@ -28,14 +25,9 @@ interface Tarea {
     co_estado: string
 }
 
-const initialFilters = {
-    global: { value: null as string | null, matchMode: FilterMatchMode.CONTAINS },
-};
-
 function TableTask() {
     const [task, setTask] = useState<Tarea[]>([]);
     const [cargando, setCargando] = useState(true);
-    const [filters, setFilters] = useState(initialFilters);
 
     // --- ESTADOS PARA EL MODAL ---
     const [displayModal, setDisplayModal] = useState(false);
@@ -57,14 +49,6 @@ function TableTask() {
     const openCustomerModal = (customer: Tarea) => {
         setSelectedCustomer(customer);
         setDisplayModal(true);
-    };
-
-    const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        let _filters = { ...filters };
-        _filters['global'].value = value;
-        setFilters(_filters);
-        setGlobalFilterValue(value);
     };
 
     if (cargando) return <p>Cargando registros...</p>
@@ -94,7 +78,6 @@ function TableTask() {
                     paginator
                     rows={10}
                     className="custom-datatable"
-                    filters={filters}
                     globalFilterFields={['co_rif', 'nb_cliente', 'co_rol', 'co_producto']}
                     responsiveLayout="scroll"
                 >
