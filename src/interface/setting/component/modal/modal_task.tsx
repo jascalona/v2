@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Grid from '@mui/material/Grid'; 
+import Grid from '@mui/material/Grid';
 import {
     TextField,
     Button,
@@ -25,6 +25,8 @@ import OptionEstado from '../dropdown/option_estado';
 import TimeDate from '../dropdown/option_date';
 import AccordionEvidencias from '../accordion/evidencias_solicitud';
 import OptionArea from '../dropdown/option_area';
+
+import { useAuth } from '../../../config/AuthContext';
 
 const modalContainerStyle = {
     position: 'absolute' as const,
@@ -56,19 +58,19 @@ const inputStyle = {
 
 interface idSoli {
     co_solicitud: string
-}
+}function ModalTarea({ co_solicitud }: idSoli) {
+    const { user } = useAuth();
 
-function ModalTarea({ co_solicitud }: idSoli) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idProduct, setIdProduct] = useState<string>("");
     const [idArea, setIdArea] = useState<string>("");
 
     const [formData, setFormData] = useState({
-        co_solicitud: "", // Se llenará vía useEffect o manualmente
+        co_solicitud: "",
         tx_asunto: "",
         tx_description: "",
         fe_vencimiento: "",
-        co_user_emisor: "",
+        co_user_creador_tarea: "",
         co_user_asignado: "",
         nb_contacto: "",
         nu_celular_contacto: "",
@@ -78,15 +80,16 @@ function ModalTarea({ co_solicitud }: idSoli) {
         co_producto: 0
     });
 
-    // CORRECCIÓN 1: Sincronizar la prop co_solicitud con el estado local
+    // CORRECCIÓN: Un solo useEffect limpio para sincronizar props y auth
     useEffect(() => {
-        if (co_solicitud) {
+        if (isModalOpen) {
             setFormData(prev => ({
                 ...prev,
-                co_solicitud: co_solicitud
+                co_solicitud: co_solicitud || prev.co_solicitud,
+                co_user_creador_tarea: user?.co_usuario || prev.co_user_creador_tarea
             }));
         }
-    }, [co_solicitud]);
+    }, [isModalOpen, co_solicitud, user]);
 
     const toggleModal = () => setIsModalOpen(!isModalOpen);
 
@@ -97,37 +100,33 @@ function ModalTarea({ co_solicitud }: idSoli) {
 
     const handleSelectChange = (name: string, value: any) => {
         const numericFields = ['co_area', 'co_estado', 'co_prioridad', 'co_producto'];
+        // Si es un campo numérico, lo convertimos, de lo contrario pasamos el valor tal cual
         const finalValue = numericFields.includes(name) && value !== "" ? parseInt(value, 10) : value;
         setFormData(prev => ({ ...prev, [name]: finalValue }));
     };
 
     const handleSubmit = async () => {
         try {
-            // CORRECCIÓN 2: Asegurar que co_solicitud no vaya vacío al enviar
-            const dataToSubmit = {
-                ...formData,
-                co_solicitud: formData.co_solicitud || co_solicitud
-            };
-
+            // Ya no necesitas 'dataToSubmit' porque el useEffect mantiene el formData actualizado
             const response = await fetch('http://localhost:8081/task', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dataToSubmit),
+                body: JSON.stringify(formData),
             });
 
             if (response.ok) {
-                alert("Solicitud Creada exitosamente!");
+                alert("¡Tarea creada exitosamente!");
                 toggleModal();
+                // Opcional: Limpiar el formulario aquí si lo deseas
             } else {
                 const errorData = await response.json();
                 console.error("Error del servidor:", errorData);
-                alert("Error al crear la tarea. Revisa la consola.");
+                alert("Error al crear la tarea.");
             }
         } catch (error) {
             console.error("Error de red:", error);
         }
     };
-
     return (
         <>
             <Button
@@ -198,7 +197,7 @@ function ModalTarea({ co_solicitud }: idSoli) {
                                         <Grid container spacing={2.5}>
                                             <Grid size={{ xs: 12 }}>
                                                 <Box sx={{ mb: 1 }}>
-                                                    <TimeDate label='Fecha de Vencimiento de la Tarea' />
+                                                    <TimeDate label='Fecha de Vencimiento' value={formData.fe_vencimiento} onChange={(val) => handleSelectChange('fe_vencimiento', val)} />
                                                 </Box>
                                             </Grid>
                                             <Grid size={{ xs: 12, sm: 6, md: 4 }}><OptionPrioridad onSelect={(v) => handleSelectChange('co_prioridad', v)} /></Grid>
@@ -214,12 +213,21 @@ function ModalTarea({ co_solicitud }: idSoli) {
                                     <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: '#26427c', textTransform: 'uppercase' }}>Asignación de Tarea</Typography>
                                 </Grid>
 
+                                <Grid size={{ xs: 12, md: 6 }}>
+                                    <TextField
+                                        fullWidth
+                                        label="Creado por"
+                                        variant="outlined"
+                                        sx={inputStyle}
+                                        value={formData.co_user_creador_tarea}
+                                        disabled
+                                    />
+                                </Grid>
+
                                 <Grid size={{ xs: 12, md: 4 }}>
                                     <OptionArea onAreaChange={(id) => { setIdArea(id); handleSelectChange('co_area', id); }} />
                                 </Grid>
-                                <Grid size={{ xs: 12, md: 4 }}>
-                                    <OptionUsuario areaId={idArea} onSelect={(v) => handleSelectChange('co_user_emisor', v)} />
-                                </Grid>
+
                                 <Grid size={{ xs: 12, md: 4 }}>
                                     <OptionUsuario areaId={idArea} onSelect={(v) => handleSelectChange('co_user_asignado', v)} />
                                 </Grid>
