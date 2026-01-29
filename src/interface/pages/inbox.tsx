@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import InboxIcon from '@mui/icons-material/Inbox';
 import RunningWithErrorsIcon from '@mui/icons-material/RunningWithErrors';
 import TimelineIcon from '@mui/icons-material/Timeline';
+import { red } from '@mui/material/colors';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -57,14 +58,14 @@ function Inbox() {
 
     return (
         <Box sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                     <Tab
                         icon={<InboxIcon sx={{ fontSize: 20 }} />}
                         iconPosition="start"
                         label={<TabLabel primary="Principal" secondary="10 sin leer" />}
                         {...a11yProps(0)}
-                        sx={{ textTransform: 'none', minHeight: 64 }}
+                        sx={{ textTransform: 'none', minHeight: 64, width: '200px' }}
                     />
 
                     <Tab
@@ -72,7 +73,7 @@ function Inbox() {
                         iconPosition="start"
                         label={<TabLabel primary="Vencidos" secondary="3 pendientes" />}
                         {...a11yProps(1)}
-                        sx={{ textTransform: 'none', minHeight: 64 }}
+                        sx={{ textTransform: 'none', minHeight: 64, width: '200px' }}
                     />
 
                     <Tab
@@ -80,7 +81,7 @@ function Inbox() {
                         iconPosition="start"
                         label={<TabLabel primary="Otros" secondary="1 sin leer" />}
                         {...a11yProps(2)}
-                        sx={{ textTransform: 'none', minHeight: 64 }}
+                        sx={{ textTransform: 'none', minHeight: 64, width: '200px' }}
                     />
                 </Tabs>
             </Box>
