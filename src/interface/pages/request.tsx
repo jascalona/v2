@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 // Componentes
 import CardRequest from "../setting/component/card/card_solicitud";
 import BarsProduct from "../setting/component/charts/chart_product";

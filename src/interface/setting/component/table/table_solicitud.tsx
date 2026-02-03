@@ -9,7 +9,6 @@ import axios from 'axios';
 import '../../../../assets/css/table.css'
 
 //Componentes
-import NewMember from '../modal/modal_user';
 
 interface Solicitud {
     co_solicitud: string,
