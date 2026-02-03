@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import Grid from '@mui/material/Grid'; 
+import { useState, useEffect, useMemo } from 'react';
+import Grid from '@mui/material/Grid';
 import {
     TextField,
     Button,
@@ -35,6 +35,31 @@ import OptionSubComponente from '../dropdown/option_subcomponente';
 import OptionCliente from '../dropdown/option_cliente';
 import OptionArea from '../dropdown/option_area';
 
+// --- Interfaces para robustez de Tipado ---
+interface FormDataState {
+    co_solicitud_bcv: string;
+    fe_vencimiento: string;
+    fe_cierre: string;
+    co_user_creador_soli: string;
+    co_user_asignado: string | number;
+    co_tp_solicitud: string | number;
+    nb_contacto: string;
+    nu_celular_contacto: string;
+    tx_asunto: string;
+    tx_descripcion: string;
+    tx_causa: string;
+    co_ambiente: string | number;
+    co_producto: string | number;
+    co_sla: string | number;
+    tx_descripcion_resolucion: string;
+    co_estado: string | number;
+    co_cliente: string | number;
+    co_prioridad: string | number;
+    co_componente: string | number;
+    co_subcomponente: string | number;
+    co_area: string | number;
+}
+
 const modalContainerStyle = {
     position: 'absolute' as const,
     top: '50%',
@@ -56,7 +81,7 @@ const inputStyle = {
     '& .MuiOutlinedInput-root': {
         borderRadius: '12px',
         backgroundColor: 'white',
-        '& fieldset': { borderColor: '#e2e8f0' },
+        '& fieldset': { borderColor: '#e2e8h0' },
         '&:hover fieldset': { borderColor: '#cbd5e0' },
         '&.Mui-focused fieldset': { borderColor: '#26427c' },
     },
@@ -71,13 +96,14 @@ function ModalSolicitud() {
     const [idArea, setIdArea] = useState<string>("");
     const [idComponente, setIdComponente] = useState<string>("");
 
-    const [formData, setFormData] = useState({
+    // Inicializamos el estado directamente con el usuario de AuthContext
+    const [formData, setFormData] = useState<FormDataState>({
         co_solicitud_bcv: "",
         fe_vencimiento: "",
         fe_cierre: "",
-        co_user_creador_soli: "", 
-        co_user_asignado: "",     
-        co_tp_solicitud: "",     
+        co_user_creador_soli: user?.co_usuario || "", 
+        co_user_asignado: "",
+        co_tp_solicitud: "",
         nb_contacto: "",
         nu_celular_contacto: "",
         tx_asunto: "",
@@ -95,15 +121,21 @@ function ModalSolicitud() {
         co_area: ""
     });
 
-    // Sincronización del usuario autenticado con el formulario
+    // Actualizar el creador si el usuario de la sesión cambia
     useEffect(() => {
-        if (isModalOpen && user?.co_usuario) {
-            setFormData(prev => ({
-                ...prev,
-                co_user_creador_soli: user.co_usuario 
-            }));
+        if (user?.co_usuario) {
+            setFormData(prev => ({ ...prev, co_user_creador_soli: user.co_usuario }));
         }
-    }, [isModalOpen, user]);
+    }, [user?.co_usuario]);
+
+    // VALIDACIÓN: Comprobar si los campos críticos están llenos
+    const isFormValid = useMemo(() => {
+        const requiredFields: (keyof FormDataState)[] = [
+            'tx_asunto', 'tx_descripcion', 'co_tp_solicitud', 
+            'co_ambiente', 'co_producto', 'co_area'
+        ];
+        return requiredFields.every(field => formData[field] !== "");
+    }, [formData]);
 
     const toggleModal = () => setIsModalOpen(!isModalOpen);
 
@@ -112,24 +144,26 @@ function ModalSolicitud() {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSelectChange = (name: string, value: any) => {
+    // Ajuste de Any y conversión numérica
+    const handleSelectChange = (name: keyof FormDataState, value: string | number) => {
         const numericFields = [
             'co_tp_solicitud', 'co_ambiente', 'co_producto', 'co_sla', 
             'co_estado', 'co_prioridad', 'co_componente', 
             'co_subcomponente', 'co_area', 'co_cliente'
         ];
         
-        const finalValue = numericFields.includes(name) && value !== "" ? parseInt(value, 10) : value;
+        const finalValue = (numericFields.includes(name) && value !== "" && typeof value === 'string') 
+            ? parseInt(value, 10) 
+            : value;
+
         setFormData(prev => ({ ...prev, [name]: finalValue }));
     };
 
     const handleSubmit = async () => {
-        // Filtramos para no enviar strings vacíos que puedan romper FKs
+        // Quitamos valores vacíos y corregimos el error de variable '_' no usada
         const dataToSend = Object.fromEntries(
-            Object.entries(formData).filter(([_, v]) => v !== "" && v !== null)
+            Object.entries(formData).filter(([, v]) => v !== "" && v !== null)
         );
-
-        console.log("Payload a enviar:", dataToSend);
 
         try {
             const response = await fetch('http://localhost:8081/request', {
@@ -146,7 +180,6 @@ function ModalSolicitud() {
                 toggleModal();
             } else {
                 const errorMsg = await response.text();
-                console.error("Error del servidor:", errorMsg);
                 alert("Error al insertar: " + errorMsg);
             }
         } catch (error) { 
@@ -185,10 +218,10 @@ function ModalSolicitud() {
                                     <TextField fullWidth name="co_solicitud_bcv" label="N# Solicitud" variant="outlined" sx={inputStyle} value={formData.co_solicitud_bcv} onChange={handleChange} />
                                 </Grid>
                                 <Grid size={{ xs: 12, md: 8 }}>
-                                    <TextField fullWidth name="tx_asunto" label="Asunto o Resumen" variant="outlined" sx={inputStyle} value={formData.tx_asunto} onChange={handleChange} />
+                                    <TextField fullWidth name="tx_asunto" label="Asunto o Resumen *" variant="outlined" sx={inputStyle} value={formData.tx_asunto} onChange={handleChange} />
                                 </Grid>
                                 <Grid size={12}>
-                                    <TextField fullWidth multiline rows={2} name="tx_descripcion" label="Descripción Detallada" sx={inputStyle} value={formData.tx_descripcion} onChange={handleChange} />
+                                    <TextField fullWidth multiline rows={2} name="tx_descripcion" label="Descripción Detallada *" sx={inputStyle} value={formData.tx_descripcion} onChange={handleChange} />
                                 </Grid>
 
                                 <Grid size={12} sx={{ mt: 2 }}>
@@ -212,14 +245,7 @@ function ModalSolicitud() {
                                 </Grid>
 
                                 <Grid size={{ xs: 12, md: 6 }}>
-                                    <TextField 
-                                        fullWidth 
-                                        label="Creado por" 
-                                        variant="outlined" 
-                                        sx={inputStyle} 
-                                        value={formData.co_user_creador_soli} 
-                                        disabled 
-                                    />
+                                    <TextField fullWidth label="Creado por" variant="outlined" sx={inputStyle} value={formData.co_user_creador_soli} disabled />
                                 </Grid>
                                 <Grid size={{ xs: 12, md: 6 }}>
                                     <OptionArea onAreaChange={(id) => { setIdArea(id); handleSelectChange('co_area', id); }} />
@@ -246,10 +272,26 @@ function ModalSolicitud() {
                             </Grid>
                         </Box>
 
-                        {/* Footer */}
+                        {/* Footer con validación de botón */}
                         <Box sx={{ p: 2.5, display: 'flex', justifyContent: 'flex-end', gap: 2, bgcolor: 'white', borderTop: '1px solid #edf2f7' }}>
-                            <Button onClick={toggleModal} variant="outlined" sx={{ borderRadius: '10px', textTransform: 'none', px: 3 }}>Cancelar</Button>
-                            <Button onClick={handleSubmit} variant="contained" sx={{ bgcolor: '#26427c', borderRadius: '10px', textTransform: 'none', px: 5, fontWeight: 600 }}>Crear Ticket</Button>
+                            <Button onClick={toggleModal} variant="outlined" sx={{ borderRadius: '10px', textTransform: 'none', px: 3 }}>
+                                Cancelar
+                            </Button>
+                            <Button 
+                                onClick={handleSubmit} 
+                                variant="contained" 
+                                disabled={!isFormValid} // Deshabilitado si faltan campos obligatorios
+                                sx={{ 
+                                    bgcolor: isFormValid ? '#26427c' : '#cbd5e0', 
+                                    borderRadius: '10px', 
+                                    textTransform: 'none', 
+                                    px: 5, 
+                                    fontWeight: 600,
+                                    '&:hover': { bgcolor: '#1b315d' }
+                                }}
+                            >
+                                Crear Ticket
+                            </Button>
                         </Box>
                     </Box>
                 </Fade>

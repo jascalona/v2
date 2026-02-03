@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import InboxIcon from '@mui/icons-material/Inbox';
 import RunningWithErrorsIcon from '@mui/icons-material/RunningWithErrors';
 import TimelineIcon from '@mui/icons-material/Timeline';
-import { red } from '@mui/material/colors';
 
 interface TabPanelProps {
     children?: React.ReactNode;

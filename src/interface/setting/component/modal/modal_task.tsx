@@ -64,7 +64,7 @@ function ModalTarea({ co_solicitud }: idSoli) {
     const { user } = useAuth();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    //const [idProduct, setIdProduct] = useState<string>("");
+    const [idProduct, setIdProduct] = useState<string>("");
     const [idArea, setIdArea] = useState<string>("");
 
     const [formData, setFormData] = useState({
