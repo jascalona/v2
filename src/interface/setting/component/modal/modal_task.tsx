@@ -23,7 +23,6 @@ import OptionUsuario from '../dropdown/option_users';
 import OptionPrioridad from '../dropdown/option_prioridad';
 import OptionEstado from '../dropdown/option_estado';
 import TimeDate from '../dropdown/option_date';
-import AccordionEvidencias from '../accordion/evidencias_solicitud';
 import OptionArea from '../dropdown/option_area';
 
 import { useAuth } from '../../../config/AuthContext';
@@ -236,9 +235,6 @@ function ModalTarea({ co_solicitud }: idSoli) {
                                     <TextField fullWidth multiline rows={6} name="tx_descripcion" label="Descripción Detallada" sx={inputStyle} value={formData.tx_descripcion} onChange={handleChange} />
                                 </Grid>
 
-                                <Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
-                                    <AccordionEvidencias />
-                                </Grid>
                             </Grid>
                         </Box>
 

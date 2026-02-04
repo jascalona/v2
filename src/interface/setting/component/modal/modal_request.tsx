@@ -215,7 +215,7 @@ function ModalSolicitud() {
                                 </Grid>
 
                                 <Grid size={{ xs: 12, md: 4 }}>
-                                    <TextField fullWidth name="co_solicitud_bcv" label="N# Solicitud" variant="outlined" sx={inputStyle} value={formData.co_solicitud_bcv} onChange={handleChange} />
+                                    <TextField fullWidth name="co_solicitud_bcv" label="N# Solicitud BCV    " variant="outlined" sx={inputStyle} value={formData.co_solicitud_bcv} onChange={handleChange} />
                                 </Grid>
                                 <Grid size={{ xs: 12, md: 8 }}>
                                     <TextField fullWidth name="tx_asunto" label="Asunto o Resumen *" variant="outlined" sx={inputStyle} value={formData.tx_asunto} onChange={handleChange} />

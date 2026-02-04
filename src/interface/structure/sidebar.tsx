@@ -26,7 +26,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   
   // Recuperamos el nombre guardado durante el login
   const userName = localStorage.getItem('userName') || 'Usuario';
-  const userSurname = localStorage.getItem('userSurname') || 'Usuario';
 
 
   const handleLogout = () => {
