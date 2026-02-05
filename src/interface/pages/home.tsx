@@ -2,7 +2,12 @@ import { useState } from "react";
 
 //Icons
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
-
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import FolderCopyIcon from '@mui/icons-material/FolderCopy';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import GroupIcon from '@mui/icons-material/Group';
+import FileOpenIcon from '@mui/icons-material/FileOpen';
 
 function Home() {
     return (
@@ -27,7 +32,7 @@ function Home() {
                     <div className="quick-start-cards">
                         {/* Tarjeta 1 */}
                         <div className="quick-start-card">
-                            <div className="card-icon-container"><span className="card-icon">📄</span></div>
+                            <div className="card-icon-container"><span className="card-icon"><FileOpenIcon /></span></div>
                             <h4>Crea un proyecto</h4>
                             <p>La mayoría de las cosas comienzan con un proyecto en Plane.</p>
                             <button className="primary-button link-style">Comienza</button>
@@ -35,7 +40,7 @@ function Home() {
 
                         {/* Tarjeta 2 */}
                         <div className="quick-start-card">
-                            <div className="card-icon-container"><span className="card-icon">👥</span></div>
+                            <div className="card-icon-container"><span className="card-icon"><GroupIcon /></span></div>
                             <h4>Invita a tu equipo</h4>
                             <p>Construye, lanza y gestiona con tus compañeros de trabajo.</p>
                             <button className="primary-button link-style">Consíguelos</button>
@@ -43,7 +48,7 @@ function Home() {
 
                         {/* Tarjeta 3 */}
                         <div className="quick-start-card">
-                            <div className="card-icon-container"><span className="card-icon">🗄️</span></div>
+                            <div className="card-icon-container"><span className="card-icon"><AttachFileIcon /></span></div>
                             <h4>Configura tu espacio de trabajo.</h4>
                             <p>Activa o desactiva funciones, o ve más allá.</p>
                             <a href="#" className="link-text">Configura este espacio de trabajo</a>
@@ -51,7 +56,7 @@ function Home() {
 
                         {/* Tarjeta 4 */}
                         <div className="quick-start-card">
-                            <div className="card-icon-container"><span className="card-icon">🎨</span></div>
+                            <div className="card-icon-container"><span className="card-icon"><DarkModeIcon /></span></div>
                             <h4>Haz tuyo el diseño.</h4>
                             <p>Elige tu imagen, colores y más.</p>
                             <a href="#" className="link-text">Personaliza ahora</a>
@@ -66,7 +71,7 @@ function Home() {
                         <button className="add-link-button">+ Agregar enlace rápido</button>
                     </div>
                     <div className="empty-state">
-                        <span className="empty-state-icon">🔗</span>
+                        <span className="empty-state-icon"><FolderCopyIcon /></span>
                         <p>Guarda enlaces a cosas del trabajo que quieras tener a mano.</p>
                     </div>
                 </div>
@@ -80,7 +85,7 @@ function Home() {
                         </select>
                     </div>
                     <div className="empty-state">
-                        <span className="empty-state-icon">🗓️</span>
+                        <span className="empty-state-icon"><EventAvailableIcon /></span>
                         <p>Aún no tienes ninguna publicación reciente.</p>
                     </div>
                 </div>
